@@ -59,7 +59,11 @@ function normalizeError(error: AxiosError<ApiErrorBody>): ApiError {
       code: 'network_error',
     });
   }
-  return new ApiError({ message: error.message || 'Unexpected error.', status: 0, code: 'unknown' });
+  return new ApiError({
+    message: error.message || 'Unexpected error.',
+    status: 0,
+    code: 'unknown',
+  });
 }
 
 // Unwraps the { status, message, data } envelope down to `data` for clean call sites.
@@ -76,5 +80,6 @@ export const api = {
     request<T>({ ...cfg, method: 'PUT', url, data }),
   patch: <T>(url: string, data?: unknown, cfg?: AxiosRequestConfig) =>
     request<T>({ ...cfg, method: 'PATCH', url, data }),
-  delete: <T>(url: string, cfg?: AxiosRequestConfig) => request<T>({ ...cfg, method: 'DELETE', url }),
+  delete: <T>(url: string, cfg?: AxiosRequestConfig) =>
+    request<T>({ ...cfg, method: 'DELETE', url }),
 };
