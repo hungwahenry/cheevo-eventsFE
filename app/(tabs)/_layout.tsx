@@ -2,7 +2,7 @@ import { useCurrentUser } from '@/features/auth';
 import { THEME } from '@/lib/theme';
 import { Image } from 'expo-image';
 import { Tabs } from 'expo-router';
-import { Compass, House, Ticket, UserRound } from 'lucide-react-native';
+import { House, Ticket, UserRound } from 'lucide-react-native';
 import { View } from 'react-native';
 import { useUniwind } from 'uniwind';
 
@@ -31,15 +31,8 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
+          title: 'Feed',
           tabBarIcon: ({ color, size }) => <House color={color} size={size} strokeWidth={2} />,
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color, size }) => <Compass color={color} size={size} strokeWidth={2} />,
         }}
       />
       <Tabs.Screen

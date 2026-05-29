@@ -3,7 +3,7 @@ import type { OnboardingDraft, UsernameAvailability } from '@/features/onboardin
 import { api } from '@/lib/api';
 
 export function getInterests(): Promise<Interest[]> {
-  return api.get<Interest[]>('/onboarding/interests');
+  return api.get<Interest[]>('/interests');
 }
 
 export function checkUsername(username: string): Promise<UsernameAvailability> {
