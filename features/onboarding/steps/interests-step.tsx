@@ -5,6 +5,7 @@ import { InterestGrid } from '@/features/onboarding/components/interest-grid';
 import { OnboardingLayout } from '@/features/onboarding/components/onboarding-layout';
 import { OptInRow } from '@/features/onboarding/components/opt-in-row';
 import { useInterestsStep } from '@/features/onboarding/hooks';
+import { Sparkles } from 'lucide-react-native';
 import { ActivityIndicator, View } from 'react-native';
 
 export function InterestsStep() {
@@ -24,12 +25,10 @@ export function InterestsStep() {
 
   return (
     <OnboardingLayout
-      step={3}
-      totalSteps={4}
+      icon={Sparkles}
       title="What are you into?"
       subtitle="Pick a few — we'll tailor your feed."
       onBack={onBack}
-      contentAlignment="fill"
       footer={
         <View className="gap-4">
           <OptInRow

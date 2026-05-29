@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
-import { MapPin } from 'lucide-react-native';
+import { Check, MapPin } from 'lucide-react-native';
 import { ActivityIndicator, View } from 'react-native';
 
 type LocationPromptProps = {
@@ -13,17 +13,19 @@ type LocationPromptProps = {
 
 export function LocationPrompt({ status, hasLocation, placeName, onRequest }: LocationPromptProps) {
   return (
-    <View className="flex-1 items-center justify-center gap-5">
-      <View className="bg-muted size-24 items-center justify-center rounded-full">
-        <Icon as={MapPin} className="text-primary size-10" strokeWidth={1.5} />
-      </View>
-
+    <View className="gap-4">
       {hasLocation ? (
-        <Text className="text-foreground text-lg font-semibold">{placeName}</Text>
+        <View className="border-border bg-muted/40 flex-row items-center gap-3 rounded-2xl border p-4">
+          <Icon as={MapPin} className="text-primary size-5" strokeWidth={1.75} />
+          <Text className="text-foreground flex-1 font-medium">{placeName}</Text>
+          <Icon as={Check} className="text-primary size-5" strokeWidth={2} />
+        </View>
       ) : null}
 
       <Button
         variant={hasLocation ? 'outline' : 'default'}
+        size="lg"
+        className="w-full"
         onPress={onRequest}
         disabled={status === 'loading'}>
         {status === 'loading' ? (
@@ -31,12 +33,12 @@ export function LocationPrompt({ status, hasLocation, placeName, onRequest }: Lo
             colorClassName={hasLocation ? 'accent-foreground' : 'accent-primary-foreground'}
           />
         ) : (
-          <Text>{hasLocation ? 'Update location' : 'Set Up Location'}</Text>
+          <Text>{hasLocation ? 'Update location' : 'Set up location'}</Text>
         )}
       </Button>
 
       {status === 'denied' ? (
-        <Text className="text-destructive px-6 text-center text-sm">
+        <Text className="text-destructive text-sm">
           Location permission is required to continue. Enable it in Settings, then try again.
         </Text>
       ) : null}

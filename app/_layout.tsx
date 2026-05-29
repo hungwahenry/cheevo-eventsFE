@@ -3,6 +3,7 @@ import '@/global.css';
 import { useAuthBootstrap } from '@/features/auth';
 import { queryClient } from '@/lib/query';
 import { NAV_THEME } from '@/lib/theme';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { ThemeProvider } from '@react-navigation/native';
 import { PortalHost } from '@rn-primitives/portal';
 import { QueryClientProvider } from '@tanstack/react-query';
@@ -35,12 +36,14 @@ export default function RootLayout() {
         <SafeAreaProvider>
           <SafeAreaListener onChange={({ insets }) => Uniwind.updateInsets(insets)}>
             <QueryClientProvider client={queryClient}>
-              <ThemeProvider value={NAV_THEME[theme ?? 'light']}>
-                <StatusBar style={theme === 'dark' ? 'light' : 'dark'} />
-                <Stack screenOptions={{ headerShown: false }} />
-                <PortalHost />
-                <Toaster richColors />
-              </ThemeProvider>
+              <BottomSheetModalProvider>
+                <ThemeProvider value={NAV_THEME[theme ?? 'light']}>
+                  <StatusBar style={theme === 'dark' ? 'light' : 'dark'} />
+                  <Stack screenOptions={{ headerShown: false }} />
+                  <PortalHost />
+                  <Toaster richColors />
+                </ThemeProvider>
+              </BottomSheetModalProvider>
             </QueryClientProvider>
           </SafeAreaListener>
         </SafeAreaProvider>

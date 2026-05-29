@@ -5,6 +5,7 @@ import { Field } from '@/features/onboarding/components/field';
 import { GenderSelect } from '@/features/onboarding/components/gender-select';
 import { OnboardingLayout } from '@/features/onboarding/components/onboarding-layout';
 import { useAboutStep } from '@/features/onboarding/hooks';
+import { Cake } from 'lucide-react-native';
 
 export function AboutStep() {
   const {
@@ -20,8 +21,7 @@ export function AboutStep() {
 
   return (
     <OnboardingLayout
-      step={1}
-      totalSteps={4}
+      icon={Cake}
       title="A bit about you"
       subtitle="Your birthday helps us show age-appropriate events."
       onBack={onBack}

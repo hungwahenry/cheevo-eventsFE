@@ -5,7 +5,9 @@ import { AvatarPicker } from '@/features/onboarding/components/avatar-picker';
 import { Field } from '@/features/onboarding/components/field';
 import { OnboardingLayout } from '@/features/onboarding/components/onboarding-layout';
 import { UsernameField } from '@/features/onboarding/components/username-field';
+import { useSignOut } from '@/features/auth';
 import { useProfileStep } from '@/features/onboarding/hooks';
+import { UserRound } from 'lucide-react-native';
 import { Controller } from 'react-hook-form';
 import { View } from 'react-native';
 
@@ -20,11 +22,12 @@ export function ProfileStep() {
     canContinue,
     onContinue,
   } = useProfileStep();
+  const { signOut } = useSignOut();
 
   return (
     <OnboardingLayout
-      step={0}
-      totalSteps={4}
+      icon={UserRound}
+      onLogout={signOut}
       title="Set up your profile"
       subtitle="This is how you'll show up on cheevo."
       footer={

@@ -1,6 +1,6 @@
 import type { Interest } from '@/features/auth';
 import { SelectChip } from '@/features/onboarding/components/select-chip';
-import { ActivityIndicator, ScrollView } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 
 type InterestGridProps = {
   interests: Interest[];
@@ -15,9 +15,7 @@ export function InterestGrid({ interests, selectedIds, onToggle, isLoading }: In
   }
 
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      contentContainerClassName="flex-row flex-wrap gap-2 pb-2">
+    <View className="flex-row flex-wrap gap-2">
       {interests.map((interest) => (
         <SelectChip
           key={interest.id}
@@ -26,6 +24,6 @@ export function InterestGrid({ interests, selectedIds, onToggle, isLoading }: In
           onPress={() => onToggle(interest.id)}
         />
       ))}
-    </ScrollView>
+    </View>
   );
 }
