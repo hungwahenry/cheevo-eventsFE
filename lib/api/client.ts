@@ -1,0 +1,80 @@
+import axios, { type AxiosError, type AxiosRequestConfig } from 'axios';
+
+import { config } from '@/lib/config';
+import { ApiError } from '@/lib/api/errors';
+import { clearToken, getToken } from '@/lib/api/token';
+import type { ApiErrorBody, ApiSuccess } from '@/lib/api/types';
+
+let onUnauthorized: (() => void) | null = null;
+
+/**
+ * Register a handler invoked once on a 401 (after the token is cleared) — the
+ * auth layer uses this to reset the session and route back to sign-in.
+ */
+export function setUnauthorizedHandler(handler: (() => void) | null): void {
+  onUnauthorized = handler;
+}
+
+const instance = axios.create({
+  baseURL: config.apiBaseUrl,
+  timeout: 15000,
+  headers: { Accept: 'application/json' },
+});
+
+instance.interceptors.request.use(async (request) => {
+  const token = await getToken();
+  if (token) {
+    request.headers.Authorization = `Bearer ${token}`;
+  }
+  return request;
+});
+
+instance.interceptors.response.use(
+  (response) => response,
+  async (error: AxiosError<ApiErrorBody>) => {
+    const apiError = normalizeError(error);
+    if (apiError.status === 401) {
+      await clearToken();
+      onUnauthorized?.();
+    }
+    return Promise.reject(apiError);
+  }
+);
+
+function normalizeError(error: AxiosError<ApiErrorBody>): ApiError {
+  if (error.response) {
+    const body = error.response.data;
+    return new ApiError({
+      message: body?.message ?? 'Something went wrong.',
+      status: error.response.status,
+      code: body?.code,
+      errors: body?.errors,
+      requestId: body?.request_id,
+    });
+  }
+  if (error.request) {
+    return new ApiError({
+      message: 'Network error. Please check your connection.',
+      status: 0,
+      code: 'network_error',
+    });
+  }
+  return new ApiError({ message: error.message || 'Unexpected error.', status: 0, code: 'unknown' });
+}
+
+// Unwraps the { status, message, data } envelope down to `data` for clean call sites.
+async function request<T>(cfg: AxiosRequestConfig): Promise<T> {
+  const response = await instance.request<ApiSuccess<T>>(cfg);
+  return response.data.data;
+}
+
+export const api = {
+  get: <T>(url: string, cfg?: AxiosRequestConfig) => request<T>({ ...cfg, method: 'GET', url }),
+  post: <T>(url: string, data?: unknown, cfg?: AxiosRequestConfig) =>
+    request<T>({ ...cfg, method: 'POST', url, data }),
+  put: <T>(url: string, data?: unknown, cfg?: AxiosRequestConfig) =>
+    request<T>({ ...cfg, method: 'PUT', url, data }),
+  patch: <T>(url: string, data?: unknown, cfg?: AxiosRequestConfig) =>
+    request<T>({ ...cfg, method: 'PATCH', url, data }),
+  delete: <T>(url: string, cfg?: AxiosRequestConfig) => request<T>({ ...cfg, method: 'DELETE', url }),
+};
