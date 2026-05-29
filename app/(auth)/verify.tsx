@@ -9,7 +9,9 @@ import { ActivityIndicator, Pressable, TextInput, View } from 'react-native';
 
 export default function VerifyScreen() {
   const { email } = useLocalSearchParams<{ email: string }>();
-  const { control, errors, submit, resend, isVerifying, isResending } = useVerifyForm(email ?? '');
+  const { control, errors, canSubmit, submit, resend, isVerifying, isResending } = useVerifyForm(
+    email ?? ''
+  );
 
   return (
     <AuthLayout
@@ -18,7 +20,11 @@ export default function VerifyScreen() {
       subtitle={`We sent a 6-digit code to ${email ?? 'your email'}.`}
       footer={
         <View className="gap-3">
-          <Button size="lg" className="w-full" disabled={isVerifying} onPress={submit}>
+          <Button
+            size="lg"
+            className="w-full"
+            disabled={!canSubmit || isVerifying}
+            onPress={submit}>
             <Text>Verify</Text>
             {isVerifying ? (
               <ActivityIndicator colorClassName="accent-primary-foreground" />

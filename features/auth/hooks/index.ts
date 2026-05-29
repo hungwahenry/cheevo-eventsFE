@@ -47,9 +47,11 @@ export function useAuthBootstrap() {
 export function useEmailForm() {
   const form = useForm<SendOtpInput>({
     resolver: zodResolver(sendOtpSchema),
+    mode: 'onTouched',
     defaultValues: { email: '' },
   });
   const sendOtp = useSendOtp();
+  const canSubmit = sendOtpSchema.safeParse(form.watch()).success;
 
   const submit = form.handleSubmit((data) => {
     haptics.select();
@@ -70,6 +72,7 @@ export function useEmailForm() {
   return {
     control: form.control,
     errors: form.formState.errors,
+    canSubmit,
     submit,
     isPending: sendOtp.isPending,
   };
@@ -78,10 +81,12 @@ export function useEmailForm() {
 export function useVerifyForm(email: string) {
   const form = useForm<VerifyOtpInput>({
     resolver: zodResolver(verifyOtpSchema),
+    mode: 'onTouched',
     defaultValues: { email, code: '' },
   });
   const verifyOtp = useVerifyOtp();
   const resendOtp = useSendOtp();
+  const canSubmit = verifyOtpSchema.safeParse(form.watch()).success;
 
   const submit = form.handleSubmit((data) => {
     haptics.select();
@@ -107,6 +112,7 @@ export function useVerifyForm(email: string) {
   return {
     control: form.control,
     errors: form.formState.errors,
+    canSubmit,
     submit,
     resend,
     isVerifying: verifyOtp.isPending,

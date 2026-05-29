@@ -8,7 +8,7 @@ import { Controller } from 'react-hook-form';
 import { ActivityIndicator, View } from 'react-native';
 
 export default function EmailScreen() {
-  const { control, errors, submit, isPending } = useEmailForm();
+  const { control, errors, canSubmit, submit, isPending } = useEmailForm();
 
   return (
     <AuthLayout
@@ -16,7 +16,7 @@ export default function EmailScreen() {
       title="What's your email?"
       subtitle="We'll email you a 6-digit code to verify it's you."
       footer={
-        <Button size="lg" className="w-full" disabled={isPending} onPress={submit}>
+        <Button size="lg" className="w-full" disabled={!canSubmit || isPending} onPress={submit}>
           <Text>Continue</Text>
           {isPending ? (
             <ActivityIndicator colorClassName="accent-primary-foreground" />

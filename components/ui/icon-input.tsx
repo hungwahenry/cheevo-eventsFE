@@ -5,12 +5,14 @@ import * as React from 'react';
 import { TextInput, View } from 'react-native';
 
 type IconInputProps = React.ComponentProps<typeof TextInput> & {
-  icon: LucideIcon;
+  icon?: LucideIcon;
+  trailing?: React.ReactNode;
   containerClassName?: string;
 };
 
 function IconInput({
   icon,
+  trailing,
   className,
   containerClassName,
   onFocus,
@@ -26,11 +28,13 @@ function IconInput({
         focused ? 'border-primary' : 'border-input',
         containerClassName
       )}>
-      <Icon
-        as={icon}
-        className={cn('size-5', focused ? 'text-primary' : 'text-muted-foreground')}
-        strokeWidth={1.75}
-      />
+      {icon ? (
+        <Icon
+          as={icon}
+          className={cn('size-5', focused ? 'text-primary' : 'text-muted-foreground')}
+          strokeWidth={1.75}
+        />
+      ) : null}
       <TextInput
         className={cn(
           // font-size only (no line-height) so iOS vertically centers single-line text
@@ -48,6 +52,7 @@ function IconInput({
         }}
         {...props}
       />
+      {trailing}
     </View>
   );
 }

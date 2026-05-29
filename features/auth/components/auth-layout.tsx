@@ -4,13 +4,13 @@ import { router } from 'expo-router';
 import { ArrowLeft } from 'lucide-react-native';
 import * as React from 'react';
 import { Pressable, View } from 'react-native';
-import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
+import { KeyboardAwareScrollView, KeyboardStickyView } from 'react-native-keyboard-controller';
 
 type AuthLayoutProps = {
   title: string;
   subtitle?: string;
   showBack?: boolean;
-  /** Optional content (brand/illustration) shown centered in the space above the header. */
+  /** Optional content (brand/illustration) shown in the space above the header. */
   media?: React.ReactNode;
   /** Inputs / form fields. */
   children?: React.ReactNode;
@@ -27,32 +27,45 @@ export function AuthLayout({
   footer,
 }: AuthLayoutProps) {
   return (
-    <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
-      <View className="bg-background pt-safe pb-safe flex-1 px-6">
-        {showBack ? (
+    <View className="bg-background flex-1">
+      {showBack ? (
+        <View className="pt-safe px-6">
           <Pressable
             onPress={() => router.back()}
             hitSlop={12}
             className="active:bg-muted mt-1 size-11 items-center justify-center rounded-full">
             <Icon as={ArrowLeft} className="text-foreground size-6" strokeWidth={1.75} />
           </Pressable>
-        ) : null}
-
-        <View className="flex-1 items-center justify-center">{media}</View>
-
-        <View className="gap-2 pb-6">
-          <Text variant="h1" className="text-foreground text-left text-3xl">
-            {title}
-          </Text>
-          {subtitle ? (
-            <Text className="text-muted-foreground text-base leading-6">{subtitle}</Text>
-          ) : null}
         </View>
+      ) : (
+        <View className="pt-safe" />
+      )}
 
-        {children ? <View className="gap-4">{children}</View> : null}
+      <KeyboardAwareScrollView
+        bottomOffset={90}
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+        style={{ flex: 1 }}
+        contentContainerStyle={{ flexGrow: 1, justifyContent: 'flex-end' }}>
+        <View className="flex-1 items-center justify-center px-6">{media}</View>
 
-        <View className="mt-5">{footer}</View>
-      </View>
-    </KeyboardAvoidingView>
+        <View className="px-6">
+          <View className="gap-2 pb-6">
+            <Text variant="h1" className="text-foreground text-left text-3xl">
+              {title}
+            </Text>
+            {subtitle ? (
+              <Text className="text-muted-foreground text-base leading-6">{subtitle}</Text>
+            ) : null}
+          </View>
+
+          {children ? <View className="gap-4">{children}</View> : null}
+        </View>
+      </KeyboardAwareScrollView>
+
+      <KeyboardStickyView>
+        <View className="pb-safe px-6 pt-3">{footer}</View>
+      </KeyboardStickyView>
+    </View>
   );
 }

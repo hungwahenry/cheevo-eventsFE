@@ -3,7 +3,7 @@ import { Redirect } from 'expo-router';
 import { ActivityIndicator, View } from 'react-native';
 
 export default function Index() {
-  const { status } = useSession();
+  const { status, user } = useSession();
 
   if (status === 'loading') {
     return (
@@ -17,7 +17,9 @@ export default function Index() {
     return <Redirect href="/welcome" />;
   }
 
-  // TODO: when onboarding screens exist, redirect here to /onboarding
-  // while the session user's onboarding_completed is false.
+  if (user && !user.onboarding_completed) {
+    return <Redirect href="/onboarding" />;
+  }
+
   return <Redirect href="/home" />;
 }
