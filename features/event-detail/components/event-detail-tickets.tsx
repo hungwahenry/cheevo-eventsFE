@@ -1,19 +1,40 @@
+import { Icon } from '@/components/ui/icon';
+import { Text } from '@/components/ui/text';
 import { EventDetailSection } from '@/features/event-detail/components/event-detail-section';
 import { EventDetailTicketCard } from '@/features/event-detail/components/event-detail-ticket-card';
 import type { EventDetail } from '@/features/event-detail/types';
-import { View } from 'react-native';
+import { ChevronRight } from 'lucide-react-native';
+import { Pressable, View } from 'react-native';
+
+const INLINE_LIMIT = 3;
 
 export function EventDetailTickets({ event }: { event: EventDetail }) {
   const onSale = event.tickets.filter((t) => t.status === 'on_sale');
   if (onSale.length === 0) return null;
 
+  const visible = onSale.slice(0, INLINE_LIMIT);
+  const remaining = onSale.length - visible.length;
+
   return (
     <EventDetailSection title="Tickets">
       <View className="gap-2">
-        {onSale.map((ticket) => (
+        {visible.map((ticket) => (
           <EventDetailTicketCard key={ticket.id} ticket={ticket} />
         ))}
+        {remaining > 0 ? <ViewAllRow count={onSale.length} /> : null}
       </View>
     </EventDetailSection>
+  );
+}
+
+function ViewAllRow({ count }: { count: number }) {
+  return (
+    <Pressable
+      onPress={() => {
+      }}
+      className="bg-card border-border flex-row items-center justify-between rounded-2xl border px-4 py-3">
+      <Text className="text-foreground text-sm font-medium">View all {count} tickets</Text>
+      <Icon as={ChevronRight} className="text-muted-foreground size-4" strokeWidth={2} />
+    </Pressable>
   );
 }
