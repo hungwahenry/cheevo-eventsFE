@@ -1,5 +1,5 @@
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import type { FeedEvent } from '@/features/feed/types';
@@ -13,6 +13,7 @@ export function EventCardDetails({ event }: { event: FeedEvent }) {
   const price = formatPriceRange(event.tickets_min_price, event.tickets_max_price);
   const when = formatShortDateTime(event.starts_at);
   const location = event.venue_name ?? event.city;
+  const badge = price ?? 'Free · RSVP';
 
   return (
     <View className="gap-3">
@@ -47,16 +48,9 @@ export function EventCardDetails({ event }: { event: FeedEvent }) {
         ) : null}
       </View>
 
-      <View className="flex-row items-center justify-between">
-        {price ? (
-          <Text className="text-foreground text-base font-semibold">{price}</Text>
-        ) : (
-          <View />
-        )}
-        <Button size="sm" className="px-6">
-          <Text>{price ? 'Get tickets' : 'RSVP'}</Text>
-        </Button>
-      </View>
+      <Badge variant="secondary" className="self-start">
+        <Text>{badge}</Text>
+      </Badge>
     </View>
   );
 }
