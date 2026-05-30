@@ -35,3 +35,13 @@ export function formatTimeRange(
   if (starts) return `From ${formatTime(starts)}`;
   return `Until ${formatTime(ends!)}`;
 }
+
+export function formatDateRange(
+  starts: string | null,
+  ends: string | null
+): string | null {
+  if (!starts && !ends) return null;
+  if (starts && ends) return `${formatShortDate(starts)} – ${formatShortDate(ends)}`;
+  if (starts) return `from ${formatShortDate(starts)}`;
+  return `until ${formatShortDate(ends!)}`;
+}

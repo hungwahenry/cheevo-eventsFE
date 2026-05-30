@@ -7,6 +7,7 @@ import { EventDetailGallery } from '@/features/event-detail/components/event-det
 import { EventDetailHeader } from '@/features/event-detail/components/event-detail-header';
 import { EventDetailOrganisation } from '@/features/event-detail/components/event-detail-organisation';
 import { EventDetailPinnedHeader } from '@/features/event-detail/components/event-detail-pinned-header';
+import { EventDetailPromo } from '@/features/event-detail/components/event-detail-promo';
 import { EventDetailTickets } from '@/features/event-detail/components/event-detail-tickets';
 import { useEvent } from '@/features/event-detail/hooks';
 import { formatShortDateTime } from '@/lib/format/datetime';
@@ -59,13 +60,14 @@ export function EventDetailScreen({ id }: { id: string }) {
         showsVerticalScrollIndicator={false}
         contentContainerClassName="pb-32">
         <EventDetailFlyer event={event} />
-        <View className="gap-8 px-5 pt-6">
-          <EventDetailOrganisation event={event} />
+        <View className="gap-6 px-5 pt-6">
           <EventDetailHeader event={event} />
           <EventDetailAbout event={event} />
+          <EventDetailPromo event={event} />
           <EventDetailTickets event={event} />
           <EventDetailGallery event={event} />
           <EventDetailFeatures event={event} />
+          <EventDetailOrganisation event={event} />
         </View>
       </Animated.ScrollView>
 

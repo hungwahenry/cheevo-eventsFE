@@ -5,7 +5,7 @@ import { Text } from '@/components/ui/text';
 import type { FeedEvent } from '@/features/feed/types';
 import { formatShortDateTime } from '@/lib/format/datetime';
 import { formatPriceRange } from '@/lib/format/money';
-import { Calendar, MapPin } from 'lucide-react-native';
+import { Calendar, MapPin, Sparkles } from 'lucide-react-native';
 import { View } from 'react-native';
 
 export function EventCardDetails({ event }: { event: FeedEvent }) {
@@ -44,6 +44,16 @@ export function EventCardDetails({ event }: { event: FeedEvent }) {
           <View className="flex-row items-center gap-1.5">
             <Icon as={MapPin} className="text-muted-foreground size-4" strokeWidth={2} />
             <Text className="text-muted-foreground text-xs">{location}</Text>
+          </View>
+        ) : null}
+        {event.interest_overlap > 0 ? (
+          <View className="flex-row items-center gap-1.5">
+            <Icon as={Sparkles} className="text-primary size-4" strokeWidth={2} />
+            <Text className="text-primary text-xs font-medium">
+              {event.interest_overlap === 1
+                ? '1 match'
+                : `${event.interest_overlap} matches`}
+            </Text>
           </View>
         ) : null}
       </View>

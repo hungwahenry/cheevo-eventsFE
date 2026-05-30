@@ -4,8 +4,10 @@ import { Text } from '@/components/ui/text';
 import { useRsvpToggle } from '@/features/event-detail/hooks';
 import type { EventDetail } from '@/features/event-detail/types';
 import { formatPriceRange } from '@/lib/format/money';
-import { Check, Sparkles, Ticket } from 'lucide-react-native';
+import { Check, MessageCircle, Sparkles, Ticket } from 'lucide-react-native';
 import { View } from 'react-native';
+
+const PLACEHOLDER_COMMENTS = 98;
 
 export function EventDetailActionBar({ event }: { event: EventDetail }) {
   const hasTickets = event.tickets_count > 0;
@@ -18,9 +20,10 @@ export function EventDetailActionBar({ event }: { event: EventDetail }) {
           <Text className="text-muted-foreground text-xs">From</Text>
           <Text className="text-foreground text-base font-semibold">{price ?? 'Free'}</Text>
         </View>
+        <CommentsButton />
         <Button className="px-8">
           <Icon as={Ticket} className="text-primary-foreground size-4" strokeWidth={2.25} />
-          <Text>Get tickets</Text>
+          <Text>Get Tixs</Text>
         </Button>
       </ActionBarWrapper>
     );
@@ -40,6 +43,7 @@ function RsvpAction({ event }: { event: EventDetail }) {
           {event.is_rsvped ? "You're going" : 'Are you in?'}
         </Text>
       </View>
+      <CommentsButton />
       <Button
         variant={event.is_rsvped ? 'outline' : 'default'}
         className="px-8"
@@ -56,10 +60,19 @@ function RsvpAction({ event }: { event: EventDetail }) {
   );
 }
 
+function CommentsButton() {
+  return (
+    <Button variant="outline" className="gap-1.5 px-4">
+      <Icon as={MessageCircle} className="text-foreground size-4" strokeWidth={2.25} />
+      <Text>{PLACEHOLDER_COMMENTS}</Text>
+    </Button>
+  );
+}
+
 function ActionBarWrapper({ children }: { children: React.ReactNode }) {
   return (
     <View className="bg-background pb-safe-offset-3 border-border absolute right-0 bottom-0 left-0 border-t">
-      <View className="flex-row items-center gap-4 px-5 pt-3">{children}</View>
+      <View className="flex-row items-center gap-3 px-5 pt-3">{children}</View>
     </View>
   );
 }

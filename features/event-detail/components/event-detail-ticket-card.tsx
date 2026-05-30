@@ -1,9 +1,9 @@
 import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import type { EventDetailTicket } from '@/features/event-detail/types';
-import { formatShortDate } from '@/lib/format/datetime';
+import { formatDateRange, formatShortDate } from '@/lib/format/datetime';
 import { formatNaira } from '@/lib/format/money';
-import { Clock, Ticket as TicketIcon, Users } from 'lucide-react-native';
+import { CalendarCheck, Clock, Ticket as TicketIcon, Users } from 'lucide-react-native';
 import type { LucideIcon } from 'lucide-react-native';
 import { View } from 'react-native';
 
@@ -19,6 +19,10 @@ export function EventDetailTicketCard({ ticket }: { ticket: EventDetailTicket })
   }
   if (ticket.sales_ends_at) {
     meta.push({ icon: Clock, label: `Closes ${formatShortDate(ticket.sales_ends_at)}` });
+  }
+  const validity = formatDateRange(ticket.valid_from, ticket.valid_to);
+  if (validity) {
+    meta.push({ icon: CalendarCheck, label: `Valid ${validity}` });
   }
   if (ticket.max_per_order !== null) {
     meta.push({ icon: Users, label: `Max ${ticket.max_per_order} per order` });

@@ -10,7 +10,7 @@ const VIEWABILITY_CONFIG = { itemVisiblePercentThreshold: 65 };
 const keyExtractor = (event: FeedEvent) => event.id;
 
 function CardSeparator() {
-  return <View className="h-8" />;
+  return <View className="h-6" />;
 }
 
 export function FeedList() {

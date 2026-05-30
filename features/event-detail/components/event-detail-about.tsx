@@ -5,6 +5,6 @@ export function EventDetailAbout({ event }: { event: EventDetail }) {
   if (!event.description) return null;
 
   return (
-    <Text className="text-muted-foreground text-sm leading-relaxed">{event.description}</Text>
+    <Text className="text-muted-foreground text-sm leading-normal">{event.description}</Text>
   );
 }

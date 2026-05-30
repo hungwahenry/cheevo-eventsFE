@@ -34,7 +34,7 @@ export function EventDetailFeatureCard({ feature }: { feature: EventDetailFeatur
         </View>
       ) : null}
 
-      <View className="absolute inset-x-0 bottom-0 gap-0.5 bg-black/55 p-3">
+      <View className="absolute inset-x-0 bottom-0 gap-1 bg-black/55 p-3">
         <Text className="text-sm font-semibold text-white" numberOfLines={1}>
           {feature.title}
         </Text>
@@ -43,7 +43,7 @@ export function EventDetailFeatureCard({ feature }: { feature: EventDetailFeatur
             {feature.description}
           </Text>
         ) : null}
-        {time ? <Text className="mt-1 text-xs text-white/75">{time}</Text> : null}
+        {time ? <Text className="text-xs text-white/75">{time}</Text> : null}
       </View>
     </Pressable>
   );
