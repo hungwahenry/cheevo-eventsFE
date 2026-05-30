@@ -1,10 +1,5 @@
-import { Screen } from '@/components/screen';
+import { FeedList } from '@/features/feed';
 
 export default function HomeScreen() {
-  return (
-    <Screen
-      title="Cheevo"
-      subtitle="Your feed of events, friends, and organisers you follow."
-    />
-  );
+  return <FeedList />;
 }
