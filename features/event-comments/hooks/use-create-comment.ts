@@ -57,9 +57,3 @@ export function useCreateComment(eventId: string) {
     },
   });
 }
-
-export type ReplyTarget = {
-  parentId: string;
-  mentionedUserId: string;
-  mentionUsername: string | null;
-};

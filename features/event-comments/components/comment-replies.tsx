@@ -11,10 +11,10 @@ import { Spinner } from '@/components/ui/spinner';
 type CommentRepliesProps = {
   parent: EventComment;
   onReply: (target: EventComment) => void;
-  onDelete: (comment: EventComment) => void;
+  onLongPress: (comment: EventComment) => void;
 };
 
-export function CommentReplies({ parent, onReply, onDelete }: CommentRepliesProps) {
+export function CommentReplies({ parent, onReply, onLongPress }: CommentRepliesProps) {
   const [expanded, setExpanded] = React.useState(false);
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
     useCommentReplies(parent.event_id, parent.id, expanded);
@@ -55,7 +55,7 @@ export function CommentReplies({ parent, onReply, onDelete }: CommentRepliesProp
               key={reply.id}
               comment={reply}
               onReply={() => onReply(parent)}
-              onDelete={onDelete}
+              onLongPress={onLongPress}
               compact
             />
           ))}

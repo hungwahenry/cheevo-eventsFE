@@ -1,40 +1,28 @@
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
-import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import { CommentGifView } from '@/features/event-comments/components/comment-gif';
-import { useToggleCommentLike } from '@/features/event-comments/hooks';
+import { CommentLikeButton } from '@/features/event-comments/components/comment-like-button';
 import type { EventComment } from '@/features/event-comments/types';
 import { formatRelativeShort } from '@/lib/format/datetime';
 import { haptics } from '@/lib/haptics';
-import { THEME } from '@/lib/theme';
-import { Heart } from 'lucide-react-native';
 import { Pressable, View } from 'react-native';
-import { useUniwind } from 'uniwind';
 
 type CommentRowProps = {
   comment: EventComment;
   onReply: (comment: EventComment) => void;
-  onDelete: (comment: EventComment) => void;
+  onLongPress: (comment: EventComment) => void;
   compact?: boolean;
 };
 
-export function CommentRow({ comment, onReply, onDelete, compact }: CommentRowProps) {
-  const toggleLike = useToggleCommentLike(comment.event_id);
-  const { theme } = useUniwind();
-  const colors = THEME[theme === 'dark' ? 'dark' : 'light'];
+export function CommentRow({ comment, onReply, onLongPress, compact }: CommentRowProps) {
   const time = formatRelativeShort(comment.created_at);
   const displayName = comment.author.display_name ?? comment.author.username ?? 'Someone';
   const handle = comment.author.username ? `@${comment.author.username}` : null;
-
-  const handleLike = () => {
-    haptics.select();
-    toggleLike.mutate({ comment, next: !comment.is_liked });
-  };
+  const replyingTo = comment.parent_id !== null ? comment.mentioned_users[0]?.username : null;
 
   const handleLongPress = () => {
-    if (!comment.is_mine) return;
     haptics.impact();
-    onDelete(comment);
+    onLongPress(comment);
   };
 
   return (
@@ -54,24 +42,16 @@ export function CommentRow({ comment, onReply, onDelete, compact }: CommentRowPr
           {handle ? (
             <Text className="text-muted-foreground text-xs">{handle}</Text>
           ) : null}
-          {comment.is_going ? (
-            <View className="bg-primary/10 rounded-full px-1.5 py-px">
-              <Text className="text-primary text-[10px] font-semibold uppercase tracking-wider">
-                Going
-              </Text>
-            </View>
-          ) : null}
+          {comment.is_going ? <GoingPill /> : null}
           {time ? (
             <Text className="text-muted-foreground text-xs">· {time}</Text>
           ) : null}
         </View>
 
-        {comment.parent_id !== null && comment.mentioned_users[0]?.username ? (
+        {replyingTo ? (
           <Text className="text-muted-foreground mt-0.5 text-xs">
             Replying to{' '}
-            <Text className="text-primary text-xs font-medium">
-              @{comment.mentioned_users[0].username}
-            </Text>
+            <Text className="text-primary text-xs font-medium">@{replyingTo}</Text>
           </Text>
         ) : null}
 
@@ -96,18 +76,17 @@ export function CommentRow({ comment, onReply, onDelete, compact }: CommentRowPr
         </View>
       </View>
 
-      <Pressable onPress={handleLike} hitSlop={8} className="pt-1">
-        <Icon
-          as={Heart}
-          className={
-            comment.is_liked
-              ? 'text-destructive size-4'
-              : 'text-muted-foreground size-4'
-          }
-          fill={comment.is_liked ? colors.destructive : 'transparent'}
-          strokeWidth={2}
-        />
-      </Pressable>
+      <CommentLikeButton comment={comment} />
     </Pressable>
+  );
+}
+
+function GoingPill() {
+  return (
+    <View className="bg-primary/10 rounded-full px-1.5 py-px">
+      <Text className="text-primary text-[10px] font-semibold uppercase tracking-wider">
+        Going
+      </Text>
+    </View>
   );
 }

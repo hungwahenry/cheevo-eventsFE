@@ -49,3 +49,9 @@ export type LikeResponse = {
   is_liked: boolean;
   likes_count: number;
 };
+
+export type ReplyTarget = {
+  parentId: string;
+  mentionedUserId: string;
+  mentionUsername: string | null;
+};

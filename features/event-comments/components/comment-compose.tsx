@@ -1,18 +1,15 @@
 import { GifPicker, type GifPickerRef } from '@/components/gif-picker';
 import { Icon } from '@/components/ui/icon';
+import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/ui/text';
-import { useCreateComment, type ReplyTarget } from '@/features/event-comments/hooks';
-import type { PickedGif } from '@/lib/giphy';
-import { isApiError } from '@/lib/api';
-import { haptics } from '@/lib/haptics';
+import { useCommentCompose } from '@/features/event-comments/hooks';
+import type { ReplyTarget } from '@/features/event-comments/types';
 import { THEME } from '@/lib/theme';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { Image } from 'expo-image';
 import { ImagePlay, Send, X } from 'lucide-react-native';
 import * as React from 'react';
 import { Pressable, View } from 'react-native';
-import { Spinner } from '@/components/ui/spinner';
-import { toast } from 'sonner-native';
 import { useUniwind } from 'uniwind';
 
 type CommentComposeProps = {
@@ -22,20 +19,15 @@ type CommentComposeProps = {
   onSent: () => void;
 };
 
-const MAX_BODY = 500;
-
 export function CommentCompose({
   eventId,
   replyTarget,
   onCancelReply,
   onSent,
 }: CommentComposeProps) {
-  const [body, setBody] = React.useState('');
-  const [gif, setGif] = React.useState<PickedGif | null>(null);
-  const [inputKey, setInputKey] = React.useState(0);
+  const compose = useCommentCompose({ eventId, replyTarget, onSent });
   const inputRef = React.useRef<React.ComponentRef<typeof BottomSheetTextInput>>(null);
   const gifPickerRef = React.useRef<GifPickerRef>(null);
-  const create = useCreateComment(eventId);
   const { theme } = useUniwind();
   const colors = THEME[theme === 'dark' ? 'dark' : 'light'];
 
@@ -45,72 +37,14 @@ export function CommentCompose({
     }
   }, [replyTarget]);
 
-  const canSend = (body.trim().length > 0 || gif !== null) && !create.isPending;
-
-  const handleSend = () => {
-    if (!canSend) return;
-    haptics.success();
-
-    create.mutate(
-      {
-        body: body.trim() || undefined,
-        gif: gif ?? undefined,
-        parent_id: replyTarget?.parentId,
-        mentions: replyTarget ? [replyTarget.mentionedUserId] : undefined,
-      },
-      {
-        onSuccess: () => {
-          setBody('');
-          setGif(null);
-          setInputKey((k) => k + 1);
-          onSent();
-        },
-        onError: (error) => {
-          if (isApiError(error) && error.isValidation) {
-            const first = Object.values(error.fieldErrors())[0];
-            toast.error(first ?? error.message);
-          }
-        },
-      }
-    );
-  };
-
   return (
     <View className="border-border border-t">
       {replyTarget ? (
-        <View className="bg-muted/60 flex-row items-center justify-between px-4 py-2">
-          <Text className="text-muted-foreground text-xs">
-            Replying to{' '}
-            <Text className="text-foreground text-xs font-medium">
-              {replyTarget.mentionUsername
-                ? `@${replyTarget.mentionUsername}`
-                : 'comment'}
-            </Text>
-          </Text>
-          <Pressable onPress={onCancelReply} hitSlop={8}>
-            <Icon as={X} className="text-muted-foreground size-4" />
-          </Pressable>
-        </View>
+        <ReplyPill target={replyTarget} onCancel={onCancelReply} />
       ) : null}
 
-      {gif ? (
-        <View className="px-4 pt-3">
-          <View
-            className="bg-muted relative overflow-hidden rounded-xl"
-            style={{ width: 80, aspectRatio: gif.height > 0 ? gif.width / gif.height : 1 }}>
-            <Image
-              source={{ uri: gif.url }}
-              style={{ width: '100%', height: '100%' }}
-              contentFit="cover"
-            />
-            <Pressable
-              onPress={() => setGif(null)}
-              hitSlop={8}
-              className="bg-foreground/80 absolute top-1 right-1 size-5 items-center justify-center rounded-full">
-              <Icon as={X} className="text-background size-3" />
-            </Pressable>
-          </View>
-        </View>
+      {compose.gif ? (
+        <GifPreview gif={compose.gif} onRemove={() => compose.setGif(null)} />
       ) : null}
 
       <View className="flex-row items-end gap-2 px-2 pt-2 pb-safe">
@@ -123,10 +57,10 @@ export function CommentCompose({
 
         <View className="bg-muted min-h-9 flex-1 justify-center rounded-2xl px-4 py-2">
           <BottomSheetTextInput
-            key={inputKey}
+            key={compose.inputKey}
             ref={inputRef}
-            value={body}
-            onChangeText={(t) => setBody(t.slice(0, MAX_BODY))}
+            value={compose.body}
+            onChangeText={compose.setBody}
             placeholder="Add a comment"
             placeholderTextColor={colors.mutedForeground}
             multiline
@@ -141,25 +75,77 @@ export function CommentCompose({
         </View>
 
         <Pressable
-          onPress={handleSend}
-          disabled={!canSend}
+          onPress={compose.send}
+          disabled={!compose.canSend}
           hitSlop={8}
           className={`size-9 items-center justify-center rounded-full ${
-            canSend ? 'bg-primary' : 'bg-muted'
+            compose.canSend ? 'bg-primary' : 'bg-muted'
           }`}>
-          {create.isPending ? (
+          {compose.isPending ? (
             <Spinner size="sm" barClassName="bg-primary-foreground" />
           ) : (
             <Icon
               as={Send}
-              className={canSend ? 'text-primary-foreground size-4' : 'text-muted-foreground size-4'}
+              className={compose.canSend ? 'text-primary-foreground size-4' : 'text-muted-foreground size-4'}
               strokeWidth={2.25}
             />
           )}
         </Pressable>
       </View>
 
-      <GifPicker ref={gifPickerRef} onSelect={setGif} />
+      <GifPicker ref={gifPickerRef} onSelect={compose.setGif} />
+    </View>
+  );
+}
+
+function ReplyPill({
+  target,
+  onCancel,
+}: {
+  target: ReplyTarget;
+  onCancel: () => void;
+}) {
+  const label = target.mentionUsername ? `@${target.mentionUsername}` : 'comment';
+
+  return (
+    <View className="bg-muted/60 flex-row items-center justify-between px-4 py-2">
+      <Text className="text-muted-foreground text-xs">
+        Replying to{' '}
+        <Text className="text-foreground text-xs font-medium">{label}</Text>
+      </Text>
+      <Pressable onPress={onCancel} hitSlop={8}>
+        <Icon as={X} className="text-muted-foreground size-4" />
+      </Pressable>
+    </View>
+  );
+}
+
+function GifPreview({
+  gif,
+  onRemove,
+}: {
+  gif: { url: string; width: number; height: number };
+  onRemove: () => void;
+}) {
+  const aspect = gif.height > 0 ? gif.width / gif.height : 1;
+
+  return (
+    <View className="px-4 pt-3">
+      <View
+        className="bg-muted relative overflow-hidden rounded-xl"
+        style={{ width: 80, aspectRatio: aspect }}>
+        <Image
+          source={{ uri: gif.url }}
+          style={{ width: '100%', height: '100%' }}
+          contentFit="cover"
+        />
+        <Pressable
+          onPress={onRemove}
+          hitSlop={8}
+          className="bg-foreground/80 absolute top-1 right-1 size-5 items-center justify-center rounded-full">
+          <Icon as={X} className="text-background size-3" />
+        </Pressable>
+      </View>
     </View>
   );
 }
