@@ -1,7 +1,3 @@
-/**
- * Short date+time string used on event cards across the app.
- * e.g. "Thu, Jun 5 · 8:00 PM"
- */
 export function formatShortDateTime(iso: string | null): string | null {
   if (!iso) return null;
   const d = new Date(iso);
