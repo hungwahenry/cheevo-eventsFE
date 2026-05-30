@@ -11,7 +11,8 @@ import { EventDetailPromo } from '@/features/event-detail/components/event-detai
 import { EventDetailTickets } from '@/features/event-detail/components/event-detail-tickets';
 import { useEvent } from '@/features/event-detail/hooks';
 import { formatShortDateTime } from '@/lib/format/datetime';
-import { ActivityIndicator, useWindowDimensions, View } from 'react-native';
+import { useWindowDimensions, View } from 'react-native';
+import { Spinner } from '@/components/ui/spinner';
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
@@ -31,7 +32,7 @@ export function EventDetailScreen({ id }: { id: string }) {
   if (isLoading) {
     return (
       <View className="bg-background flex-1 items-center justify-center">
-        <ActivityIndicator />
+        <Spinner size="lg" />
       </View>
     );
   }

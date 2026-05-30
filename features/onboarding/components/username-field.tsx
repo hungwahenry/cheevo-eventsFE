@@ -1,7 +1,7 @@
 import { Icon } from '@/components/ui/icon';
 import { IconInput } from '@/components/ui/icon-input';
+import { Spinner } from '@/components/ui/spinner';
 import { AtSign, Check, X } from 'lucide-react-native';
-import { ActivityIndicator } from 'react-native';
 
 type UsernameStatus = {
   isChecking: boolean;
@@ -27,7 +27,7 @@ export function UsernameField({ value, onChangeText, onBlur, status }: UsernameF
       autoCorrect={false}
       trailing={
         status.isChecking ? (
-          <ActivityIndicator />
+          <Spinner size="sm" />
         ) : status.available === true ? (
           <Icon as={Check} className="size-5 text-green-500" strokeWidth={2.25} />
         ) : status.available === false ? (

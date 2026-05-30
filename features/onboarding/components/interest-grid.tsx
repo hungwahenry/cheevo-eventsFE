@@ -1,6 +1,7 @@
+import { Spinner } from '@/components/ui/spinner';
 import type { Interest } from '@/features/auth';
 import { SelectChip } from '@/features/onboarding/components/select-chip';
-import { ActivityIndicator, View } from 'react-native';
+import { View } from 'react-native';
 
 type InterestGridProps = {
   interests: Interest[];
@@ -11,7 +12,11 @@ type InterestGridProps = {
 
 export function InterestGrid({ interests, selectedIds, onToggle, isLoading }: InterestGridProps) {
   if (isLoading) {
-    return <ActivityIndicator colorClassName="accent-primary" className="mt-8" />;
+    return (
+      <View className="mt-8 items-center">
+        <Spinner size="md" />
+      </View>
+    );
   }
 
   return (

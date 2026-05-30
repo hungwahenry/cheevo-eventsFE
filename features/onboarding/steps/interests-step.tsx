@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/ui/text';
 import { Field } from '@/features/onboarding/components/field';
 import { InterestGrid } from '@/features/onboarding/components/interest-grid';
@@ -6,7 +7,7 @@ import { OnboardingLayout } from '@/features/onboarding/components/onboarding-la
 import { OptInRow } from '@/features/onboarding/components/opt-in-row';
 import { useInterestsStep } from '@/features/onboarding/hooks';
 import { Sparkles } from 'lucide-react-native';
-import { ActivityIndicator, View } from 'react-native';
+import { View } from 'react-native';
 
 export function InterestsStep() {
   const {
@@ -42,7 +43,7 @@ export function InterestsStep() {
             disabled={!canFinish || isSubmitting}
             onPress={onFinish}>
             {isSubmitting ? (
-              <ActivityIndicator colorClassName="accent-primary-foreground" />
+              <Spinner size="sm" barClassName="bg-primary-foreground" />
             ) : (
               <Text>Finish</Text>
             )}

@@ -1,38 +1,59 @@
 import { Button } from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
+import {
+  EventCommentsSheet,
+  type EventCommentsSheetRef,
+} from '@/features/event-comments';
 import { useRsvpToggle } from '@/features/event-detail/hooks';
 import type { EventDetail } from '@/features/event-detail/types';
 import { formatPriceRange } from '@/lib/format/money';
 import { Check, MessageCircle, Sparkles, Ticket } from 'lucide-react-native';
+import * as React from 'react';
 import { View } from 'react-native';
 
-const PLACEHOLDER_COMMENTS = 98;
-
 export function EventDetailActionBar({ event }: { event: EventDetail }) {
+  const commentsRef = React.useRef<EventCommentsSheetRef>(null);
   const hasTickets = event.tickets_count > 0;
 
-  if (hasTickets) {
-    const price = formatPriceRange(event.tickets_min_price, event.tickets_max_price);
-    return (
-      <ActionBarWrapper>
-        <View className="flex-1">
-          <Text className="text-muted-foreground text-xs">From</Text>
-          <Text className="text-foreground text-base font-semibold">{price ?? 'Free'}</Text>
-        </View>
-        <CommentsButton />
-        <Button className="px-8">
-          <Icon as={Ticket} className="text-primary-foreground size-4" strokeWidth={2.25} />
-          <Text>Get Tixs</Text>
-        </Button>
-      </ActionBarWrapper>
-    );
-  }
+  const openComments = () => commentsRef.current?.present();
 
-  return <RsvpAction event={event} />;
+  return (
+    <>
+      {hasTickets ? (
+        <ActionBarWrapper>
+          <View className="flex-1">
+            <Text className="text-muted-foreground text-xs">From</Text>
+            <Text className="text-foreground text-base font-semibold">
+              {formatPriceRange(event.tickets_min_price, event.tickets_max_price) ?? 'Free'}
+            </Text>
+          </View>
+          <CommentsButton count={event.comments_count} onPress={openComments} />
+          <Button className="px-8">
+            <Icon as={Ticket} className="text-primary-foreground size-4" strokeWidth={2.25} />
+            <Text>Get Tixs</Text>
+          </Button>
+        </ActionBarWrapper>
+      ) : (
+        <RsvpAction event={event} onOpenComments={openComments} />
+      )}
+
+      <EventCommentsSheet
+        ref={commentsRef}
+        eventId={event.id}
+        commentsCount={event.comments_count}
+      />
+    </>
+  );
 }
 
-function RsvpAction({ event }: { event: EventDetail }) {
+function RsvpAction({
+  event,
+  onOpenComments,
+}: {
+  event: EventDetail;
+  onOpenComments: () => void;
+}) {
   const toggle = useRsvpToggle(event.id);
 
   return (
@@ -43,7 +64,7 @@ function RsvpAction({ event }: { event: EventDetail }) {
           {event.is_rsvped ? "You're going" : 'Are you in?'}
         </Text>
       </View>
-      <CommentsButton />
+      <CommentsButton count={event.comments_count} onPress={onOpenComments} />
       <Button
         variant={event.is_rsvped ? 'outline' : 'default'}
         className="px-8"
@@ -60,11 +81,11 @@ function RsvpAction({ event }: { event: EventDetail }) {
   );
 }
 
-function CommentsButton() {
+function CommentsButton({ count, onPress }: { count: number; onPress: () => void }) {
   return (
-    <Button variant="outline" className="gap-1.5 px-4">
+    <Button variant="outline" className="gap-1.5 px-4" onPress={onPress}>
       <Icon as={MessageCircle} className="text-foreground size-4" strokeWidth={2.25} />
-      <Text>{PLACEHOLDER_COMMENTS}</Text>
+      {count > 0 ? <Text>{count.toLocaleString()}</Text> : null}
     </Button>
   );
 }

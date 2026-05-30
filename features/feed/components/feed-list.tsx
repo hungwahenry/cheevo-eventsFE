@@ -1,9 +1,10 @@
+import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/ui/text';
 import { EventCard } from '@/features/feed/components/event-card';
 import { useFeed } from '@/features/feed/hooks';
 import type { FeedEvent } from '@/features/feed/types';
 import { useCallback, useMemo, useRef, useState } from 'react';
-import { ActivityIndicator, FlatList, View, type ViewToken } from 'react-native';
+import { FlatList, View, type ViewToken } from 'react-native';
 
 const VIEWABILITY_CONFIG = { itemVisiblePercentThreshold: 65 };
 
@@ -43,7 +44,7 @@ export function FeedList() {
   if (isLoading) {
     return (
       <View className="bg-background flex-1 items-center justify-center">
-        <ActivityIndicator />
+        <Spinner size="lg" />
       </View>
     );
   }

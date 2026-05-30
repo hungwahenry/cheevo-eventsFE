@@ -1,8 +1,9 @@
 import { Button } from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
+import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/ui/text';
 import { Check, MapPin } from 'lucide-react-native';
-import { ActivityIndicator, View } from 'react-native';
+import { View } from 'react-native';
 
 type LocationPromptProps = {
   status: 'idle' | 'loading' | 'denied';
@@ -29,8 +30,9 @@ export function LocationPrompt({ status, hasLocation, placeName, onRequest }: Lo
         onPress={onRequest}
         disabled={status === 'loading'}>
         {status === 'loading' ? (
-          <ActivityIndicator
-            colorClassName={hasLocation ? 'accent-foreground' : 'accent-primary-foreground'}
+          <Spinner
+            size="sm"
+            barClassName={hasLocation ? 'bg-foreground' : 'bg-primary-foreground'}
           />
         ) : (
           <Text>{hasLocation ? 'Update location' : 'Set up location'}</Text>

@@ -36,6 +36,22 @@ export function formatTimeRange(
   return `Until ${formatTime(ends!)}`;
 }
 
+export function formatRelativeShort(iso: string | null): string | null {
+  if (!iso) return null;
+  const diff = Date.now() - new Date(iso).getTime();
+  const s = Math.floor(diff / 1000);
+  if (s < 60) return 'now';
+  const m = Math.floor(s / 60);
+  if (m < 60) return `${m}m`;
+  const h = Math.floor(m / 60);
+  if (h < 24) return `${h}h`;
+  const d = Math.floor(h / 24);
+  if (d < 7) return `${d}d`;
+  const w = Math.floor(d / 7);
+  if (w < 5) return `${w}w`;
+  return formatShortDate(iso);
+}
+
 export function formatDateRange(
   starts: string | null,
   ends: string | null

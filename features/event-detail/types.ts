@@ -71,6 +71,7 @@ export type EventDetail = {
   tickets_min_price: number | null;
   tickets_max_price: number | null;
   rsvps_count: number;
+  comments_count: number;
   organisation: EventDetailOrganisation;
   interests: EventDetailInterest[];
   images: EventDetailImage[];
