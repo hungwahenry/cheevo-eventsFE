@@ -59,6 +59,15 @@ export function CommentRow({ comment, onReply, onDelete, compact }: CommentRowPr
           ) : null}
         </View>
 
+        {comment.parent_id !== null && comment.mentioned_users[0]?.username ? (
+          <Text className="text-muted-foreground mt-0.5 text-xs">
+            Replying to{' '}
+            <Text className="text-primary text-xs font-medium">
+              @{comment.mentioned_users[0].username}
+            </Text>
+          </Text>
+        ) : null}
+
         {comment.body ? (
           <Text className="text-foreground mt-0.5 text-sm leading-5">
             {comment.body}

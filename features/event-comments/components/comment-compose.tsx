@@ -1,8 +1,8 @@
 import { GifPicker, type GifPickerRef } from '@/components/gif-picker';
 import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
-import { useCreateComment } from '@/features/event-comments/hooks';
-import type { CommentGif, EventComment } from '@/features/event-comments/types';
+import { useCreateComment, type ReplyTarget } from '@/features/event-comments/hooks';
+import type { PickedGif } from '@/lib/giphy';
 import { isApiError } from '@/lib/api';
 import { haptics } from '@/lib/haptics';
 import { THEME } from '@/lib/theme';
@@ -17,7 +17,7 @@ import { useUniwind } from 'uniwind';
 
 type CommentComposeProps = {
   eventId: string;
-  replyTarget: EventComment | null;
+  replyTarget: ReplyTarget | null;
   onCancelReply: () => void;
   onSent: () => void;
 };
@@ -31,7 +31,7 @@ export function CommentCompose({
   onSent,
 }: CommentComposeProps) {
   const [body, setBody] = React.useState('');
-  const [gif, setGif] = React.useState<CommentGif | null>(null);
+  const [gif, setGif] = React.useState<PickedGif | null>(null);
   const [inputKey, setInputKey] = React.useState(0);
   const inputRef = React.useRef<React.ComponentRef<typeof BottomSheetTextInput>>(null);
   const gifPickerRef = React.useRef<GifPickerRef>(null);
@@ -41,10 +41,6 @@ export function CommentCompose({
 
   React.useEffect(() => {
     if (replyTarget) {
-      const mention = replyTarget.author.username
-        ? `@${replyTarget.author.username} `
-        : '';
-      setBody((prev) => (prev.startsWith(mention) ? prev : mention));
       requestAnimationFrame(() => inputRef.current?.focus());
     }
   }, [replyTarget]);
@@ -59,7 +55,8 @@ export function CommentCompose({
       {
         body: body.trim() || undefined,
         gif: gif ?? undefined,
-        parent_id: replyTarget?.id,
+        parent_id: replyTarget?.parentId,
+        mentions: replyTarget ? [replyTarget.mentionedUserId] : undefined,
       },
       {
         onSuccess: () => {
@@ -85,9 +82,9 @@ export function CommentCompose({
           <Text className="text-muted-foreground text-xs">
             Replying to{' '}
             <Text className="text-foreground text-xs font-medium">
-              {replyTarget.author.username
-                ? `@${replyTarget.author.username}`
-                : (replyTarget.author.display_name ?? 'comment')}
+              {replyTarget.mentionUsername
+                ? `@${replyTarget.mentionUsername}`
+                : 'comment'}
             </Text>
           </Text>
           <Pressable onPress={onCancelReply} hitSlop={8}>

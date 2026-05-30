@@ -16,6 +16,7 @@ import { CommentRow } from '@/features/event-comments/components/comment-row';
 import {
   useDeleteComment,
   useEventComments,
+  type ReplyTarget,
 } from '@/features/event-comments/hooks';
 import type { EventComment } from '@/features/event-comments/types';
 import { THEME } from '@/lib/theme';
@@ -52,7 +53,7 @@ export const EventCommentsSheet = React.forwardRef<
   const colors = THEME[theme === 'dark' ? 'dark' : 'light'];
 
   const [isOpen, setIsOpen] = React.useState(false);
-  const [replyTarget, setReplyTarget] = React.useState<EventComment | null>(null);
+  const [replyTarget, setReplyTarget] = React.useState<ReplyTarget | null>(null);
   const [pendingDelete, setPendingDelete] = React.useState<EventComment | null>(null);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
@@ -83,8 +84,11 @@ export const EventCommentsSheet = React.forwardRef<
   );
 
   const handleReply = (comment: EventComment) => {
-    const top = comment.parent_id === null ? comment : items.find((c) => c.id === comment.parent_id);
-    setReplyTarget(top ?? comment);
+    setReplyTarget({
+      parentId: comment.parent_id ?? comment.id,
+      mentionedUserId: comment.author.id,
+      mentionUsername: comment.author.username,
+    });
   };
 
   const handleConfirmDelete = () => {

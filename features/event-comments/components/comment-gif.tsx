@@ -1,10 +1,10 @@
-import type { CommentGif } from '@/features/event-comments/types';
+import type { PickedGif } from '@/lib/giphy';
 import { Image } from 'expo-image';
 import { View } from 'react-native';
 
 const MAX_WIDTH = 180;
 
-export function CommentGifView({ gif }: { gif: CommentGif }) {
+export function CommentGifView({ gif }: { gif: PickedGif }) {
   const aspect = gif.height > 0 ? gif.width / gif.height : 1;
 
   return (

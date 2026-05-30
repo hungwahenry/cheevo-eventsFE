@@ -4,7 +4,6 @@ import { repliesKey } from '@/features/event-comments/hooks/use-comment-replies'
 import type {
   CommentsPage,
   CreateCommentPayload,
-  EventComment,
 } from '@/features/event-comments/types';
 import { eventKey } from '@/features/event-detail/hooks/use-event';
 import type { EventDetail } from '@/features/event-detail/types';
@@ -59,10 +58,8 @@ export function useCreateComment(eventId: string) {
   });
 }
 
-export type CommentDraftKind = { kind: 'top-level' } | { kind: 'reply'; parentId: string; mentionUsername?: string | null };
-
-export type CommentDraft = {
-  body: string;
-  gif: EventComment['gif'] | null;
-  target: CommentDraftKind;
+export type ReplyTarget = {
+  parentId: string;
+  mentionedUserId: string;
+  mentionUsername: string | null;
 };

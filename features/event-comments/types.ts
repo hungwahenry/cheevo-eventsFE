@@ -1,6 +1,4 @@
-import type { GiphyGif } from '@/lib/giphy';
-
-export type CommentGif = Pick<GiphyGif, 'id' | 'url' | 'width' | 'height'>;
+import type { PickedGif } from '@/lib/giphy';
 
 export type CommentAuthor = {
   id: string;
@@ -9,13 +7,20 @@ export type CommentAuthor = {
   avatar_url: string | null;
 };
 
+export type MentionedUser = {
+  id: string;
+  username: string | null;
+  display_name: string | null;
+};
+
 export type EventComment = {
   id: string;
   event_id: string;
   parent_id: string | null;
   body: string | null;
-  gif: CommentGif | null;
+  gif: PickedGif | null;
   mentions: string[];
+  mentioned_users: MentionedUser[];
   likes_count: number;
   replies_count: number;
   is_liked: boolean;
@@ -34,7 +39,7 @@ export type CommentsPage = {
 
 export type CreateCommentPayload = {
   body?: string;
-  gif?: CommentGif;
+  gif?: PickedGif;
   parent_id?: string;
   mentions?: string[];
 };
