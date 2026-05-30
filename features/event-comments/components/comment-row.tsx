@@ -49,10 +49,17 @@ export function CommentRow({ comment, onReply, onDelete, compact }: CommentRowPr
       </Avatar>
 
       <View className="flex-1">
-        <View className="flex-row items-baseline gap-1.5">
+        <View className="flex-row flex-wrap items-center gap-x-1.5 gap-y-0.5">
           <Text className="text-foreground text-sm font-semibold">{displayName}</Text>
           {handle ? (
             <Text className="text-muted-foreground text-xs">{handle}</Text>
+          ) : null}
+          {comment.is_going ? (
+            <View className="bg-primary/10 rounded-full px-1.5 py-px">
+              <Text className="text-primary text-[10px] font-semibold uppercase tracking-wider">
+                Going
+              </Text>
+            </View>
           ) : null}
           {time ? (
             <Text className="text-muted-foreground text-xs">· {time}</Text>

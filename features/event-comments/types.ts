@@ -25,6 +25,7 @@ export type EventComment = {
   replies_count: number;
   is_liked: boolean;
   is_mine: boolean;
+  is_going: boolean;
   created_at: string;
   author: CommentAuthor;
 };
