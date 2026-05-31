@@ -7,10 +7,12 @@ import { EventDetailGallery } from '@/features/event-detail/components/event-det
 import { EventDetailHeader } from '@/features/event-detail/components/event-detail-header';
 import { EventDetailOrganisation } from '@/features/event-detail/components/event-detail-organisation';
 import { EventDetailPinnedHeader } from '@/features/event-detail/components/event-detail-pinned-header';
+import { EventDetailPresaleBanner } from '@/features/event-detail/components/event-detail-presale-banner';
 import { EventDetailPromo } from '@/features/event-detail/components/event-detail-promo';
 import { EventDetailTickets } from '@/features/event-detail/components/event-detail-tickets';
 import { useEvent } from '@/features/event-detail/hooks';
 import { formatShortDateTime } from '@/lib/format/datetime';
+import { isEventInPresale } from '@/lib/presale';
 import { useWindowDimensions, View } from 'react-native';
 import { Spinner } from '@/components/ui/spinner';
 import Animated, {
@@ -65,6 +67,12 @@ export function EventDetailScreen({ id }: { id: string }) {
           <EventDetailHeader event={event} />
           <EventDetailAbout event={event} />
           <EventDetailPromo event={event} />
+          {isEventInPresale(event.presale_until) && event.presale_until ? (
+            <EventDetailPresaleBanner
+              presaleUntil={event.presale_until}
+              isRsvped={event.is_rsvped}
+            />
+          ) : null}
           <EventDetailTickets event={event} />
           <EventDetailGallery event={event} />
           <EventDetailFeatures event={event} />

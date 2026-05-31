@@ -12,7 +12,8 @@ import {
 import { useRsvpToggle } from '@/features/event-detail/hooks';
 import type { EventDetail } from '@/features/event-detail/types';
 import { formatPriceRange } from '@/lib/format/money';
-import { Check, MessageCircle, Sparkles, Ticket } from 'lucide-react-native';
+import { isEventInPresale } from '@/lib/presale';
+import { Check, LockIcon, MessageCircle, Sparkles, Ticket } from 'lucide-react-native';
 import * as React from 'react';
 import { View } from 'react-native';
 
@@ -20,13 +21,17 @@ export function EventDetailActionBar({ event }: { event: EventDetail }) {
   const commentsRef = React.useRef<EventCommentsSheetRef>(null);
   const checkoutRef = React.useRef<CheckoutSheetRef>(null);
   const hasTickets = event.tickets_count > 0;
+  const inPresale = isEventInPresale(event.presale_until);
+  const presaleBlocks = inPresale && !event.is_rsvped;
 
   const openComments = () => commentsRef.current?.present();
   const openCheckout = () => checkoutRef.current?.present();
 
   return (
     <>
-      {hasTickets ? (
+      {hasTickets && presaleBlocks ? (
+        <PresaleRsvpAction event={event} onOpenComments={openComments} />
+      ) : hasTickets ? (
         <ActionBarWrapper>
           <View className="flex-1">
             <Text className="text-muted-foreground text-xs">From</Text>
@@ -50,8 +55,37 @@ export function EventDetailActionBar({ event }: { event: EventDetail }) {
         commentsCount={event.comments_count}
       />
 
-      {hasTickets ? <CheckoutSheet ref={checkoutRef} event={event} /> : null}
+      {hasTickets && !presaleBlocks ? (
+        <CheckoutSheet ref={checkoutRef} event={event} />
+      ) : null}
     </>
+  );
+}
+
+function PresaleRsvpAction({
+  event,
+  onOpenComments,
+}: {
+  event: EventDetail;
+  onOpenComments: () => void;
+}) {
+  const toggle = useRsvpToggle(event.id);
+
+  return (
+    <ActionBarWrapper>
+      <View className="flex-1">
+        <Text className="text-muted-foreground text-xs">RSVP to unlock</Text>
+        <Text className="text-foreground text-base font-semibold">Presale only</Text>
+      </View>
+      <CommentsButton count={event.comments_count} onPress={onOpenComments} />
+      <Button
+        className="px-8"
+        disabled={toggle.isPending}
+        onPress={() => toggle.mutate(true)}>
+        <Icon as={LockIcon} className="text-primary-foreground size-4" strokeWidth={2.25} />
+        <Text>RSVP to unlock</Text>
+      </Button>
+    </ActionBarWrapper>
   );
 }
 
