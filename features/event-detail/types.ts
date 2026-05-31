@@ -40,6 +40,7 @@ export type EventDetailTicket = {
   gross_price: number;
   display_price: number | null;
   quantity: number | null;
+  sold_count: number;
   sort_order: number;
   status: 'draft' | 'on_sale' | 'paused';
   sales_starts_at: string | null;

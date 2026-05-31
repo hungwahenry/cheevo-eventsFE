@@ -2,6 +2,10 @@ import { Button } from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import {
+  CheckoutSheet,
+  type CheckoutSheetRef,
+} from '@/features/checkout';
+import {
   EventCommentsSheet,
   type EventCommentsSheetRef,
 } from '@/features/event-comments';
@@ -14,9 +18,11 @@ import { View } from 'react-native';
 
 export function EventDetailActionBar({ event }: { event: EventDetail }) {
   const commentsRef = React.useRef<EventCommentsSheetRef>(null);
+  const checkoutRef = React.useRef<CheckoutSheetRef>(null);
   const hasTickets = event.tickets_count > 0;
 
   const openComments = () => commentsRef.current?.present();
+  const openCheckout = () => checkoutRef.current?.present();
 
   return (
     <>
@@ -29,7 +35,7 @@ export function EventDetailActionBar({ event }: { event: EventDetail }) {
             </Text>
           </View>
           <CommentsButton count={event.comments_count} onPress={openComments} />
-          <Button className="px-8">
+          <Button className="px-8" onPress={openCheckout}>
             <Icon as={Ticket} className="text-primary-foreground size-4" strokeWidth={2.25} />
             <Text>Get Tixs</Text>
           </Button>
@@ -43,6 +49,8 @@ export function EventDetailActionBar({ event }: { event: EventDetail }) {
         eventId={event.id}
         commentsCount={event.comments_count}
       />
+
+      {hasTickets ? <CheckoutSheet ref={checkoutRef} event={event} /> : null}
     </>
   );
 }
