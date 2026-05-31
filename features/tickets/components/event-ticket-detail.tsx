@@ -1,0 +1,98 @@
+import { EmptyState } from '@/components/ui/empty-state';
+import { Spinner } from '@/components/ui/spinner';
+import { Text } from '@/components/ui/text';
+import { TicketRow } from '@/features/tickets/components/ticket-row';
+import { TicketScreenHeader } from '@/features/tickets/components/ticket-screen-header';
+import { useMyTickets } from '@/features/tickets/hooks';
+import { formatShortDateTime } from '@/lib/format/datetime';
+import { Image } from 'expo-image';
+import { Link } from 'expo-router';
+import { CalendarIcon, MapPinIcon, TicketIcon } from 'lucide-react-native';
+import { useMemo } from 'react';
+import { Pressable, ScrollView, View } from 'react-native';
+
+export function EventTicketDetail({ eventId }: { eventId: string }) {
+  const { data, isLoading } = useMyTickets();
+
+  const tickets = useMemo(
+    () => data?.pages.flatMap((p) => p.items).filter((t) => t.event.id === eventId) ?? [],
+    [data, eventId]
+  );
+
+  if (isLoading) {
+    return (
+      <View className="bg-background flex-1 items-center justify-center">
+        <Spinner />
+      </View>
+    );
+  }
+
+  if (tickets.length === 0) {
+    return (
+      <View className="bg-background flex-1">
+        <TicketScreenHeader />
+        <EmptyState
+          icon={TicketIcon}
+          title="No tickets for this event"
+          description="Looks like your tickets aren't here yet."
+        />
+      </View>
+    );
+  }
+
+  const event = tickets[0].event;
+  const when = formatShortDateTime(event.starts_at);
+  const venue = event.venue_name ?? event.city;
+
+  return (
+    <View className="bg-background flex-1">
+      <TicketScreenHeader />
+
+      <ScrollView contentContainerStyle={{ paddingBottom: 48 }}>
+        <Link href={`/event/${event.id}`} asChild>
+          <Pressable className="border-border bg-card mx-4 flex-row items-center gap-3 rounded-xl border p-3 active:opacity-80">
+            <View className="bg-muted h-20 w-16 overflow-hidden rounded-md">
+              {event.flyer_url ? (
+                <Image
+                  source={{ uri: event.flyer_url }}
+                  style={{ width: '100%', height: '100%' }}
+                  contentFit="cover"
+                />
+              ) : null}
+            </View>
+            <View className="min-w-0 flex-1 gap-1">
+              <Text className="text-foreground text-base font-semibold" numberOfLines={2}>
+                {event.title}
+              </Text>
+              {when ? (
+                <View className="flex-row items-center gap-1.5">
+                  <CalendarIcon size={12} className="text-muted-foreground" />
+                  <Text className="text-muted-foreground text-xs">{when}</Text>
+                </View>
+              ) : null}
+              {venue ? (
+                <View className="flex-row items-center gap-1.5">
+                  <MapPinIcon size={12} className="text-muted-foreground" />
+                  <Text className="text-muted-foreground text-xs" numberOfLines={1}>
+                    {venue}
+                  </Text>
+                </View>
+              ) : null}
+            </View>
+          </Pressable>
+        </Link>
+
+        <View className="mx-4 mt-6">
+          <Text className="text-muted-foreground mb-2 px-1 text-xs font-semibold uppercase tracking-wide">
+            Your tickets
+          </Text>
+          <View className="border-border bg-card overflow-hidden rounded-xl border">
+            {tickets.map((ticket, idx) => (
+              <TicketRow key={ticket.id} ticket={ticket} isLast={idx === tickets.length - 1} />
+            ))}
+          </View>
+        </View>
+      </ScrollView>
+    </View>
+  );
+}

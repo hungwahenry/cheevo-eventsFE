@@ -1,3 +1,4 @@
+import { Screen } from '@/components/screen';
 import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/ui/text';
 import { EventCard } from '@/features/feed/components/event-card';
@@ -41,46 +42,33 @@ export function FeedList() {
     }
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  if (isLoading) {
-    return (
-      <View className="bg-background flex-1 items-center justify-center">
-        <Spinner size="lg" />
-      </View>
-    );
-  }
-
-  if (events.length === 0) {
-    return (
-      <View className="bg-background flex-1 items-center justify-center gap-1 px-8">
-        <Text className="text-foreground text-lg font-semibold">No events yet</Text>
-        <Text className="text-muted-foreground text-center text-sm">
-          Pick more interests or follow some organisers to start seeing what&apos;s on.
-        </Text>
-      </View>
-    );
-  }
-
   return (
-    <View className="bg-background pt-safe-offset-2 flex-1">
-      <View className="gap-1 px-5 pt-2 pb-4">
-        <Text className="text-foreground text-3xl font-bold tracking-tight">For you</Text>
-        <Text className="text-muted-foreground text-sm">
-          Events picked for what you&apos;re into.
-        </Text>
-      </View>
-
-      <FlatList
-        data={events}
-        keyExtractor={keyExtractor}
-        renderItem={renderItem}
-        ItemSeparatorComponent={CardSeparator}
-        contentContainerClassName="pb-8"
-        showsVerticalScrollIndicator={false}
-        onEndReached={onEndReached}
-        onEndReachedThreshold={0.6}
-        viewabilityConfig={VIEWABILITY_CONFIG}
-        onViewableItemsChanged={onViewableItemsChanged}
-      />
-    </View>
+    <Screen title="For you" subtitle="Events picked for what you’re into.">
+      {isLoading ? (
+        <View className="flex-1 items-center justify-center">
+          <Spinner size="lg" />
+        </View>
+      ) : events.length === 0 ? (
+        <View className="flex-1 items-center justify-center gap-1 px-8">
+          <Text className="text-foreground text-lg font-semibold">No events yet</Text>
+          <Text className="text-muted-foreground text-center text-sm">
+            Pick more interests or follow some organisers to start seeing what&apos;s on.
+          </Text>
+        </View>
+      ) : (
+        <FlatList
+          data={events}
+          keyExtractor={keyExtractor}
+          renderItem={renderItem}
+          ItemSeparatorComponent={CardSeparator}
+          contentContainerClassName="pb-8"
+          showsVerticalScrollIndicator={false}
+          onEndReached={onEndReached}
+          onEndReachedThreshold={0.6}
+          viewabilityConfig={VIEWABILITY_CONFIG}
+          onViewableItemsChanged={onViewableItemsChanged}
+        />
+      )}
+    </Screen>
   );
 }

@@ -10,7 +10,7 @@ export default function ProfileScreen() {
 
   return (
     <Screen title="Profile" subtitle={user?.email}>
-      <View className="mt-auto pb-4">
+      <View className="mt-auto px-5 pb-4">
         <Button variant="outline" className="w-full" disabled={isPending} onPress={signOut}>
           <Text>Log out</Text>
         </Button>

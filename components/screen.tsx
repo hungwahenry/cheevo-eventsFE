@@ -20,23 +20,25 @@ export function Screen({
 }: ScreenProps) {
   const header =
     title || subtitle ? (
-      <View className="mb-6 gap-1">
+      <View className="gap-1 px-5 pt-2 pb-4">
         {title ? (
           <Text className="text-foreground text-3xl font-bold tracking-tight">{title}</Text>
         ) : null}
-        {subtitle ? <Text className="text-muted-foreground">{subtitle}</Text> : null}
+        {subtitle ? (
+          <Text className="text-muted-foreground text-sm">{subtitle}</Text>
+        ) : null}
       </View>
     ) : null;
 
   if (scroll) {
     return (
-      <View className={cn('bg-background pt-safe-offset-6 flex-1', className)} {...props}>
+      <View className={cn('bg-background pt-safe-offset-2 flex-1', className)} {...props}>
+        {header}
         <ScrollView
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingHorizontal: 24, paddingBottom: 96 }}
+          contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 96 }}
           className={contentClassName}>
-          {header}
           {children}
         </ScrollView>
       </View>
@@ -44,7 +46,7 @@ export function Screen({
   }
 
   return (
-    <View className={cn('bg-background pt-safe-offset-2 flex-1 px-2', className)} {...props}>
+    <View className={cn('bg-background pt-safe-offset-2 flex-1', className)} {...props}>
       {header}
       {children}
     </View>
