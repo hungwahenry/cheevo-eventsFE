@@ -1,3 +1,4 @@
+import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import type { MyTicket, TicketEvent } from '@/features/tickets/types';
 import { formatShortDateTime } from '@/lib/format/datetime';
@@ -22,7 +23,7 @@ export function EventTicketCard({ event, tickets }: Props) {
 
   return (
     <Link href={`/tickets/event/${event.id}`} asChild>
-      <Pressable className="border-border bg-card flex-row items-center gap-3 rounded-xl border p-2.5 active:opacity-80">
+      <Pressable className="bg-card flex-row items-center gap-3 rounded-xl p-2.5 active:opacity-80">
         <View className="bg-muted h-16 w-12 overflow-hidden rounded-md">
           {event.flyer_url ? (
             <Image
@@ -51,7 +52,7 @@ export function EventTicketCard({ event, tickets }: Props) {
           <Text className="text-foreground mt-0.5 text-xs font-medium">{countLabel}</Text>
         </View>
 
-        <ChevronRightIcon size={16} className="text-muted-foreground" />
+        <Icon as={ChevronRightIcon} className="text-muted-foreground size-4" />
       </Pressable>
     </Link>
   );

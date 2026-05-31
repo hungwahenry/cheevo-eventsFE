@@ -57,7 +57,7 @@ export function TicketDetail({ ticketId }: { ticketId: string }) {
     <View className="bg-background flex-1">
       <TicketScreenHeader />
 
-      <ScrollView contentContainerStyle={{ paddingBottom: 48 }}>
+      <ScrollView contentContainerStyle={{ paddingBottom: 24 }}>
         <View className="mx-4 mt-2 items-center gap-1">
           <Text className="text-foreground text-xl font-semibold" numberOfLines={2}>
             {ticket.event.title}
@@ -74,7 +74,7 @@ export function TicketDetail({ ticketId }: { ticketId: string }) {
           ref={shotRef}
           options={{ format: 'png', quality: 1, result: 'tmpfile' }}
           style={{ marginHorizontal: 16, marginTop: 24, backgroundColor: 'transparent' }}>
-          <View className="items-center gap-4 rounded-2xl border border-border bg-card p-6">
+          <View className="items-center gap-4 rounded-2xl bg-card p-6">
             <View className="flex-row items-center gap-2">
               <Text className="text-foreground text-base font-semibold">
                 {ticket.ticket_name}
@@ -107,14 +107,14 @@ export function TicketDetail({ ticketId }: { ticketId: string }) {
             )}
           </View>
         </ViewShot>
-
-        <View className="mx-4 mt-4">
-          <Button variant="outline" onPress={handleShare}>
-            <Icon as={ShareIcon} className="size-4" />
-            <Text>Share</Text>
-          </Button>
-        </View>
       </ScrollView>
+
+      <View className="bg-background pb-safe-offset-4 px-4 pt-3">
+        <Button variant="outline" onPress={handleShare}>
+          <Icon as={ShareIcon} className="size-4" />
+          <Text>Share</Text>
+        </Button>
+      </View>
     </View>
   );
 }

@@ -1,3 +1,4 @@
+import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import { TicketStatusPill } from '@/features/tickets/components/ticket-status-pill';
 import type { MyTicket } from '@/features/tickets/types';
@@ -21,7 +22,7 @@ export function TicketRow({ ticket, isLast }: { ticket: MyTicket; isLast: boolea
           </Text>
         </View>
         <TicketStatusPill status={ticket.status} />
-        <ChevronRightIcon size={16} className="text-muted-foreground" />
+        <Icon as={ChevronRightIcon} className="text-muted-foreground size-4" />
       </Pressable>
     </Link>
   );
