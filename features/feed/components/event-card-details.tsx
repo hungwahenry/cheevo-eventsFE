@@ -10,7 +10,7 @@ import { View } from 'react-native';
 
 export function EventCardDetails({ event }: { event: FeedEvent }) {
   const org = event.organisation;
-  const price = formatPriceRange(event.tickets_min_price, event.tickets_max_price);
+  const price = formatPriceRange(event.tickets_min_price, event.tickets_max_price, event.currency);
   const when = formatShortDateTime(event.starts_at);
   const location = event.venue_name ?? event.city;
   const badge = price ?? 'Free · RSVP';

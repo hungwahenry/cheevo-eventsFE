@@ -19,7 +19,11 @@ export function EventDetailTickets({ event }: { event: EventDetail }) {
     <EventDetailSection title="Tickets">
       <View className="gap-2">
         {visible.map((ticket) => (
-          <EventDetailTicketCard key={ticket.id} ticket={ticket} />
+          <EventDetailTicketCard
+            key={ticket.id}
+            ticket={ticket}
+            currency={event.currency}
+          />
         ))}
         {remaining > 0 ? <ViewAllRow count={onSale.length} /> : null}
       </View>

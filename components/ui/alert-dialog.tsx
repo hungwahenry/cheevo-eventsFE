@@ -36,7 +36,8 @@ function AlertDialogOverlay({
         {...props}>
         <NativeOnlyAnimatedView
           entering={FadeIn.duration(200).delay(50)}
-          exiting={FadeOut.duration(150)}>
+          exiting={FadeOut.duration(150)}
+          style={{ width: '88%', maxWidth: 448 }}>
           <>{children}</>
         </NativeOnlyAnimatedView>
       </AlertDialogPrimitive.Overlay>
@@ -56,7 +57,7 @@ function AlertDialogContent({
       <AlertDialogOverlay>
         <AlertDialogPrimitive.Content
           className={cn(
-            'bg-background border-border z-50 flex flex-col gap-4 rounded-lg border p-6 shadow-lg shadow-black/5 sm:max-w-lg',
+            'bg-background border-border z-50 flex w-full flex-col gap-4 rounded-2xl border p-6 shadow-lg shadow-black/5 sm:max-w-lg',
             Platform.select({
               web: 'animate-in fade-in-0 zoom-in-95 web:max-w-[calc(100%-2rem)] duration-200',
             }),

@@ -25,6 +25,7 @@ export type FeedEvent = {
   tickets_min_price: number | null;
   tickets_max_price: number | null;
   tickets_count: number;
+  currency: string;
   organisation?: FeedOrganisation;
   interests: FeedInterest[];
   interest_overlap: number;

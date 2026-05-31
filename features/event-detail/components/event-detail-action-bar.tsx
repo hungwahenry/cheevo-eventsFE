@@ -25,7 +25,7 @@ export function EventDetailActionBar({ event }: { event: EventDetail }) {
           <View className="flex-1">
             <Text className="text-muted-foreground text-xs">From</Text>
             <Text className="text-foreground text-base font-semibold">
-              {formatPriceRange(event.tickets_min_price, event.tickets_max_price) ?? 'Free'}
+              {formatPriceRange(event.tickets_min_price, event.tickets_max_price, event.currency) ?? 'Free'}
             </Text>
           </View>
           <CommentsButton count={event.comments_count} onPress={openComments} />

@@ -63,7 +63,7 @@ export const CommentActionsSheet = React.forwardRef<
       backgroundStyle={{ backgroundColor: colors.background }}
       handleIndicatorStyle={{ backgroundColor: colors.mutedForeground }}>
       <BottomSheetView style={{ paddingBottom: insets.bottom + 8 }}>
-        <View className="py-2">
+        <View className="pt-1 pb-2">
           {actions.map((action, i) => (
             <ActionRow
               key={i}
@@ -71,13 +71,6 @@ export const CommentActionsSheet = React.forwardRef<
               onAfterPress={() => ref.current?.dismiss()}
             />
           ))}
-          <View className="border-border my-1 border-t" />
-          <Pressable
-            onPress={() => ref.current?.dismiss()}
-            android_ripple={{ color: 'rgba(0,0,0,0.06)' }}
-            className="px-5 py-3.5 active:opacity-70">
-            <Text className="text-muted-foreground text-base">Cancel</Text>
-          </Pressable>
         </View>
       </BottomSheetView>
     </BottomSheetModal>

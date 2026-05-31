@@ -64,7 +64,6 @@ export const EventCommentsSheet = React.forwardRef<
 
   const handleLongPress = React.useCallback(
     (comment: EventComment) => {
-      if (!comment.is_mine) return;
       sheet.openActions(comment);
       actionsRef.current?.present();
     },

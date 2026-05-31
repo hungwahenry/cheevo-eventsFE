@@ -1,10 +1,15 @@
 import { Text } from '@/components/ui/text';
 import type { EventDetailTicket } from '@/features/event-detail/types';
 import { formatDateRange, formatShortDate } from '@/lib/format/datetime';
-import { formatNaira } from '@/lib/format/money';
+import { formatMoney } from '@/lib/format/money';
 import { View } from 'react-native';
 
-export function EventDetailTicketCard({ ticket }: { ticket: EventDetailTicket }) {
+type EventDetailTicketCardProps = {
+  ticket: EventDetailTicket;
+  currency: string;
+};
+
+export function EventDetailTicketCard({ ticket, currency }: EventDetailTicketCardProps) {
   const showCompare =
     ticket.display_price !== null && ticket.display_price > ticket.gross_price;
 
@@ -23,11 +28,11 @@ export function EventDetailTicketCard({ ticket }: { ticket: EventDetailTicket })
           </View>
           <View className="items-end">
             <Text className="text-foreground text-xl leading-tight font-bold">
-              {formatNaira(ticket.gross_price)}
+              {formatMoney(ticket.gross_price, currency)}
             </Text>
             {showCompare ? (
               <Text className="text-muted-foreground text-xs line-through">
-                {formatNaira(ticket.display_price as number)}
+                {formatMoney(ticket.display_price as number, currency)}
               </Text>
             ) : null}
           </View>
