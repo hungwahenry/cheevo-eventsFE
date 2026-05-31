@@ -16,13 +16,31 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "vip.cheevo.app",
+      "associatedDomains": [
+        "applinks:api.cheevo.vip",
+        "applinks:cheevo.vip"
+      ]
     },
     "android": {
+      "package": "vip.cheevo.app",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            { "scheme": "https", "host": "api.cheevo.vip", "pathPrefix": "/payments/return" },
+            { "scheme": "https", "host": "cheevo.vip", "pathPrefix": "/events" },
+            { "scheme": "https", "host": "cheevo.vip", "pathPrefix": "/orders" }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
     },
     "web": {
       "bundler": "metro",
