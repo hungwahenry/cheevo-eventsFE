@@ -3,15 +3,10 @@ import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/ui/text';
 import { EventTicketCard } from '@/features/tickets/components/event-ticket-card';
 import { useMyTickets } from '@/features/tickets/hooks';
-import type { MyTicket, TicketEvent } from '@/features/tickets/types';
+import { groupTicketsByEvent } from '@/lib/tickets';
 import { TicketIcon } from 'lucide-react-native';
 import { useMemo } from 'react';
 import { FlatList, RefreshControl, View } from 'react-native';
-
-type EventGroup = {
-  event: TicketEvent;
-  tickets: MyTicket[];
-};
 
 export function TicketsList() {
   const {
@@ -24,19 +19,10 @@ export function TicketsList() {
     refetch,
   } = useMyTickets();
 
-  const groups = useMemo<EventGroup[]>(() => {
-    const items = data?.pages.flatMap((p) => p.items) ?? [];
-    const byEvent = new Map<string, EventGroup>();
-    for (const ticket of items) {
-      const existing = byEvent.get(ticket.event.id);
-      if (existing) {
-        existing.tickets.push(ticket);
-      } else {
-        byEvent.set(ticket.event.id, { event: ticket.event, tickets: [ticket] });
-      }
-    }
-    return [...byEvent.values()];
-  }, [data]);
+  const groups = useMemo(
+    () => groupTicketsByEvent(data?.pages.flatMap((p) => p.items) ?? []),
+    [data]
+  );
 
   if (isLoading) {
     return (

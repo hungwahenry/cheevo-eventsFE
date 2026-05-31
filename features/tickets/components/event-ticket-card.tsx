@@ -2,6 +2,7 @@ import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import type { MyTicket, TicketEvent } from '@/features/tickets/types';
 import { formatShortDateTime } from '@/lib/format/datetime';
+import { ticketCountLabel } from '@/lib/tickets';
 import { Image } from 'expo-image';
 import { Link } from 'expo-router';
 import { ChevronRightIcon } from 'lucide-react-native';
@@ -15,15 +16,11 @@ type Props = {
 export function EventTicketCard({ event, tickets }: Props) {
   const when = formatShortDateTime(event.starts_at);
   const venue = event.venue_name ?? event.city;
-  const validCount = tickets.filter((t) => t.status === 'valid').length;
-  const totalCount = tickets.length;
-  const countLabel = `${totalCount} ticket${totalCount === 1 ? '' : 's'}${
-    validCount < totalCount ? ` · ${validCount} active` : ''
-  }`;
+  const countLabel = ticketCountLabel(tickets);
 
   return (
     <Link href={`/tickets/event/${event.id}`} asChild>
-      <Pressable className="bg-card flex-row items-center gap-3 rounded-xl p-2.5 active:opacity-80">
+      <Pressable className="bg-muted flex-row items-center gap-3 rounded-xl p-2.5 active:opacity-80">
         <View className="bg-muted h-16 w-12 overflow-hidden rounded-md">
           {event.flyer_url ? (
             <Image

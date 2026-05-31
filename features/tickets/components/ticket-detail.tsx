@@ -74,7 +74,7 @@ export function TicketDetail({ ticketId }: { ticketId: string }) {
           ref={shotRef}
           options={{ format: 'png', quality: 1, result: 'tmpfile' }}
           style={{ marginHorizontal: 16, marginTop: 24, backgroundColor: 'transparent' }}>
-          <View className="items-center gap-4 rounded-2xl bg-card p-6">
+          <View className="items-center gap-4 rounded-2xl bg-muted p-6">
             <View className="flex-row items-center gap-2">
               <Text className="text-foreground text-base font-semibold">
                 {ticket.ticket_name}

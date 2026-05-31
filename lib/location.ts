@@ -11,11 +11,6 @@ export type DeviceLocationResult =
   | { status: 'granted'; location: ResolvedLocation }
   | { status: 'denied' };
 
-/**
- * Request foreground location permission, read the device position, and
- * reverse-geocode it to a human label + city. Shared infra — used by
- * onboarding now and the "near me" discovery feed later.
- */
 export async function requestDeviceLocation(): Promise<DeviceLocationResult> {
   const permission = await Location.requestForegroundPermissionsAsync();
   if (permission.status !== 'granted') {

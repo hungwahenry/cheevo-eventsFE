@@ -6,6 +6,7 @@ import { TicketRow } from '@/features/tickets/components/ticket-row';
 import { TicketScreenHeader } from '@/features/tickets/components/ticket-screen-header';
 import { useMyTickets } from '@/features/tickets/hooks';
 import { formatShortDateTime } from '@/lib/format/datetime';
+import { selectTicketsForEvent } from '@/lib/tickets';
 import { Image } from 'expo-image';
 import { Link } from 'expo-router';
 import { CalendarIcon, MapPinIcon, TicketIcon } from 'lucide-react-native';
@@ -16,7 +17,7 @@ export function EventTicketDetail({ eventId }: { eventId: string }) {
   const { data, isLoading } = useMyTickets();
 
   const tickets = useMemo(
-    () => data?.pages.flatMap((p) => p.items).filter((t) => t.event.id === eventId) ?? [],
+    () => selectTicketsForEvent(data?.pages.flatMap((p) => p.items) ?? [], eventId),
     [data, eventId]
   );
 
@@ -51,7 +52,7 @@ export function EventTicketDetail({ eventId }: { eventId: string }) {
 
       <ScrollView contentContainerStyle={{ paddingBottom: 48 }}>
         <Link href={`/event/${event.id}`} asChild>
-          <Pressable className="bg-card mx-4 flex-row items-center gap-3 rounded-xl p-3 active:opacity-80">
+          <Pressable className="bg-muted mx-4 flex-row items-center gap-3 rounded-xl p-3 active:opacity-80">
             <View className="bg-muted h-20 w-16 overflow-hidden rounded-md">
               {event.flyer_url ? (
                 <Image
@@ -87,7 +88,7 @@ export function EventTicketDetail({ eventId }: { eventId: string }) {
           <Text className="text-muted-foreground mb-2 px-1 text-xs font-semibold uppercase tracking-wide">
             Your tickets
           </Text>
-          <View className="bg-card overflow-hidden rounded-xl">
+          <View className="bg-muted overflow-hidden rounded-xl">
             {tickets.map((ticket, idx) => (
               <TicketRow key={ticket.id} ticket={ticket} isLast={idx === tickets.length - 1} />
             ))}

@@ -1,7 +1,5 @@
 import * as Haptics from 'expo-haptics';
 
-// Haptics are best-effort — unsupported on web and some devices, so never let
-// a failed buzz throw into the calling flow.
 function run(action: () => Promise<unknown>): void {
   action().catch(() => {});
 }

@@ -3,13 +3,14 @@ import { Text } from '@/components/ui/text';
 import { EventDetailSection } from '@/features/event-detail/components/event-detail-section';
 import { EventDetailTicketCard } from '@/features/event-detail/components/event-detail-ticket-card';
 import type { EventDetail } from '@/features/event-detail/types';
+import { getOnSaleTickets } from '@/lib/tickets';
 import { ChevronRight } from 'lucide-react-native';
 import { Pressable, View } from 'react-native';
 
 const INLINE_LIMIT = 3;
 
 export function EventDetailTickets({ event }: { event: EventDetail }) {
-  const onSale = event.tickets.filter((t) => t.status === 'on_sale');
+  const onSale = getOnSaleTickets(event.tickets);
   if (onSale.length === 0) return null;
 
   const visible = onSale.slice(0, INLINE_LIMIT);
@@ -36,7 +37,7 @@ function ViewAllRow({ count }: { count: number }) {
     <Pressable
       onPress={() => {
       }}
-      className="bg-card flex-row items-center justify-between rounded-2xl px-4 py-3">
+      className="bg-muted flex-row items-center justify-between rounded-2xl px-4 py-3">
       <Text className="text-foreground text-sm font-medium">View all {count} tickets</Text>
       <Icon as={ChevronRight} className="text-muted-foreground size-4" strokeWidth={2} />
     </Pressable>

@@ -19,12 +19,10 @@ export class ApiError extends Error {
     this.requestId = params.requestId;
   }
 
-  /** 422 — field validation failed; show these inline on the form, not in a toast. */
   get isValidation(): boolean {
     return this.status === 422;
   }
 
-  /** First message per field, ready to feed into react-hook-form's setError. */
   fieldErrors(): Record<string, string> {
     if (!this.errors) return {};
     return Object.fromEntries(

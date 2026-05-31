@@ -18,7 +18,7 @@ export function EventDetailTicketCard({ ticket, currency }: EventDetailTicketCar
 
   return (
     <View
-      className={`bg-card gap-2 rounded-2xl p-4 ${soldOut ? 'opacity-60' : ''}`}>
+      className={`bg-muted gap-2 rounded-2xl p-4 ${soldOut ? 'opacity-60' : ''}`}>
       <View className="flex-row items-start justify-between gap-3">
         <View className="min-w-0 flex-1">
           <Text className="text-foreground text-base font-semibold" numberOfLines={1}>

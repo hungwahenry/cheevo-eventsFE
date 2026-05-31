@@ -4,8 +4,6 @@ import { toast } from 'sonner-native';
 import { isApiError } from '@/lib/api/errors';
 
 export const queryClient = new QueryClient({
-  // Global mutation feedback: surface failures as rich-color toasts — except
-  // validation (422), which features render inline on the form.
   mutationCache: new MutationCache({
     onError: (error) => {
       if (isApiError(error) && error.isValidation) return;

@@ -15,6 +15,7 @@ import * as React from 'react';
 import { View } from 'react-native';
 import { toast } from 'sonner-native';
 import { THEME } from '@/lib/theme';
+import { getOnSaleTickets } from '@/lib/tickets';
 import { useUniwind } from 'uniwind';
 
 export type CheckoutSheetRef = {
@@ -39,7 +40,7 @@ export const CheckoutSheet = React.forwardRef<CheckoutSheetRef, CheckoutSheetPro
     const checkout = useCheckout();
 
     const tickets = React.useMemo(
-      () => event.tickets.filter((t) => t.status === 'on_sale'),
+      () => getOnSaleTickets(event.tickets),
       [event.tickets]
     );
 

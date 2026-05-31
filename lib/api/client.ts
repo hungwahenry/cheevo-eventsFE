@@ -7,10 +7,6 @@ import type { ApiErrorBody, ApiSuccess } from '@/lib/api/types';
 
 let onUnauthorized: (() => void) | null = null;
 
-/**
- * Register a handler invoked once on a 401 (after the token is cleared) — the
- * auth layer uses this to reset the session and route back to sign-in.
- */
 export function setUnauthorizedHandler(handler: (() => void) | null): void {
   onUnauthorized = handler;
 }
@@ -66,7 +62,6 @@ function normalizeError(error: AxiosError<ApiErrorBody>): ApiError {
   });
 }
 
-// Unwraps the { status, message, data } envelope down to `data` for clean call sites.
 async function request<T>(cfg: AxiosRequestConfig): Promise<T> {
   const response = await instance.request<ApiSuccess<T>>(cfg);
   return response.data.data;
