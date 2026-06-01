@@ -1,4 +1,4 @@
-import { EventDetailSection } from '@/features/event-detail/components/event-detail-section';
+import { EventDetailSection } from '@/features/event-detail/components/sections/event-detail-section';
 import type { EventDetail } from '@/features/event-detail/types';
 import { Image } from 'expo-image';
 import { ScrollView, View } from 'react-native';

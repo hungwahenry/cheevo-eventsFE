@@ -1,7 +1,7 @@
 import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
-import { EventDetailSection } from '@/features/event-detail/components/event-detail-section';
-import { EventDetailTicketCard } from '@/features/event-detail/components/event-detail-ticket-card';
+import { EventDetailSection } from '@/features/event-detail/components/sections/event-detail-section';
+import { EventDetailTicketCard } from '@/features/event-detail/components/tickets/event-detail-ticket-card';
 import type { EventDetail } from '@/features/event-detail/types';
 import { getOnSaleTickets } from '@/lib/tickets';
 import { ChevronRight } from 'lucide-react-native';

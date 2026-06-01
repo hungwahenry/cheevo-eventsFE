@@ -2,17 +2,17 @@ import { ActionsSheet } from '@/components/ui/actions-sheet';
 import { Icon } from '@/components/ui/icon';
 import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/ui/text';
-import { EventDetailAbout } from '@/features/event-detail/components/event-detail-about';
-import { EventDetailActionBar } from '@/features/event-detail/components/event-detail-action-bar';
-import { EventDetailFeatures } from '@/features/event-detail/components/event-detail-features';
+import { EventDetailActionBar } from '@/features/event-detail/components/action-bar';
+import { EventDetailFeatures } from '@/features/event-detail/components/features/event-detail-features';
 import { EventDetailFlyer } from '@/features/event-detail/components/event-detail-flyer';
-import { EventDetailGallery } from '@/features/event-detail/components/event-detail-gallery';
-import { EventDetailHeader } from '@/features/event-detail/components/event-detail-header';
-import { EventDetailOrganisation } from '@/features/event-detail/components/event-detail-organisation';
-import { EventDetailPinnedHeader } from '@/features/event-detail/components/event-detail-pinned-header';
-import { EventDetailPresaleBanner } from '@/features/event-detail/components/event-detail-presale-banner';
-import { EventDetailPromo } from '@/features/event-detail/components/event-detail-promo';
-import { EventDetailTickets } from '@/features/event-detail/components/event-detail-tickets';
+import { EventDetailHeader } from '@/features/event-detail/components/header/event-detail-header';
+import { EventDetailPinnedHeader } from '@/features/event-detail/components/header/event-detail-pinned-header';
+import { EventDetailAbout } from '@/features/event-detail/components/sections/event-detail-about';
+import { EventDetailGallery } from '@/features/event-detail/components/sections/event-detail-gallery';
+import { EventDetailOrganisation } from '@/features/event-detail/components/sections/event-detail-organisation';
+import { EventDetailPresaleBanner } from '@/features/event-detail/components/sections/event-detail-presale-banner';
+import { EventDetailPromo } from '@/features/event-detail/components/sections/event-detail-promo';
+import { EventDetailTickets } from '@/features/event-detail/components/tickets/event-detail-tickets';
 import {
   useEvent,
   useEventDetailActions,
