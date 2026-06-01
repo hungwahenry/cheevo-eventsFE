@@ -1,5 +1,7 @@
 import { api } from '@/lib/api';
 
+export * from './inbox';
+
 export function registerPushToken(token: string, deviceId: string | null): Promise<null> {
   return api.post<null>('/notifications/push-tokens', {
     token,

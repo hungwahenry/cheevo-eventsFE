@@ -1,9 +1,10 @@
 import { useCurrentUser } from '@/features/auth';
+import { useUnreadCount } from '@/features/notifications/hooks';
 import { THEME } from '@/lib/theme';
 import { Image } from 'expo-image';
 import { Tabs } from 'expo-router';
-import { House, Ticket, UserRound } from 'lucide-react-native';
-import { View } from 'react-native';
+import { Bell, House, Ticket, UserRound } from 'lucide-react-native';
+import { Text, View } from 'react-native';
 import { useUniwind } from 'uniwind';
 
 export default function TabsLayout() {
@@ -43,6 +44,15 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
+        name="inbox"
+        options={{
+          title: 'Inbox',
+          tabBarIcon: ({ color, size }) => (
+            <InboxTabIcon color={color} size={size} />
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="profile"
         options={{
           title: 'Profile',
@@ -52,6 +62,36 @@ export default function TabsLayout() {
         }}
       />
     </Tabs>
+  );
+}
+
+function InboxTabIcon({ color, size }: { color: string; size: number }) {
+  const { data } = useUnreadCount();
+  const unread = data?.unread ?? 0;
+
+  return (
+    <View>
+      <Bell color={color} size={size} strokeWidth={2} />
+      {unread > 0 ? (
+        <View
+          style={{
+            position: 'absolute',
+            top: -4,
+            right: -6,
+            minWidth: 16,
+            height: 16,
+            paddingHorizontal: 4,
+            borderRadius: 8,
+            backgroundColor: '#ef4444',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+          <Text style={{ color: 'white', fontSize: 10, fontWeight: '700' }}>
+            {unread > 99 ? '99+' : unread}
+          </Text>
+        </View>
+      ) : null}
+    </View>
   );
 }
 
