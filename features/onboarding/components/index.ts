@@ -1,10 +1,10 @@
-export { AvatarPicker } from './avatar-picker';
-export { BirthdayField } from './birthday-field';
-export { Field } from './field';
-export { GenderSelect } from './gender-select';
+export { AvatarPicker } from './form-fields/avatar-picker';
+export { BirthdayField } from './form-fields/birthday-field';
+export { Field } from './form-fields/field';
+export { GenderSelect } from './form-fields/gender-select';
+export { LocationPrompt } from './form-fields/location-prompt';
+export { UsernameField } from './form-fields/username-field';
 export { InterestGrid } from './interest-grid';
-export { LocationPrompt } from './location-prompt';
 export { OnboardingLayout } from './onboarding-layout';
 export { OptInRow } from './opt-in-row';
 export { SelectChip } from './select-chip';
-export { UsernameField } from './username-field';

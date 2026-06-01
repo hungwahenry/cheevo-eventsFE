@@ -1,10 +1,10 @@
 import { Button } from '@/components/ui/button';
 import { IconInput } from '@/components/ui/icon-input';
 import { Text } from '@/components/ui/text';
-import { AvatarPicker } from '@/features/onboarding/components/avatar-picker';
-import { Field } from '@/features/onboarding/components/field';
+import { AvatarPicker } from '@/features/onboarding/components/form-fields/avatar-picker';
+import { Field } from '@/features/onboarding/components/form-fields/field';
 import { OnboardingLayout } from '@/features/onboarding/components/onboarding-layout';
-import { UsernameField } from '@/features/onboarding/components/username-field';
+import { UsernameField } from '@/features/onboarding/components/form-fields/username-field';
 import { useSignOut } from '@/features/auth';
 import { useProfileStep } from '@/features/onboarding/hooks';
 import { UserRound } from 'lucide-react-native';

@@ -1,8 +1,8 @@
 import { Button } from '@/components/ui/button';
 import { Text } from '@/components/ui/text';
-import { BirthdayField } from '@/features/onboarding/components/birthday-field';
-import { Field } from '@/features/onboarding/components/field';
-import { GenderSelect } from '@/features/onboarding/components/gender-select';
+import { BirthdayField } from '@/features/onboarding/components/form-fields/birthday-field';
+import { Field } from '@/features/onboarding/components/form-fields/field';
+import { GenderSelect } from '@/features/onboarding/components/form-fields/gender-select';
 import { OnboardingLayout } from '@/features/onboarding/components/onboarding-layout';
 import { useAboutStep } from '@/features/onboarding/hooks';
 import { Cake } from 'lucide-react-native';

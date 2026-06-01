@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Text } from '@/components/ui/text';
-import { LocationPrompt } from '@/features/onboarding/components/location-prompt';
+import { LocationPrompt } from '@/features/onboarding/components/form-fields/location-prompt';
 import { OnboardingLayout } from '@/features/onboarding/components/onboarding-layout';
 import { useLocationStep } from '@/features/onboarding/hooks';
 import { MapPin } from 'lucide-react-native';
