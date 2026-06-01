@@ -67,12 +67,6 @@ export function CommentRow({ comment, onReply, onLongPress, compact }: CommentRo
           <Pressable onPress={() => onReply(comment)} hitSlop={6}>
             <Text className="text-muted-foreground text-xs font-medium">Reply</Text>
           </Pressable>
-          {comment.likes_count > 0 ? (
-            <Text className="text-muted-foreground text-xs">
-              {comment.likes_count.toLocaleString()}{' '}
-              {comment.likes_count === 1 ? 'like' : 'likes'}
-            </Text>
-          ) : null}
         </View>
       </View>
 

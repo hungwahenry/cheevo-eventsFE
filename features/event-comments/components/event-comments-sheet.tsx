@@ -1,7 +1,4 @@
-import {
-  CommentActionsSheet,
-  type CommentActionsSheetRef,
-} from '@/features/event-comments/components/comment-actions-sheet';
+import { ActionsSheet, type ActionsSheetRef } from '@/components/ui/actions-sheet';
 import { CommentCompose } from '@/features/event-comments/components/comment-compose';
 import { CommentsList } from '@/features/event-comments/components/comments-list';
 import { CommentsSheetHeader } from '@/features/event-comments/components/comments-sheet-header';
@@ -37,7 +34,7 @@ export const EventCommentsSheet = React.forwardRef<
   EventCommentsSheetProps
 >(function EventCommentsSheet({ eventId, commentsCount }, forwardedRef) {
   const sheetRef = React.useRef<BottomSheetModal>(null);
-  const actionsRef = React.useRef<CommentActionsSheetRef>(null);
+  const actionsRef = React.useRef<ActionsSheetRef>(null);
   const reportRef = React.useRef<ReportSheetRef>(null);
   const insets = useSafeAreaInsets();
   const { theme } = useUniwind();
@@ -124,7 +121,7 @@ export const EventCommentsSheet = React.forwardRef<
         </View>
       </BottomSheetModal>
 
-      <CommentActionsSheet ref={actionsRef} actions={actions} />
+      <ActionsSheet ref={actionsRef} actions={actions} />
 
       <ReportSheet ref={reportRef} />
 

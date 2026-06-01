@@ -75,7 +75,7 @@ function PresaleRsvpAction({
     <ActionBarWrapper>
       <View className="flex-1">
         <Text className="text-muted-foreground text-xs">RSVP to unlock</Text>
-        <Text className="text-foreground text-base font-semibold">Presale only</Text>
+        <Text className="text-foreground text-base font-semibold">Presale</Text>
       </View>
       <CommentsButton count={event.comments_count} onPress={onOpenComments} />
       <Button

@@ -1,4 +1,5 @@
 import { Icon } from '@/components/ui/icon';
+import { Text } from '@/components/ui/text';
 import { useToggleCommentLike } from '@/features/event-comments/hooks';
 import type { EventComment } from '@/features/event-comments/types';
 import { haptics } from '@/lib/haptics';
@@ -18,7 +19,7 @@ export function CommentLikeButton({ comment }: { comment: EventComment }) {
   };
 
   return (
-    <Pressable onPress={handlePress} hitSlop={8} className="pt-1">
+    <Pressable onPress={handlePress} hitSlop={8} className="items-center gap-0.5 pt-1">
       <Icon
         as={Heart}
         className={
@@ -29,6 +30,11 @@ export function CommentLikeButton({ comment }: { comment: EventComment }) {
         fill={comment.is_liked ? colors.destructive : 'transparent'}
         strokeWidth={2}
       />
+      {comment.likes_count > 0 ? (
+        <Text className="text-muted-foreground text-[10px] tabular-nums">
+          {comment.likes_count.toLocaleString()}
+        </Text>
+      ) : null}
     </Pressable>
   );
 }

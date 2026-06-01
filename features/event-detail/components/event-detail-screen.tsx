@@ -1,3 +1,6 @@
+import { ActionsSheet, type ActionsSheetRef } from '@/components/ui/actions-sheet';
+import { Icon } from '@/components/ui/icon';
+import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/ui/text';
 import { EventDetailAbout } from '@/features/event-detail/components/event-detail-about';
 import { EventDetailActionBar } from '@/features/event-detail/components/event-detail-action-bar';
@@ -10,11 +13,15 @@ import { EventDetailPinnedHeader } from '@/features/event-detail/components/even
 import { EventDetailPresaleBanner } from '@/features/event-detail/components/event-detail-presale-banner';
 import { EventDetailPromo } from '@/features/event-detail/components/event-detail-promo';
 import { EventDetailTickets } from '@/features/event-detail/components/event-detail-tickets';
-import { useEvent } from '@/features/event-detail/hooks';
+import { useEvent, useEventActions } from '@/features/event-detail/hooks';
+import type { EventDetail } from '@/features/event-detail/types';
+import { ReportSheet, type ReportSheetRef } from '@/features/reports';
 import { formatShortDateTime } from '@/lib/format/datetime';
 import { isEventInPresale } from '@/lib/presale';
-import { useWindowDimensions, View } from 'react-native';
-import { Spinner } from '@/components/ui/spinner';
+import { useRouter } from 'expo-router';
+import { ChevronLeft, MoreHorizontal } from 'lucide-react-native';
+import * as React from 'react';
+import { Pressable, useWindowDimensions, View } from 'react-native';
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
@@ -23,7 +30,21 @@ import Animated, {
 export function EventDetailScreen({ id }: { id: string }) {
   const { data: event, isLoading, error } = useEvent(id);
   const { width } = useWindowDimensions();
+  const router = useRouter();
   const scrollY = useSharedValue(0);
+
+  const actionsRef = React.useRef<ActionsSheetRef>(null);
+  const reportRef = React.useRef<ReportSheetRef>(null);
+
+  const handleReport = React.useCallback((e: EventDetail) => {
+    reportRef.current?.present({
+      type: 'event',
+      id: e.id,
+      noun: 'this event',
+    });
+  }, []);
+
+  const actions = useEventActions(event ?? null, { onReport: handleReport });
 
   const onScroll = useAnimatedScrollHandler({
     onScroll: (e) => {
@@ -88,7 +109,32 @@ export function EventDetailScreen({ id }: { id: string }) {
         endAt={pinEnd}
       />
 
+      <View className="pt-safe-offset-2 absolute top-0 left-3 z-30">
+        <Pressable
+          onPress={() => router.back()}
+          hitSlop={12}
+          accessibilityLabel="Back">
+          <View className="bg-foreground/15 size-9 items-center justify-center rounded-full">
+            <Icon as={ChevronLeft} className="text-foreground size-5" strokeWidth={2.25} />
+          </View>
+        </Pressable>
+      </View>
+
+      <View className="pt-safe-offset-2 absolute top-0 right-3 z-30">
+        <Pressable
+          onPress={() => actionsRef.current?.present()}
+          hitSlop={12}
+          accessibilityLabel="More options">
+          <View className="bg-foreground/15 size-9 items-center justify-center rounded-full">
+            <Icon as={MoreHorizontal} className="text-foreground size-5" strokeWidth={2.25} />
+          </View>
+        </Pressable>
+      </View>
+
       <EventDetailActionBar event={event} />
+
+      <ActionsSheet ref={actionsRef} actions={actions} />
+      <ReportSheet ref={reportRef} />
     </View>
   );
 }

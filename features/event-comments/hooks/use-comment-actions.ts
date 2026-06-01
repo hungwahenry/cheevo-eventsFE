@@ -1,4 +1,4 @@
-import type { CommentAction } from '@/features/event-comments/components/comment-actions-sheet';
+import type { ActionItem } from '@/components/ui/actions-sheet';
 import type { EventComment } from '@/features/event-comments/types';
 import { Copy, Flag, Share2, Trash2 } from 'lucide-react-native';
 import * as React from 'react';
@@ -9,10 +9,10 @@ export function useCommentActions(
     onDelete: (comment: EventComment) => void;
     onReport: (comment: EventComment) => void;
   }
-): CommentAction[] {
+): ActionItem[] {
   return React.useMemo(() => {
     if (!comment) return [];
-    const actions: CommentAction[] = [];
+    const actions: ActionItem[] = [];
 
     if (comment.body) {
       actions.push({
