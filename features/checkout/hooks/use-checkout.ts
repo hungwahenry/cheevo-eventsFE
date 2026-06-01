@@ -38,13 +38,9 @@ export function useCheckout() {
       return { order: verified, cancelled: false as const };
     },
     onError: (error) => {
-      if (isApiError(error)) {
-        if (error.isValidation) {
-          const first = Object.values(error.fieldErrors())[0];
-          toast.error(first ?? error.message);
-        } else {
-          toast.error(error.message);
-        }
+      if (isApiError(error) && error.isValidation) {
+        const first = Object.values(error.fieldErrors())[0];
+        toast.error(first ?? error.message);
       }
     },
   });
