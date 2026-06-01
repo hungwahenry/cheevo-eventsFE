@@ -18,32 +18,37 @@ export function EventDetailFeatureCard({ feature }: { feature: EventDetailFeatur
     <Pressable
       onPress={handlePress}
       disabled={!feature.link}
-      className="bg-muted aspect-square w-[200px] overflow-hidden rounded-2xl">
-      {feature.image_url ? (
-        <Image
-          source={{ uri: feature.image_url }}
-          style={fillParent}
-          contentFit="cover"
-          transition={150}
-        />
-      ) : null}
+      className="w-[200px] gap-2 active:opacity-80">
+      <View className="bg-muted aspect-square overflow-hidden rounded-2xl">
+        {feature.image_url ? (
+          <Image
+            source={{ uri: feature.image_url }}
+            style={fillParent}
+            contentFit="cover"
+            transition={150}
+          />
+        ) : null}
+      </View>
 
-      {feature.link ? (
-        <View className="absolute top-2 right-2 size-7 items-center justify-center rounded-full bg-black/55">
-          <Icon as={ExternalLink} className="size-3.5 text-white" strokeWidth={2.25} />
+      <View className="gap-0.5">
+        <View className="flex-row items-center gap-1.5">
+          <Text className="text-foreground text-sm font-semibold" numberOfLines={1}>
+            {feature.title}
+          </Text>
+          {feature.link ? (
+            <Icon
+              as={ExternalLink}
+              className="text-muted-foreground size-3.5"
+              strokeWidth={2}
+            />
+          ) : null}
         </View>
-      ) : null}
-
-      <View className="absolute inset-x-0 bottom-0 gap-1 bg-black/55 p-3">
-        <Text className="text-sm font-semibold text-white" numberOfLines={1}>
-          {feature.title}
-        </Text>
         {feature.description ? (
-          <Text className="text-xs text-white/85" numberOfLines={2}>
+          <Text className="text-muted-foreground text-xs" numberOfLines={2}>
             {feature.description}
           </Text>
         ) : null}
-        {time ? <Text className="text-xs text-white/75">{time}</Text> : null}
+        {time ? <Text className="text-muted-foreground text-xs">{time}</Text> : null}
       </View>
     </Pressable>
   );

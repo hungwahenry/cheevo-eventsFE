@@ -8,6 +8,7 @@ import { CommentsSheetHeader } from '@/features/event-comments/components/commen
 import { DeleteCommentDialog } from '@/features/event-comments/components/delete-comment-dialog';
 import { useCommentActions, useCommentsSheet } from '@/features/event-comments/hooks';
 import type { EventComment } from '@/features/event-comments/types';
+import { ReportSheet, type ReportSheetRef } from '@/features/reports';
 import { THEME } from '@/lib/theme';
 import {
   BottomSheetBackdrop,
@@ -16,6 +17,7 @@ import {
 } from '@gorhom/bottom-sheet';
 import * as React from 'react';
 import { View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useUniwind } from 'uniwind';
 
 export type EventCommentsSheetRef = {
@@ -36,13 +38,27 @@ export const EventCommentsSheet = React.forwardRef<
 >(function EventCommentsSheet({ eventId, commentsCount }, forwardedRef) {
   const sheetRef = React.useRef<BottomSheetModal>(null);
   const actionsRef = React.useRef<CommentActionsSheetRef>(null);
+  const reportRef = React.useRef<ReportSheetRef>(null);
+  const insets = useSafeAreaInsets();
   const { theme } = useUniwind();
   const colors = THEME[theme === 'dark' ? 'dark' : 'light'];
 
   const sheet = useCommentsSheet(eventId);
 
+  const handleReport = React.useCallback(
+    (comment: EventComment) => {
+      reportRef.current?.present({
+        type: 'event_comment',
+        id: comment.id,
+        noun: comment.parent_id !== null ? 'this reply' : 'this comment',
+      });
+    },
+    []
+  );
+
   const actions = useCommentActions(sheet.actionsTarget, {
     onDelete: sheet.requestDelete,
+    onReport: handleReport,
   });
 
   React.useImperativeHandle(forwardedRef, () => ({
@@ -77,6 +93,7 @@ export const EventCommentsSheet = React.forwardRef<
         snapPoints={SNAP_POINTS}
         enableDynamicSizing={false}
         stackBehavior="push"
+        topInset={insets.top}
         onChange={(index) => sheet.setIsOpen(index >= 0)}
         onDismiss={sheet.handleClose}
         backdropComponent={renderBackdrop}
@@ -108,6 +125,8 @@ export const EventCommentsSheet = React.forwardRef<
       </BottomSheetModal>
 
       <CommentActionsSheet ref={actionsRef} actions={actions} />
+
+      <ReportSheet ref={reportRef} />
 
       <DeleteCommentDialog
         open={sheet.pendingDelete !== null}

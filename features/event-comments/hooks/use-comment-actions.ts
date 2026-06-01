@@ -5,7 +5,10 @@ import * as React from 'react';
 
 export function useCommentActions(
   comment: EventComment | null,
-  handlers: { onDelete: (comment: EventComment) => void }
+  handlers: {
+    onDelete: (comment: EventComment) => void;
+    onReport: (comment: EventComment) => void;
+  }
 ): CommentAction[] {
   return React.useMemo(() => {
     if (!comment) return [];
@@ -37,7 +40,7 @@ export function useCommentActions(
         label: 'Report',
         icon: Flag,
         destructive: true,
-        onPress: () => {},
+        onPress: () => handlers.onReport(comment),
       });
     }
 

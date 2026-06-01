@@ -52,6 +52,7 @@ export const Sheet = React.forwardRef<SheetRef, SheetProps>(function Sheet(
       ref={ref}
       snapPoints={snapPoints}
       enableDynamicSizing={snapPoints === undefined}
+      topInset={insets.top}
       onDismiss={onDismiss}
       backdropComponent={renderBackdrop}
       backgroundStyle={{ backgroundColor: colors.background }}

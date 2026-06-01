@@ -13,6 +13,7 @@ import {
 import { Ticket } from 'lucide-react-native';
 import * as React from 'react';
 import { View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { toast } from 'sonner-native';
 import { THEME } from '@/lib/theme';
 import { getOnSaleTickets } from '@/lib/tickets';
@@ -32,6 +33,7 @@ const SNAP_POINTS = ['90%'];
 export const CheckoutSheet = React.forwardRef<CheckoutSheetRef, CheckoutSheetProps>(
   function CheckoutSheet({ event }, forwardedRef) {
     const ref = React.useRef<BottomSheetModal>(null);
+    const insets = useSafeAreaInsets();
     const { theme } = useUniwind();
     const colors = THEME[theme === 'dark' ? 'dark' : 'light'];
 
@@ -90,6 +92,7 @@ export const CheckoutSheet = React.forwardRef<CheckoutSheetRef, CheckoutSheetPro
         snapPoints={SNAP_POINTS}
         enableDynamicSizing={false}
         stackBehavior="push"
+        topInset={insets.top}
         backdropComponent={renderBackdrop}
         keyboardBehavior="interactive"
         backgroundStyle={{ backgroundColor: colors.background }}

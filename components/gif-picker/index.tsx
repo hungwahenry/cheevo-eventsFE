@@ -10,6 +10,7 @@ import {
 } from '@gorhom/bottom-sheet';
 import * as React from 'react';
 import { View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useUniwind } from 'uniwind';
 
 export type GifPickerRef = {
@@ -26,6 +27,7 @@ const SNAP_POINTS = ['90%'];
 export const GifPicker = React.forwardRef<GifPickerRef, GifPickerProps>(
   function GifPicker({ onSelect }, forwardedRef) {
     const ref = React.useRef<BottomSheetModal>(null);
+    const insets = useSafeAreaInsets();
     const { theme } = useUniwind();
     const colors = THEME[theme === 'dark' ? 'dark' : 'light'];
 
@@ -84,6 +86,7 @@ export const GifPicker = React.forwardRef<GifPickerRef, GifPickerProps>(
         snapPoints={SNAP_POINTS}
         enableDynamicSizing={false}
         stackBehavior="push"
+        topInset={insets.top}
         onDismiss={handleClear}
         backdropComponent={renderBackdrop}
         keyboardBehavior="interactive"

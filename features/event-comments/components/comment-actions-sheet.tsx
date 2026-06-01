@@ -59,6 +59,7 @@ export const CommentActionsSheet = React.forwardRef<
     <BottomSheetModal
       ref={ref}
       stackBehavior="push"
+      topInset={insets.top}
       backdropComponent={renderBackdrop}
       backgroundStyle={{ backgroundColor: colors.background }}
       handleIndicatorStyle={{ backgroundColor: colors.mutedForeground }}>
