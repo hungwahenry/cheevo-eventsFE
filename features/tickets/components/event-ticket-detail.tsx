@@ -1,3 +1,4 @@
+import { EventFlyer } from '@/components/event-flyer';
 import { EmptyState } from '@/components/ui/empty-state';
 import { Icon } from '@/components/ui/icon';
 import { Spinner } from '@/components/ui/spinner';
@@ -7,7 +8,6 @@ import { TicketScreenHeader } from '@/features/tickets/components/ticket-screen-
 import { useMyTickets } from '@/features/tickets/hooks';
 import { formatShortDateTime } from '@/lib/format/datetime';
 import { selectTicketsForEvent } from '@/lib/tickets';
-import { Image } from 'expo-image';
 import { Link } from 'expo-router';
 import { CalendarIcon, MapPinIcon, TicketIcon } from 'lucide-react-native';
 import { useMemo } from 'react';
@@ -54,13 +54,11 @@ export function EventTicketDetail({ eventId }: { eventId: string }) {
         <Link href={`/event/${event.id}`} asChild>
           <Pressable className="bg-muted mx-4 flex-row items-center gap-3 rounded-xl p-3 active:opacity-80">
             <View className="bg-muted h-20 w-16 overflow-hidden rounded-md">
-              {event.flyer_url ? (
-                <Image
-                  source={{ uri: event.flyer_url }}
-                  className="size-full"
-                  contentFit="cover"
-                />
-              ) : null}
+              <EventFlyer
+                flyerUrl={event.flyer_url}
+                flyerType={event.flyer_type}
+                variant="thumbnail"
+              />
             </View>
             <View className="min-w-0 flex-1 gap-1">
               <Text className="text-foreground text-base font-semibold" numberOfLines={2}>

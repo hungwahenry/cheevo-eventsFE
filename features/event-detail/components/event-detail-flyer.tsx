@@ -1,6 +1,5 @@
-import { EventCardVideo } from '@/features/feed/components/event-card-video';
+import { EventFlyer } from '@/components/event-flyer';
 import type { EventDetail } from '@/features/event-detail/types';
-import { Image } from 'expo-image';
 import { View, useWindowDimensions } from 'react-native';
 
 export function EventDetailFlyer({ event }: { event: EventDetail }) {
@@ -9,18 +8,7 @@ export function EventDetailFlyer({ event }: { event: EventDetail }) {
 
   return (
     <View className="bg-muted w-full" style={{ height }}>
-      {event.flyer_url ? (
-        event.flyer_type === 'video' ? (
-          <EventCardVideo url={event.flyer_url} isVisible={true} />
-        ) : (
-          <Image
-            source={{ uri: event.flyer_url }}
-            className="size-full"
-            contentFit="cover"
-            transition={200}
-          />
-        )
-      ) : null}
+      <EventFlyer flyerUrl={event.flyer_url} flyerType={event.flyer_type} />
     </View>
   );
 }
