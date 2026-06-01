@@ -54,6 +54,7 @@ export type EventDetail = {
   id: string;
   title: string;
   slug: string;
+  status: 'published' | 'past';
   description: string | null;
   starts_at: string | null;
   ends_at: string | null;

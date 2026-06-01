@@ -1,5 +1,6 @@
 import { ActionsSheet } from '@/components/ui/actions-sheet';
 import { SheetHeader } from '@/components/ui/sheet-header';
+import { Text } from '@/components/ui/text';
 import { CommentCompose } from '@/features/event-comments/components/compose/comment-compose';
 import { CommentsList } from '@/features/event-comments/components/list/comments-list';
 import { DeleteCommentDialog } from '@/features/event-comments/components/actions/delete-comment-dialog';
@@ -24,6 +25,7 @@ export type EventCommentsSheetRef = {
 type EventCommentsSheetProps = {
   eventId: string;
   commentsCount: number;
+  canCompose?: boolean;
 };
 
 const SNAP_POINTS = ['90%'];
@@ -31,7 +33,7 @@ const SNAP_POINTS = ['90%'];
 export const EventCommentsSheet = React.forwardRef<
   EventCommentsSheetRef,
   EventCommentsSheetProps
->(function EventCommentsSheet({ eventId, commentsCount }, forwardedRef) {
+>(function EventCommentsSheet({ eventId, commentsCount, canCompose = true }, forwardedRef) {
   const sheetRef = React.useRef<BottomSheetModal>(null);
   const insets = useSafeAreaInsets();
   const { theme } = useUniwind();
@@ -92,12 +94,16 @@ export const EventCommentsSheet = React.forwardRef<
             onLongPress={handleLongPress}
           />
 
-          <CommentCompose
-            eventId={eventId}
-            replyTarget={sheet.replyTarget}
-            onCancelReply={sheet.clearReply}
-            onSent={sheet.clearReply}
-          />
+          {canCompose ? (
+            <CommentCompose
+              eventId={eventId}
+              replyTarget={sheet.replyTarget}
+              onCancelReply={sheet.clearReply}
+              onSent={sheet.clearReply}
+            />
+          ) : (
+            <ComposeClosed />
+          )}
         </View>
       </BottomSheetModal>
 
@@ -113,3 +119,13 @@ export const EventCommentsSheet = React.forwardRef<
     </>
   );
 });
+
+function ComposeClosed() {
+  return (
+    <View className="border-border pb-safe-offset-3 border-t px-5 pt-3">
+      <Text className="text-muted-foreground text-center text-xs">
+        Comments are closed for past events.
+      </Text>
+    </View>
+  );
+}

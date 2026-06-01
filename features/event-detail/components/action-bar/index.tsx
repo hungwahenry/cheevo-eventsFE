@@ -8,6 +8,7 @@ import {
 } from '@/features/event-comments';
 import { ActionBarWrapper } from '@/features/event-detail/components/action-bar/action-bar-wrapper';
 import { CommentsButton } from '@/features/event-detail/components/action-bar/comments-button';
+import { PastEventAction } from '@/features/event-detail/components/action-bar/past-event-action';
 import { PresaleRsvpAction } from '@/features/event-detail/components/action-bar/presale-rsvp-action';
 import { RsvpAction } from '@/features/event-detail/components/action-bar/rsvp-action';
 import type { EventDetail } from '@/features/event-detail/types';
@@ -20,6 +21,7 @@ import { View } from 'react-native';
 export function EventDetailActionBar({ event }: { event: EventDetail }) {
   const commentsRef = React.useRef<EventCommentsSheetRef>(null);
   const checkoutRef = React.useRef<CheckoutSheetRef>(null);
+  const isPast = event.status === 'past';
   const hasTickets = event.tickets_count > 0;
   const inPresale = isEventInPresale(event.presale_until);
   const presaleBlocks = inPresale && !event.is_rsvped;
@@ -29,7 +31,12 @@ export function EventDetailActionBar({ event }: { event: EventDetail }) {
 
   return (
     <>
-      {hasTickets && presaleBlocks ? (
+      {isPast ? (
+        <PastEventAction
+          commentsCount={event.comments_count}
+          onOpenComments={openComments}
+        />
+      ) : hasTickets && presaleBlocks ? (
         <PresaleRsvpAction event={event} onOpenComments={openComments} />
       ) : hasTickets ? (
         <ActionBarWrapper>
@@ -53,9 +60,10 @@ export function EventDetailActionBar({ event }: { event: EventDetail }) {
         ref={commentsRef}
         eventId={event.id}
         commentsCount={event.comments_count}
+        canCompose={!isPast}
       />
 
-      {hasTickets && !presaleBlocks ? (
+      {!isPast && hasTickets && !presaleBlocks ? (
         <CheckoutSheet ref={checkoutRef} event={event} />
       ) : null}
     </>

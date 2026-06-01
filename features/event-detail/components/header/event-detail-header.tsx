@@ -1,5 +1,6 @@
 import { Badge } from '@/components/ui/badge';
 import { Icon } from '@/components/ui/icon';
+import { StatusPill } from '@/components/ui/status-pill';
 import { Text } from '@/components/ui/text';
 import type { EventDetail } from '@/features/event-detail/types';
 import { formatShortDateTime } from '@/lib/format/datetime';
@@ -13,7 +14,16 @@ export function EventDetailHeader({ event }: { event: EventDetail }) {
 
   return (
     <View className="gap-3">
-      <Text className="text-foreground text-2xl leading-tight font-bold">{event.title}</Text>
+      <View className="flex-row items-start gap-2">
+        <Text className="text-foreground flex-1 text-2xl leading-tight font-bold">
+          {event.title}
+        </Text>
+        {event.status === 'past' ? (
+          <View className="mt-1">
+            <StatusPill label="Ended" tone="muted" size="sm" />
+          </View>
+        ) : null}
+      </View>
 
       <View className="flex-row flex-wrap items-center gap-x-4 gap-y-2">
         {when ? (
