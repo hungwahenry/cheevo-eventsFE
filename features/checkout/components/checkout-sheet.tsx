@@ -1,5 +1,5 @@
 import { EmptyState } from '@/components/ui/empty-state';
-import { Text } from '@/components/ui/text';
+import { SheetHeader } from '@/components/ui/sheet-header';
 import { CheckoutSummary } from '@/features/checkout/components/checkout-summary';
 import { TicketPickerRow } from '@/features/checkout/components/ticket-picker-row';
 import { useCart, useCheckout, useQuote } from '@/features/checkout/hooks';
@@ -98,12 +98,7 @@ export const CheckoutSheet = React.forwardRef<CheckoutSheetRef, CheckoutSheetPro
         backgroundStyle={{ backgroundColor: colors.background }}
         handleIndicatorStyle={{ backgroundColor: colors.mutedForeground }}>
         <View className="flex-1">
-          <View className="border-border border-b px-5 pb-3">
-            <Text className="text-foreground text-base font-semibold">Get tickets</Text>
-            <Text className="text-muted-foreground mt-0.5 text-xs">
-              Pick how many of each to get.
-            </Text>
-          </View>
+          <SheetHeader title="Get tickets" subtitle="Pick how many of each to get." />
 
           <CheckoutTicketList
             tickets={tickets}

@@ -1,6 +1,6 @@
+import { SheetHeader } from '@/components/ui/sheet-header';
 import { ReportDetailsField } from '@/features/reports/components/report-details-field';
 import { ReportReasonsList } from '@/features/reports/components/report-reasons-list';
-import { ReportSheetHeader } from '@/features/reports/components/report-sheet-header';
 import { ReportSubmitFooter } from '@/features/reports/components/report-submit-footer';
 import { useReportSheet } from '@/features/reports/hooks/use-report-sheet';
 import type { ReportTarget } from '@/features/reports/types';
@@ -63,7 +63,10 @@ export const ReportSheet = React.forwardRef<ReportSheetRef>(function ReportSheet
       backdropComponent={renderBackdrop}
       backgroundStyle={{ backgroundColor: colors.background }}
       handleIndicatorStyle={{ backgroundColor: colors.mutedForeground }}>
-      <ReportSheetHeader noun={sheet.target?.noun ?? 'this'} />
+      <SheetHeader
+        title={`Report ${sheet.target?.noun ?? 'this'}`}
+        subtitle="Reports are private. Our team reviews each one."
+      />
 
       <BottomSheetScrollView contentContainerStyle={{ paddingBottom: insets.bottom + 96 }}>
         <ReportReasonsList

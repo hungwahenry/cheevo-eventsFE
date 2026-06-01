@@ -1,7 +1,7 @@
 import { ActionsSheet, type ActionsSheetRef } from '@/components/ui/actions-sheet';
+import { SheetHeader } from '@/components/ui/sheet-header';
 import { CommentCompose } from '@/features/event-comments/components/comment-compose';
 import { CommentsList } from '@/features/event-comments/components/comments-list';
-import { CommentsSheetHeader } from '@/features/event-comments/components/comments-sheet-header';
 import { DeleteCommentDialog } from '@/features/event-comments/components/delete-comment-dialog';
 import { useCommentActions, useCommentsSheet } from '@/features/event-comments/hooks';
 import type { EventComment } from '@/features/event-comments/types';
@@ -100,7 +100,13 @@ export const EventCommentsSheet = React.forwardRef<
         backgroundStyle={{ backgroundColor: colors.background }}
         handleIndicatorStyle={{ backgroundColor: colors.mutedForeground }}>
         <View className="flex-1">
-          <CommentsSheetHeader count={commentsCount} />
+          <SheetHeader
+            title={
+              commentsCount > 0
+                ? `${commentsCount.toLocaleString()} ${commentsCount === 1 ? 'comment' : 'comments'}`
+                : 'Comments'
+            }
+          />
 
           <CommentsList
             items={sheet.items}
