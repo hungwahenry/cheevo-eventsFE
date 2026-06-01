@@ -1,11 +1,10 @@
-import { ActionsSheet, type ActionsSheetRef } from '@/components/ui/actions-sheet';
+import { ActionsSheet } from '@/components/ui/actions-sheet';
 import { SheetHeader } from '@/components/ui/sheet-header';
 import { CommentCompose } from '@/features/event-comments/components/comment-compose';
 import { CommentsList } from '@/features/event-comments/components/comments-list';
 import { DeleteCommentDialog } from '@/features/event-comments/components/delete-comment-dialog';
-import { useCommentActions, useCommentsSheet } from '@/features/event-comments/hooks';
-import type { EventComment } from '@/features/event-comments/types';
-import { ReportSheet, type ReportSheetRef } from '@/features/reports';
+import { useCommentsSheet, useCommentsSheetActions } from '@/features/event-comments/hooks';
+import { ReportSheet } from '@/features/reports';
 import { THEME } from '@/lib/theme';
 import {
   BottomSheetBackdrop,
@@ -34,29 +33,12 @@ export const EventCommentsSheet = React.forwardRef<
   EventCommentsSheetProps
 >(function EventCommentsSheet({ eventId, commentsCount }, forwardedRef) {
   const sheetRef = React.useRef<BottomSheetModal>(null);
-  const actionsRef = React.useRef<ActionsSheetRef>(null);
-  const reportRef = React.useRef<ReportSheetRef>(null);
   const insets = useSafeAreaInsets();
   const { theme } = useUniwind();
   const colors = THEME[theme === 'dark' ? 'dark' : 'light'];
 
   const sheet = useCommentsSheet(eventId);
-
-  const handleReport = React.useCallback(
-    (comment: EventComment) => {
-      reportRef.current?.present({
-        type: 'event_comment',
-        id: comment.id,
-        noun: comment.parent_id !== null ? 'this reply' : 'this comment',
-      });
-    },
-    []
-  );
-
-  const actions = useCommentActions(sheet.actionsTarget, {
-    onDelete: sheet.requestDelete,
-    onReport: handleReport,
-  });
+  const { actionsRef, reportRef, actions, handleLongPress } = useCommentsSheetActions(sheet);
 
   React.useImperativeHandle(forwardedRef, () => ({
     present: () => sheetRef.current?.present(),
@@ -73,14 +55,6 @@ export const EventCommentsSheet = React.forwardRef<
       />
     ),
     []
-  );
-
-  const handleLongPress = React.useCallback(
-    (comment: EventComment) => {
-      sheet.openActions(comment);
-      actionsRef.current?.present();
-    },
-    [sheet]
   );
 
   return (

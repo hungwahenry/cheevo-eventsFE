@@ -2,6 +2,7 @@ export { useCommentActions } from './use-comment-actions';
 export { useCommentCompose } from './use-comment-compose';
 export { useCommentReplies, repliesKey } from './use-comment-replies';
 export { useCommentsSheet } from './use-comments-sheet';
+export { useCommentsSheetActions } from './use-comments-sheet-actions';
 export { useCreateComment } from './use-create-comment';
 export { useDeleteComment } from './use-delete-comment';
 export { useEventComments, commentsKey } from './use-event-comments';

@@ -1,7 +1,8 @@
 import { GifPickerGrid } from '@/components/gif-picker/gif-picker-grid';
 import { GifPickerSearch } from '@/components/gif-picker/gif-picker-search';
+import { useGifPickerState } from '@/components/gif-picker/use-gif-picker-state';
 import { Text } from '@/components/ui/text';
-import { useGiphySearch, type GiphyGif, type PickedGif } from '@/lib/giphy';
+import { type PickedGif } from '@/lib/giphy';
 import { THEME } from '@/lib/theme';
 import {
   BottomSheetBackdrop,
@@ -31,21 +32,10 @@ export const GifPicker = React.forwardRef<GifPickerRef, GifPickerProps>(
     const { theme } = useUniwind();
     const colors = THEME[theme === 'dark' ? 'dark' : 'light'];
 
-    const [query, setQuery] = React.useState('');
-    const {
-      data,
-      fetchNextPage,
-      hasNextPage,
-      isFetchingNextPage,
-      isLoading,
-      isError,
-      debouncedQuery,
-    } = useGiphySearch(query);
-
-    const items = React.useMemo(
-      () => data?.pages.flatMap((p) => p.items) ?? [],
-      [data]
-    );
+    const gif = useGifPickerState({
+      onSelect,
+      onDone: () => ref.current?.dismiss(),
+    });
 
     React.useImperativeHandle(forwardedRef, () => ({
       present: () => ref.current?.present(),
@@ -64,22 +54,6 @@ export const GifPicker = React.forwardRef<GifPickerRef, GifPickerProps>(
       []
     );
 
-    const handleSelect = React.useCallback(
-      (gif: GiphyGif) => {
-        onSelect({
-          id: gif.id,
-          url: gif.url,
-          width: gif.width,
-          height: gif.height,
-        });
-        setQuery('');
-        ref.current?.dismiss();
-      },
-      [onSelect]
-    );
-
-    const handleClear = React.useCallback(() => setQuery(''), []);
-
     return (
       <BottomSheetModal
         ref={ref}
@@ -87,23 +61,27 @@ export const GifPicker = React.forwardRef<GifPickerRef, GifPickerProps>(
         enableDynamicSizing={false}
         stackBehavior="push"
         topInset={insets.top}
-        onDismiss={handleClear}
+        onDismiss={gif.handleClear}
         backdropComponent={renderBackdrop}
         keyboardBehavior="interactive"
         keyboardBlurBehavior="restore"
         backgroundStyle={{ backgroundColor: colors.background }}
         handleIndicatorStyle={{ backgroundColor: colors.mutedForeground }}>
         <View className="flex-1">
-          <GifPickerSearch value={query} onChange={setQuery} onClear={handleClear} />
+          <GifPickerSearch
+            value={gif.query}
+            onChange={gif.setQuery}
+            onClear={gif.handleClear}
+          />
           <GifPickerGrid
-            items={items}
-            query={debouncedQuery}
-            isLoading={isLoading}
-            isError={isError}
-            hasNextPage={hasNextPage}
-            isFetchingNextPage={isFetchingNextPage}
-            onFetchNextPage={fetchNextPage}
-            onSelect={handleSelect}
+            items={gif.items}
+            query={gif.debouncedQuery}
+            isLoading={gif.isLoading}
+            isError={gif.isError}
+            hasNextPage={gif.hasNextPage}
+            isFetchingNextPage={gif.isFetchingNextPage}
+            onFetchNextPage={gif.fetchNextPage}
+            onSelect={gif.handleSelect}
           />
           <View className="border-border items-center border-t px-4 py-2">
             <Text className="text-muted-foreground text-[10px] tracking-wider uppercase">
