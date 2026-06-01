@@ -18,7 +18,7 @@ export function EventDetailGallery({ event }: { event: EventDetail }) {
             className="bg-muted size-[140px] overflow-hidden rounded-xl">
             <Image
               source={{ uri: image.url }}
-              className="size-full"
+              style={{ width: '100%', height: '100%' }}
               contentFit="cover"
               transition={150}
             />

@@ -136,7 +136,7 @@ function GifPreview({
         style={{ width: 80, aspectRatio: aspect }}>
         <Image
           source={{ uri: gif.url }}
-          className="size-full"
+          style={{ width: '100%', height: '100%' }}
           contentFit="cover"
         />
         <Pressable

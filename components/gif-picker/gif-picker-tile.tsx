@@ -22,7 +22,7 @@ export const GifPickerTile = React.memo(function GifPickerTile({
       style={{ aspectRatio: aspect }}>
       <Image
         source={{ uri: gif.preview_url }}
-        className="size-full"
+        style={{ width: '100%', height: '100%' }}
         contentFit="cover"
         transition={120}
         recyclingKey={gif.id}

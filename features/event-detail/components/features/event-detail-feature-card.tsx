@@ -21,7 +21,7 @@ export function EventDetailFeatureCard({ feature }: { feature: EventDetailFeatur
         {feature.image_url ? (
           <Image
             source={{ uri: feature.image_url }}
-            className="size-full"
+            style={{ width: '100%', height: '100%' }}
             contentFit="cover"
             transition={150}
           />
