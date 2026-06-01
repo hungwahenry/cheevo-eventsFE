@@ -1,5 +1,5 @@
 import { listReplies } from '@/features/event-comments/api';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
 
 export const repliesKey = (eventId: string, commentId: string) =>
   ['event-comment-replies', eventId, commentId] as const;
@@ -10,6 +10,7 @@ export function useCommentReplies(eventId: string, commentId: string, enabled: b
     queryFn: ({ pageParam }) => listReplies(eventId, commentId, pageParam),
     initialPageParam: 1,
     getNextPageParam: (last) => (last.page < last.last_page ? last.page + 1 : undefined),
+    placeholderData: keepPreviousData,
     enabled: enabled && Boolean(commentId),
   });
 }

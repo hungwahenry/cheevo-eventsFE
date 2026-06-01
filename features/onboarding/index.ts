@@ -1,7 +1,5 @@
-export * from './types';
-export * from './validation';
-export * from './stores';
-export * from './hooks';
-export * from './components';
-export * from './steps';
-export * as onboardingApi from './api';
+export { AboutStep } from './steps/about-step';
+export { InterestsStep } from './steps/interests-step';
+export { LocationStep } from './steps/location-step';
+export { ProfileStep } from './steps/profile-step';
+export { useOnboardingStore } from './stores';

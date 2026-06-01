@@ -1,5 +1,5 @@
 import { getMyTicket, listMyTickets } from '@/features/tickets/api';
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useInfiniteQuery, useQuery } from '@tanstack/react-query';
 
 export const myTicketsKey = ['my-tickets'] as const;
 export const myTicketKey = (id: string) => ['my-ticket', id] as const;
@@ -10,6 +10,7 @@ export function useMyTickets() {
     queryFn: ({ pageParam }) => listMyTickets(pageParam),
     initialPageParam: 1,
     getNextPageParam: (last) => (last.page < last.last_page ? last.page + 1 : undefined),
+    placeholderData: keepPreviousData,
   });
 }
 
