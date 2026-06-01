@@ -5,7 +5,7 @@ import { EventCard } from '@/features/feed/components/event-card';
 import { useFeed } from '@/features/feed/hooks';
 import type { FeedEvent } from '@/features/feed/types';
 import { useCallback, useMemo, useRef, useState } from 'react';
-import { FlatList, View, type ViewToken } from 'react-native';
+import { FlatList, RefreshControl, View, type ViewToken } from 'react-native';
 
 const VIEWABILITY_CONFIG = { itemVisiblePercentThreshold: 65 };
 
@@ -16,7 +16,15 @@ function CardSeparator() {
 }
 
 export function FeedList() {
-  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } = useFeed();
+  const {
+    data,
+    isLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isRefetching,
+    refetch,
+  } = useFeed();
 
   const events: FeedEvent[] = useMemo(
     () => data?.pages.flatMap((page) => page.items) ?? [],
@@ -67,6 +75,12 @@ export function FeedList() {
           onEndReachedThreshold={0.6}
           viewabilityConfig={VIEWABILITY_CONFIG}
           onViewableItemsChanged={onViewableItemsChanged}
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefetching && !isFetchingNextPage}
+              onRefresh={refetch}
+            />
+          }
         />
       )}
     </Screen>

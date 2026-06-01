@@ -23,11 +23,11 @@ import { formatShortDateTime } from '@/lib/format/datetime';
 import { isEventInPresale } from '@/lib/presale';
 import { useRouter } from 'expo-router';
 import { ChevronLeft, MoreHorizontal } from 'lucide-react-native';
-import { Pressable, View } from 'react-native';
+import { Pressable, RefreshControl, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
 export function EventDetailScreen({ id }: { id: string }) {
-  const { data: event, isLoading, error } = useEvent(id);
+  const { data: event, isLoading, error, isRefetching, refetch } = useEvent(id);
   const router = useRouter();
   const { scrollY, onScroll, pinStart, pinEnd } = useEventDetailScroll();
   const { actionsRef, reportRef, actions } = useEventDetailActions(event ?? null);
@@ -59,7 +59,8 @@ export function EventDetailScreen({ id }: { id: string }) {
         onScroll={onScroll}
         scrollEventThrottle={16}
         showsVerticalScrollIndicator={false}
-        contentContainerClassName="pb-32">
+        contentContainerClassName="pb-32"
+        refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} />}>
         <EventDetailFlyer event={event} />
         <View className="gap-6 px-5 pt-6">
           <EventDetailHeader event={event} />
