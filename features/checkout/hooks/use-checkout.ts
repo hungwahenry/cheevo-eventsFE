@@ -1,6 +1,7 @@
 import { createOrder } from '@/features/checkout/api';
 import type { CartItem } from '@/features/checkout/types';
 import { cancelOrder, verifyOrder } from '@/features/orders/api';
+import type { Order } from '@/features/orders/types';
 import { isApiError } from '@/lib/api';
 import { useMutation } from '@tanstack/react-query';
 import * as Linking from 'expo-linking';
@@ -12,7 +13,14 @@ type StartCheckoutArgs = {
   items: CartItem[];
 };
 
-export function useCheckout() {
+type Options = {
+  /** Called when the user closes the payment browser without paying. */
+  onCancelled?: () => void;
+  /** Called after a successful payment (paid or pending capture). */
+  onConfirmed?: (order: Order) => void;
+};
+
+export function useCheckout(options: Options = {}) {
   return useMutation({
     mutationFn: async ({ eventId, items }: StartCheckoutArgs) => {
       const callbackUrl = Linking.createURL('/orders/return');
@@ -36,6 +44,20 @@ export function useCheckout() {
       const verified = await verifyOrder(order.id, lookupKey);
 
       return { order: verified, cancelled: false as const };
+    },
+    onSuccess: ({ order, cancelled }) => {
+      if (cancelled) {
+        toast.info('Checkout cancelled.');
+        options.onCancelled?.();
+        return;
+      }
+
+      if (order.status === 'paid') {
+        toast.success('Tickets confirmed!');
+      } else {
+        toast.success("Payment received — we'll confirm shortly.");
+      }
+      options.onConfirmed?.(order);
     },
     onError: (error) => {
       if (isApiError(error) && error.isValidation) {

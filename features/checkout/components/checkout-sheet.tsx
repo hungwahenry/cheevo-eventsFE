@@ -14,7 +14,6 @@ import { Ticket } from 'lucide-react-native';
 import * as React from 'react';
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { toast } from 'sonner-native';
 import { THEME } from '@/lib/theme';
 import { getOnSaleTickets } from '@/lib/tickets';
 import { useUniwind } from 'uniwind';
@@ -39,7 +38,12 @@ export const CheckoutSheet = React.forwardRef<CheckoutSheetRef, CheckoutSheetPro
 
     const cart = useCart();
     const quote = useQuote(event.id, cart.items);
-    const checkout = useCheckout();
+    const checkout = useCheckout({
+      onConfirmed: () => {
+        ref.current?.dismiss();
+        cart.clear();
+      },
+    });
 
     const tickets = React.useMemo(
       () => getOnSaleTickets(event.tickets),
@@ -65,25 +69,7 @@ export const CheckoutSheet = React.forwardRef<CheckoutSheetRef, CheckoutSheetPro
 
     const handleCheckout = () => {
       if (cart.items.length === 0) return;
-
-      checkout.mutate(
-        { eventId: event.id, items: cart.items },
-        {
-          onSuccess: ({ order, cancelled }) => {
-            if (cancelled) {
-              toast.info('Checkout cancelled.');
-              return;
-            }
-            ref.current?.dismiss();
-            cart.clear();
-            if (order.status === 'paid') {
-              toast.success('Tickets confirmed!');
-            } else {
-              toast.success("Payment received — we'll confirm shortly.");
-            }
-          },
-        }
-      );
+      checkout.mutate({ eventId: event.id, items: cart.items });
     };
 
     return (

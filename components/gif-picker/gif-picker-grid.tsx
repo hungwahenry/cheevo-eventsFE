@@ -1,4 +1,5 @@
 import { GifPickerTile } from '@/components/gif-picker/gif-picker-tile';
+import { splitMasonry } from '@/components/gif-picker/masonry';
 import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/ui/text';
 import type { GiphyGif } from '@/lib/giphy';
@@ -87,26 +88,6 @@ function MasonryColumn({
       ))}
     </View>
   );
-}
-
-function splitMasonry(items: GiphyGif[]): [GiphyGif[], GiphyGif[]] {
-  const left: GiphyGif[] = [];
-  const right: GiphyGif[] = [];
-  let leftHeight = 0;
-  let rightHeight = 0;
-
-  for (const gif of items) {
-    const aspect = gif.height > 0 ? gif.width / gif.height : 1;
-    const unitHeight = 1 / aspect;
-    if (leftHeight <= rightHeight) {
-      left.push(gif);
-      leftHeight += unitHeight;
-    } else {
-      right.push(gif);
-      rightHeight += unitHeight;
-    }
-  }
-  return [left, right];
 }
 
 function GridEmpty({
