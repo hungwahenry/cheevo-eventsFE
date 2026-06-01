@@ -61,3 +61,12 @@ export function formatDateRange(
   if (starts) return `from ${formatShortDate(starts)}`;
   return `until ${formatShortDate(ends!)}`;
 }
+
+/** Y-m-d → long-form display (e.g. "2000-03-14" → "March 14, 2000"). */
+export function formatBirthday(ymd: string): string {
+  return new Date(`${ymd}T00:00:00`).toLocaleDateString(undefined, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}

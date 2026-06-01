@@ -2,18 +2,11 @@ import { Button } from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
 import { Sheet, type SheetRef } from '@/components/ui/sheet';
 import { Text } from '@/components/ui/text';
+import { formatBirthday } from '@/lib/format/datetime';
 import DateTimePicker, { type DateTimePickerEvent } from '@react-native-community/datetimepicker';
 import { Calendar } from 'lucide-react-native';
 import { useRef, useState } from 'react';
 import { Platform, Pressable, View } from 'react-native';
-
-function formatBirthday(value: string): string {
-  return new Date(`${value}T00:00:00`).toLocaleDateString(undefined, {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-}
 
 function toYmd(date: Date): string {
   return date.toISOString().slice(0, 10);
