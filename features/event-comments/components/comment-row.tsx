@@ -1,4 +1,5 @@
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
+import { StatusPill } from '@/components/ui/status-pill';
 import { Text } from '@/components/ui/text';
 import { CommentGifView } from '@/features/event-comments/components/comment-gif';
 import { CommentLikeButton } from '@/features/event-comments/components/comment-like-button';
@@ -42,7 +43,9 @@ export function CommentRow({ comment, onReply, onLongPress, compact }: CommentRo
           {handle ? (
             <Text className="text-muted-foreground text-xs">{handle}</Text>
           ) : null}
-          {comment.is_going ? <GoingPill /> : null}
+          {comment.is_going ? (
+            <StatusPill label="Going" tone="primary" size="sm" />
+          ) : null}
           {time ? (
             <Text className="text-muted-foreground text-xs">· {time}</Text>
           ) : null}
@@ -75,12 +78,3 @@ export function CommentRow({ comment, onReply, onLongPress, compact }: CommentRo
   );
 }
 
-function GoingPill() {
-  return (
-    <View className="bg-primary/10 rounded-full px-1.5 py-px">
-      <Text className="text-primary text-[10px] font-semibold uppercase tracking-wider">
-        Going
-      </Text>
-    </View>
-  );
-}

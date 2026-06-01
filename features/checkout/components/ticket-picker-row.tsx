@@ -1,3 +1,4 @@
+import { StatusPill } from '@/components/ui/status-pill';
 import { Text } from '@/components/ui/text';
 import { QuantityStepper } from '@/features/checkout/components/quantity-stepper';
 import type { EventDetailTicket } from '@/features/event-detail/types';
@@ -37,9 +38,9 @@ export function TicketPickerRow({
               {ticket.name}
             </Text>
             {soldOut ? (
-              <UrgencyChip label="Sold out" tone="muted" />
+              <StatusPill label="Sold out" tone="muted" size="sm" />
             ) : remaining !== null && remaining <= 10 ? (
-              <UrgencyChip label={`${remaining} left`} tone="warn" />
+              <StatusPill label={`${remaining} left`} tone="destructive" size="sm" />
             ) : null}
           </View>
           {meta ? (
@@ -72,22 +73,6 @@ export function TicketPickerRow({
           max={soldOut ? 0 : maxPurchasable}
         />
       </View>
-    </View>
-  );
-}
-
-function UrgencyChip({ label, tone }: { label: string; tone: 'warn' | 'muted' }) {
-  return (
-    <View
-      className={`rounded-full px-2 py-0.5 ${
-        tone === 'warn' ? 'bg-destructive/10' : 'bg-muted'
-      }`}>
-      <Text
-        className={`text-[10px] font-semibold uppercase tracking-wider ${
-          tone === 'warn' ? 'text-destructive' : 'text-muted-foreground'
-        }`}>
-        {label}
-      </Text>
     </View>
   );
 }
