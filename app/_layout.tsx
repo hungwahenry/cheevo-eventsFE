@@ -1,6 +1,7 @@
 import '@/global.css';
 
 import { useAuthBootstrap } from '@/features/auth';
+import { usePushTokenRegistration } from '@/features/notifications';
 import { queryClient } from '@/lib/query';
 import { NAV_THEME } from '@/lib/theme';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
@@ -25,6 +26,7 @@ export default function RootLayout() {
   const { theme } = useUniwind();
 
   useAuthBootstrap();
+  usePushTokenRegistration();
 
   useEffect(() => {
     Uniwind.setTheme('system');
