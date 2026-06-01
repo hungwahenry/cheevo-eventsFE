@@ -1,6 +1,6 @@
 import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
-import { CommentRow } from '@/features/event-comments/components/comment-row';
+import { CommentRow } from '@/features/event-comments/components/list/comment-row';
 import { useCommentReplies } from '@/features/event-comments/hooks';
 import type { EventComment } from '@/features/event-comments/types';
 import { ChevronDown, ChevronUp } from 'lucide-react-native';

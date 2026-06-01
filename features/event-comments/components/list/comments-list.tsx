@@ -1,7 +1,7 @@
 import { EmptyState } from '@/components/ui/empty-state';
 import { Spinner } from '@/components/ui/spinner';
-import { CommentReplies } from '@/features/event-comments/components/comment-replies';
-import { CommentRow } from '@/features/event-comments/components/comment-row';
+import { CommentReplies } from '@/features/event-comments/components/list/comment-replies';
+import { CommentRow } from '@/features/event-comments/components/list/comment-row';
 import type { EventComment } from '@/features/event-comments/types';
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import { MessageCircle } from 'lucide-react-native';

@@ -1,8 +1,8 @@
 import { ActionsSheet } from '@/components/ui/actions-sheet';
 import { SheetHeader } from '@/components/ui/sheet-header';
-import { CommentCompose } from '@/features/event-comments/components/comment-compose';
-import { CommentsList } from '@/features/event-comments/components/comments-list';
-import { DeleteCommentDialog } from '@/features/event-comments/components/delete-comment-dialog';
+import { CommentCompose } from '@/features/event-comments/components/compose/comment-compose';
+import { CommentsList } from '@/features/event-comments/components/list/comments-list';
+import { DeleteCommentDialog } from '@/features/event-comments/components/actions/delete-comment-dialog';
 import { useCommentsSheet, useCommentsSheetActions } from '@/features/event-comments/hooks';
 import { ReportSheet } from '@/features/reports';
 import { THEME } from '@/lib/theme';

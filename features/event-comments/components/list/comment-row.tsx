@@ -1,8 +1,8 @@
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { StatusPill } from '@/components/ui/status-pill';
 import { Text } from '@/components/ui/text';
-import { CommentGifView } from '@/features/event-comments/components/comment-gif';
-import { CommentLikeButton } from '@/features/event-comments/components/comment-like-button';
+import { CommentGifView } from '@/features/event-comments/components/compose/comment-gif';
+import { CommentLikeButton } from '@/features/event-comments/components/actions/comment-like-button';
 import type { EventComment } from '@/features/event-comments/types';
 import { formatRelativeShort } from '@/lib/format/datetime';
 import { haptics } from '@/lib/haptics';
