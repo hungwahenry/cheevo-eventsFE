@@ -4,8 +4,6 @@ import { VideoView } from 'expo-video';
 import { Volume2, VolumeX } from 'lucide-react-native';
 import { Pressable, View } from 'react-native';
 
-const fillParent = { width: '100%', height: '100%' } as const;
-
 type EventCardVideoProps = {
   url: string;
   isVisible: boolean;
@@ -18,7 +16,7 @@ export function EventCardVideo({ url, isVisible }: EventCardVideoProps) {
     <Pressable onPress={toggleMuted} className="flex-1">
       <VideoView
         player={player}
-        style={fillParent}
+        style={{ width: '100%', height: '100%' }}
         contentFit="cover"
         nativeControls={false}
         allowsPictureInPicture={false}

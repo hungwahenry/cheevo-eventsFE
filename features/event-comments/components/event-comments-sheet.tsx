@@ -99,7 +99,7 @@ export const EventCommentsSheet = React.forwardRef<
         android_keyboardInputMode="adjustResize"
         backgroundStyle={{ backgroundColor: colors.background }}
         handleIndicatorStyle={{ backgroundColor: colors.mutedForeground }}>
-        <View style={{ flex: 1 }}>
+        <View className="flex-1">
           <CommentsSheetHeader count={commentsCount} />
 
           <CommentsList

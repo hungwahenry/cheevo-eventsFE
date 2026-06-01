@@ -3,8 +3,6 @@ import type { EventDetail } from '@/features/event-detail/types';
 import { Image } from 'expo-image';
 import { View, useWindowDimensions } from 'react-native';
 
-const fillParent = { width: '100%', height: '100%' } as const;
-
 export function EventDetailFlyer({ event }: { event: EventDetail }) {
   const { width } = useWindowDimensions();
   const height = (width * 5) / 4;
@@ -17,7 +15,7 @@ export function EventDetailFlyer({ event }: { event: EventDetail }) {
         ) : (
           <Image
             source={{ uri: event.flyer_url }}
-            style={fillParent}
+            className="size-full"
             contentFit="cover"
             transition={200}
           />

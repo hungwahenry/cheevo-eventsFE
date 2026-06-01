@@ -3,8 +3,6 @@ import type { FeedEvent } from '@/features/feed/types';
 import { Image } from 'expo-image';
 import { View } from 'react-native';
 
-const fillParent = { width: '100%', height: '100%' } as const;
-
 type EventCardFlyerProps = {
   event: FeedEvent;
   isVisible: boolean;
@@ -19,7 +17,7 @@ export function EventCardFlyer({ event, isVisible }: EventCardFlyerProps) {
         ) : (
           <Image
             source={{ uri: event.flyer_url }}
-            style={fillParent}
+            className="size-full"
             contentFit="cover"
             transition={200}
           />

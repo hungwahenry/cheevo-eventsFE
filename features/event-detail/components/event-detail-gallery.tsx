@@ -3,8 +3,6 @@ import type { EventDetail } from '@/features/event-detail/types';
 import { Image } from 'expo-image';
 import { ScrollView, View } from 'react-native';
 
-const fillParent = { width: '100%', height: '100%' } as const;
-
 export function EventDetailGallery({ event }: { event: EventDetail }) {
   if (event.images.length === 0) return null;
 
@@ -17,11 +15,10 @@ export function EventDetailGallery({ event }: { event: EventDetail }) {
         {event.images.map((image) => (
           <View
             key={image.id}
-            className="bg-muted overflow-hidden rounded-xl"
-            style={{ width: 140, height: 140 }}>
+            className="bg-muted size-[140px] overflow-hidden rounded-xl">
             <Image
               source={{ uri: image.url }}
-              style={fillParent}
+              className="size-full"
               contentFit="cover"
               transition={150}
             />

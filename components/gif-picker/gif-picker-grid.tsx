@@ -22,7 +22,6 @@ type GifPickerGridProps = {
   onSelect: (gif: GiphyGif) => void;
 };
 
-const COLUMN_GAP = 8;
 const END_THRESHOLD = 240;
 
 export function GifPickerGrid({
@@ -60,9 +59,7 @@ export function GifPickerGrid({
       keyboardShouldPersistTaps="handled"
       keyboardDismissMode="on-drag"
       contentContainerStyle={{ paddingBottom: insets.bottom + 16 }}>
-      <View
-        className="flex-row px-4"
-        style={{ gap: COLUMN_GAP }}>
+      <View className="flex-row gap-2 px-4">
         <MasonryColumn items={left} onSelect={onSelect} />
         <MasonryColumn items={right} onSelect={onSelect} />
       </View>
@@ -84,7 +81,7 @@ function MasonryColumn({
   onSelect: (gif: GiphyGif) => void;
 }) {
   return (
-    <View className="flex-1" style={{ gap: COLUMN_GAP }}>
+    <View className="flex-1 gap-2">
       {items.map((gif) => (
         <GifPickerTile key={gif.id} gif={gif} onPress={onSelect} />
       ))}

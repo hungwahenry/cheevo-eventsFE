@@ -44,7 +44,7 @@ export function TicketsList() {
 
   return (
     <FlatList
-      style={{ flex: 1 }}
+      className="flex-1"
       data={groups}
       keyExtractor={(g) => g.event.id}
       renderItem={({ item }) => (

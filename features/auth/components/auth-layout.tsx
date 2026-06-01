@@ -10,11 +10,8 @@ type AuthLayoutProps = {
   title: string;
   subtitle?: string;
   showBack?: boolean;
-  /** Optional content (brand/illustration) shown in the space above the header. */
   media?: React.ReactNode;
-  /** Inputs / form fields. */
   children?: React.ReactNode;
-  /** Bottom call-to-action(s). */
   footer: React.ReactNode;
 };
 
@@ -45,7 +42,7 @@ export function AuthLayout({
         bottomOffset={90}
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
-        style={{ flex: 1 }}
+        className="flex-1"
         contentContainerStyle={{ flexGrow: 1, justifyContent: 'flex-end' }}>
         <View className="flex-1 items-center justify-center px-6">{media}</View>
 

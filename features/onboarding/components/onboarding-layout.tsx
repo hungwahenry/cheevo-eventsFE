@@ -50,7 +50,7 @@ export function OnboardingLayout({
         bottomOffset={90}
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
-        style={{ flex: 1 }}
+        className="flex-1"
         contentContainerStyle={{ flexGrow: 1, justifyContent: 'flex-end' }}>
         <View className="gap-5 px-6 pt-3 pb-2">
           <View className="bg-primary/10 size-14 items-center justify-center rounded-2xl">

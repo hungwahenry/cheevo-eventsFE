@@ -6,8 +6,6 @@ import { Image } from 'expo-image';
 import { ExternalLink } from 'lucide-react-native';
 import { Linking, Pressable, View } from 'react-native';
 
-const fillParent = { width: '100%', height: '100%' } as const;
-
 export function EventDetailFeatureCard({ feature }: { feature: EventDetailFeature }) {
   const time = formatTimeRange(feature.starts_at, feature.ends_at);
   const handlePress = feature.link
@@ -23,7 +21,7 @@ export function EventDetailFeatureCard({ feature }: { feature: EventDetailFeatur
         {feature.image_url ? (
           <Image
             source={{ uri: feature.image_url }}
-            style={fillParent}
+            className="size-full"
             contentFit="cover"
             transition={150}
           />

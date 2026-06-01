@@ -93,7 +93,7 @@ export const GifPicker = React.forwardRef<GifPickerRef, GifPickerProps>(
         keyboardBlurBehavior="restore"
         backgroundStyle={{ backgroundColor: colors.background }}
         handleIndicatorStyle={{ backgroundColor: colors.mutedForeground }}>
-        <View style={{ flex: 1 }}>
+        <View className="flex-1">
           <GifPickerSearch value={query} onChange={setQuery} onClear={handleClear} />
           <GifPickerGrid
             items={items}

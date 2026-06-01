@@ -13,7 +13,7 @@ export function CommentGifView({ gif }: { gif: PickedGif }) {
       style={{ width: MAX_WIDTH, aspectRatio: aspect }}>
       <Image
         source={{ uri: gif.url }}
-        style={{ width: '100%', height: '100%' }}
+        className="size-full"
         contentFit="cover"
         transition={120}
       />

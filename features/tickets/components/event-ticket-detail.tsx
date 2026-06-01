@@ -57,7 +57,7 @@ export function EventTicketDetail({ eventId }: { eventId: string }) {
               {event.flyer_url ? (
                 <Image
                   source={{ uri: event.flyer_url }}
-                  style={{ width: '100%', height: '100%' }}
+                  className="size-full"
                   contentFit="cover"
                 />
               ) : null}
