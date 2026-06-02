@@ -1,9 +1,9 @@
-import { Text } from '@/components/ui/text';
+import { Icon } from '@/components/ui/icon';
+import { THEME } from '@/lib/theme';
 import { router } from 'expo-router';
 import { ChevronLeftIcon, SearchIcon, XIcon } from 'lucide-react-native';
 import { Pressable, TextInput, View } from 'react-native';
 import { useUniwind } from 'uniwind';
-import { THEME } from '@/lib/theme';
 
 type Props = {
   value: string;
@@ -21,11 +21,11 @@ export function SearchBar({ value, onChange, placeholder, autoFocus, showBack }:
     <View className="flex-row items-center gap-2 px-3 pt-2 pb-3">
       {showBack ? (
         <Pressable onPress={() => router.back()} hitSlop={10} className="size-9 items-center justify-center">
-          <ChevronLeftIcon size={22} color={palette.foreground} strokeWidth={2.25} />
+          <Icon as={ChevronLeftIcon} className="text-foreground" size={22} strokeWidth={2.25} />
         </Pressable>
       ) : null}
       <View className="bg-muted flex-1 flex-row items-center gap-2 rounded-full px-3">
-        <SearchIcon size={18} color={palette.mutedForeground} strokeWidth={2} />
+        <Icon as={SearchIcon} className="text-muted-foreground" size={18} strokeWidth={2} />
         <TextInput
           value={value}
           onChangeText={onChange}
@@ -39,7 +39,7 @@ export function SearchBar({ value, onChange, placeholder, autoFocus, showBack }:
         />
         {value.length > 0 ? (
           <Pressable onPress={() => onChange('')} hitSlop={8}>
-            <XIcon size={16} color={palette.mutedForeground} strokeWidth={2.25} />
+            <Icon as={XIcon} className="text-muted-foreground" size={16} strokeWidth={2.25} />
           </Pressable>
         ) : null}
       </View>

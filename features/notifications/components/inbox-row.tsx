@@ -1,8 +1,15 @@
+import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import type { InboxNotification } from '@/features/notifications/api';
-import { BellIcon, MailOpenIcon, MessageCircleIcon, PartyPopperIcon, TicketIcon } from 'lucide-react-native';
+import {
+  BellIcon,
+  MailOpenIcon,
+  MessageCircleIcon,
+  PartyPopperIcon,
+  TicketIcon,
+  type LucideIcon,
+} from 'lucide-react-native';
 import { Pressable, View } from 'react-native';
-import { useUniwind } from 'uniwind';
 
 type Props = {
   notification: InboxNotification;
@@ -10,7 +17,7 @@ type Props = {
 };
 
 type Presentation = {
-  Icon: typeof BellIcon;
+  icon: LucideIcon;
   title: string;
   body: string;
 };
@@ -21,31 +28,31 @@ function presentationFor(notification: InboxNotification): Presentation {
   switch (notification.type) {
     case 'attendee.order_paid':
       return {
-        Icon: TicketIcon,
+        icon: TicketIcon,
         title: 'Your tickets are ready',
         body: data.event_title ? `Order for ${data.event_title} confirmed.` : 'Order confirmed.',
       };
     case 'attendee.event_starting_soon':
       return {
-        Icon: PartyPopperIcon,
+        icon: PartyPopperIcon,
         title: `Tomorrow: ${data.event_title ?? 'your event'}`,
         body: 'See you there.',
       };
     case 'attendee.new_event_from_subscription':
       return {
-        Icon: BellIcon,
+        icon: BellIcon,
         title: data.organisation_name ? `New from ${data.organisation_name}` : 'New event',
         body: data.event_title ?? '',
       };
     case 'attendee.comment_reply':
       return {
-        Icon: MessageCircleIcon,
+        icon: MessageCircleIcon,
         title: 'New reply on your comment',
         body: data.preview ?? '',
       };
     default:
       return {
-        Icon: MailOpenIcon,
+        icon: MailOpenIcon,
         title: 'Notification',
         body: '',
       };
@@ -66,16 +73,15 @@ function relativeTime(iso: string): string {
 }
 
 export function InboxRow({ notification, onPress }: Props) {
-  const { theme } = useUniwind();
-  const { Icon, title, body } = presentationFor(notification);
+  const { icon, title, body } = presentationFor(notification);
   const isUnread = notification.read_at === null;
 
   return (
     <Pressable
       onPress={onPress}
       className={`flex-row gap-3 px-5 py-4 ${isUnread ? 'bg-card' : ''}`}>
-      <View className="size-10 items-center justify-center rounded-full bg-muted">
-        <Icon size={18} color={theme === 'dark' ? '#fff' : '#111'} strokeWidth={2} />
+      <View className="bg-muted size-10 items-center justify-center rounded-full">
+        <Icon as={icon} className="text-foreground" size={18} strokeWidth={2} />
       </View>
 
       <View className="flex-1 gap-1">

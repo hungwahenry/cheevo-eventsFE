@@ -1,13 +1,11 @@
 import { Screen } from '@/components/screen';
-import { Button } from '@/components/ui/button';
 import { Icon } from '@/components/ui/icon';
-import { Text } from '@/components/ui/text';
 import { useCurrentUser, useSignOut } from '@/features/auth';
 import { ProfileHeader } from '@/features/users/components/profile-header';
 import { ProfileInterests } from '@/features/users/components/profile-interests';
-import { ProfileOrganisations } from '@/features/users/components/profile-organisations';
+import { ProfileTabs } from '@/features/users/components/profile-tabs';
 import { LogOutIcon } from 'lucide-react-native';
-import { Pressable, ScrollView, View } from 'react-native';
+import { Pressable, ScrollView } from 'react-native';
 
 export default function ProfileScreen() {
   const user = useCurrentUser();
@@ -41,13 +39,7 @@ export default function ProfileScreen() {
       <ScrollView contentContainerStyle={{ paddingBottom: 32 }}>
         <ProfileHeader user={publicShape} />
         <ProfileInterests userId={user.id} />
-        <ProfileOrganisations userId={user.id} />
-
-        <View className="px-5 pt-6">
-          <Button variant="outline" onPress={signOut} disabled={isPending}>
-            <Text>Log out</Text>
-          </Button>
-        </View>
+        <ProfileTabs userId={user.id} viewpoint="self" />
       </ScrollView>
     </Screen>
   );

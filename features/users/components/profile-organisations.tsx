@@ -1,5 +1,8 @@
+import { EmptyState } from '@/components/ui/empty-state';
+import { Icon } from '@/components/ui/icon';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Text } from '@/components/ui/text';
+import type { ProfileViewpoint } from '@/features/users/components/profile-tabs';
 import { useUserOrganisations } from '@/features/users/hooks';
 import type { UserOrganisation } from '@/features/users/types';
 import { Image } from 'expo-image';
@@ -9,10 +12,11 @@ import { Pressable, View } from 'react-native';
 
 type Props = {
   userId: string;
+  viewpoint: ProfileViewpoint;
   onOpen?: (org: UserOrganisation) => void;
 };
 
-export function ProfileOrganisations({ userId, onOpen }: Props) {
+export function ProfileOrganisations({ userId, viewpoint, onOpen }: Props) {
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useUserOrganisations(userId);
 
@@ -20,8 +24,7 @@ export function ProfileOrganisations({ userId, onOpen }: Props) {
 
   if (isLoading) {
     return (
-      <View className="gap-3 px-5 py-4">
-        <SectionTitle>Following</SectionTitle>
+      <View className="gap-3 pt-1">
         {Array.from({ length: 3 }).map((_, i) => (
           <Skeleton key={i} className="h-14 w-full rounded-xl" />
         ))}
@@ -29,16 +32,26 @@ export function ProfileOrganisations({ userId, onOpen }: Props) {
     );
   }
 
-  if (items.length === 0) return null;
+  if (items.length === 0) {
+    return (
+      <EmptyState
+        icon={Building2Icon}
+        title="Not following anyone"
+        description={
+          viewpoint === 'self'
+            ? 'Organisations you follow will show up here.'
+            : 'Organisations they follow will show up here.'
+        }
+        className="py-8"
+      />
+    );
+  }
 
   return (
-    <View className="gap-2 px-5 py-4">
-      <SectionTitle>Following</SectionTitle>
-      <View className="gap-2">
-        {items.map((org) => (
-          <OrgRow key={org.id} org={org} onPress={onOpen ? () => onOpen(org) : undefined} />
-        ))}
-      </View>
+    <View className="gap-3 py-2">
+      {items.map((org) => (
+        <OrgRow key={org.id} org={org} onPress={onOpen ? () => onOpen(org) : undefined} />
+      ))}
       {hasNextPage ? (
         <Pressable
           onPress={() => fetchNextPage()}
@@ -67,7 +80,7 @@ function OrgRow({ org, onPress }: { org: UserOrganisation; onPress?: () => void 
             contentFit="cover"
           />
         ) : (
-          <Building2Icon size={18} className="text-muted-foreground" strokeWidth={2} />
+          <Icon as={Building2Icon} className="text-muted-foreground" size={18} strokeWidth={2} />
         )}
       </View>
       <View className="min-w-0 flex-1">
@@ -80,13 +93,5 @@ function OrgRow({ org, onPress }: { org: UserOrganisation; onPress?: () => void 
         </Text>
       </View>
     </Pressable>
-  );
-}
-
-function SectionTitle({ children }: { children: string }) {
-  return (
-    <Text className="text-muted-foreground text-xs font-semibold tracking-wide uppercase">
-      {children}
-    </Text>
   );
 }

@@ -1,9 +1,10 @@
 import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { StatusPill } from '@/components/ui/status-pill';
 import { Text } from '@/components/ui/text';
-import { CommentGifView } from '@/features/event-comments/components/compose/comment-gif';
 import { CommentLikeButton } from '@/features/event-comments/components/actions/comment-like-button';
+import { CommentGifView } from '@/features/event-comments/components/compose/comment-gif';
 import type { EventComment } from '@/features/event-comments/types';
+import { useOpenUserProfile } from '@/features/users/hooks';
 import { formatRelativeShort } from '@/lib/format/datetime';
 import { haptics } from '@/lib/haptics';
 import { Pressable, View } from 'react-native';
@@ -16,10 +17,12 @@ type CommentRowProps = {
 };
 
 export function CommentRow({ comment, onReply, onLongPress, compact }: CommentRowProps) {
+  const openUser = useOpenUserProfile();
+
   const time = formatRelativeShort(comment.created_at);
   const displayName = comment.author.display_name ?? comment.author.username ?? 'Someone';
   const handle = comment.author.username ? `@${comment.author.username}` : null;
-  const replyingTo = comment.parent_id !== null ? comment.mentioned_users[0]?.username : null;
+  const replyingTo = comment.parent_id !== null ? comment.mentioned_users[0] : null;
 
   const handleLongPress = () => {
     haptics.impact();
@@ -31,30 +34,38 @@ export function CommentRow({ comment, onReply, onLongPress, compact }: CommentRo
       onLongPress={handleLongPress}
       delayLongPress={350}
       className="flex-row gap-3 py-2.5">
-      <Avatar alt={`${displayName} avatar`} className={compact ? 'size-7' : 'size-9'}>
-        {comment.author.avatar_url ? (
-          <AvatarImage source={{ uri: comment.author.avatar_url }} />
-        ) : null}
-      </Avatar>
+      <Pressable onPress={() => openUser(comment.author.id)} hitSlop={4}>
+        <Avatar alt={`${displayName} avatar`} className={compact ? 'size-7' : 'size-9'}>
+          {comment.author.avatar_url ? (
+            <AvatarImage source={{ uri: comment.author.avatar_url }} />
+          ) : null}
+        </Avatar>
+      </Pressable>
 
       <View className="flex-1">
-        <View className="flex-row flex-wrap items-center gap-x-1.5 gap-y-0.5">
-          <Text className="text-foreground text-sm font-semibold">{displayName}</Text>
-          {handle ? (
-            <Text className="text-muted-foreground text-xs">{handle}</Text>
-          ) : null}
-          {comment.is_going ? (
-            <StatusPill label="Going" tone="primary" size="sm" />
-          ) : null}
-          {time ? (
-            <Text className="text-muted-foreground text-xs">· {time}</Text>
-          ) : null}
-        </View>
+        <Pressable onPress={() => openUser(comment.author.id)} hitSlop={4}>
+          <View className="flex-row flex-wrap items-center gap-x-1.5 gap-y-0.5">
+            <Text className="text-foreground text-sm font-semibold">{displayName}</Text>
+            {handle ? (
+              <Text className="text-muted-foreground text-xs">{handle}</Text>
+            ) : null}
+            {comment.is_going ? (
+              <StatusPill label="Going" tone="primary" size="sm" />
+            ) : null}
+            {time ? (
+              <Text className="text-muted-foreground text-xs">· {time}</Text>
+            ) : null}
+          </View>
+        </Pressable>
 
-        {replyingTo ? (
+        {replyingTo?.username ? (
           <Text className="text-muted-foreground mt-0.5 text-xs">
             Replying to{' '}
-            <Text className="text-primary text-xs font-medium">@{replyingTo}</Text>
+            <Text
+              onPress={() => openUser(replyingTo.id)}
+              className="text-primary text-xs font-medium">
+              @{replyingTo.username}
+            </Text>
           </Text>
         ) : null}
 
@@ -77,4 +88,3 @@ export function CommentRow({ comment, onReply, onLongPress, compact }: CommentRo
     </Pressable>
   );
 }
-

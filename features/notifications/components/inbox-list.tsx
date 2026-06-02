@@ -4,6 +4,7 @@ import { Text } from '@/components/ui/text';
 import type { InboxNotification } from '@/features/notifications/api';
 import { InboxRow } from '@/features/notifications/components/inbox-row';
 import { useInboxNotifications, useMarkRead } from '@/features/notifications/hooks';
+import { useManualRefresh } from '@/lib/use-manual-refresh';
 import { BellIcon, WifiOffIcon } from 'lucide-react-native';
 import { useMemo } from 'react';
 import { FlatList, RefreshControl, View } from 'react-native';
@@ -20,9 +21,9 @@ export function InboxList({ onOpen }: Props) {
     hasNextPage,
     isFetchingNextPage,
     isLoading,
-    isRefetching,
     refetch,
   } = useInboxNotifications();
+  const { refreshing, onRefresh } = useManualRefresh(refetch);
   const markRead = useMarkRead();
 
   const items = useMemo(() => data?.pages.flatMap((p) => p.items) ?? [], [data]);
@@ -72,7 +73,7 @@ export function InboxList({ onOpen }: Props) {
         />
       )}
       refreshControl={
-        <RefreshControl refreshing={isRefetching && !isFetchingNextPage} onRefresh={refetch} />
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
       onEndReachedThreshold={0.4}
       onEndReached={() => {

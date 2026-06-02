@@ -12,7 +12,7 @@ export function ProfileInterests({ userId }: Props) {
 
   if (isLoading) {
     return (
-      <View className="gap-2 px-5 py-4">
+      <View className="gap-2 px-5 pb-3">
         <SectionTitle>Interests</SectionTitle>
         <View className="flex-row flex-wrap gap-2">
           <Skeleton className="h-7 w-16 rounded-full" />
@@ -26,9 +26,9 @@ export function ProfileInterests({ userId }: Props) {
   if (!data || data.length === 0) return null;
 
   return (
-    <View className="gap-3 px-5 py-4">
+    <View className="gap-2 px-5 pb-3">
       <SectionTitle>Interests</SectionTitle>
-      <View className="flex-row flex-wrap gap-2">
+      <View className="flex-row flex-wrap gap-1.5">
         {data.map((interest) => (
           <View key={interest.id} className="bg-muted rounded-full px-3 py-1.5">
             <Text className="text-foreground text-xs font-medium">{interest.name}</Text>

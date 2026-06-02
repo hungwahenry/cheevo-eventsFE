@@ -1,3 +1,4 @@
+import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import { ChevronRightIcon } from 'lucide-react-native';
 import { Pressable, View } from 'react-native';
@@ -19,7 +20,7 @@ export function SearchSection({ title, hasMore, onSeeAll, children }: Props) {
         {hasMore ? (
           <Pressable onPress={onSeeAll} hitSlop={10} className="flex-row items-center gap-0.5">
             <Text className="text-primary text-xs font-semibold">See all</Text>
-            <ChevronRightIcon size={14} className="text-primary" strokeWidth={2.4} />
+            <Icon as={ChevronRightIcon} className="text-primary" size={14} strokeWidth={2.4} />
           </Pressable>
         ) : null}
       </View>

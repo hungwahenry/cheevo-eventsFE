@@ -1,3 +1,4 @@
+import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import type { PublicUser } from '@/features/users/types';
 import { Image } from 'expo-image';
@@ -12,8 +13,8 @@ export function ProfileHeader({ user }: Props) {
   const name = user.display_name ?? user.username ?? 'Cheevo user';
 
   return (
-    <View className="items-center gap-3 px-5 pt-2 pb-6">
-      <View className="bg-muted size-24 items-center justify-center overflow-hidden rounded-full">
+    <View className="items-center gap-2 px-5 pt-1 pb-3">
+      <View className="bg-muted size-20 items-center justify-center overflow-hidden rounded-full">
         {user.avatar_url ? (
           <Image
             source={{ uri: user.avatar_url }}
@@ -22,11 +23,11 @@ export function ProfileHeader({ user }: Props) {
             transition={150}
           />
         ) : (
-          <UserRoundIcon size={36} className="text-muted-foreground" strokeWidth={2} />
+          <Icon as={UserRoundIcon} className="text-muted-foreground" size={36} strokeWidth={2} />
         )}
       </View>
 
-      <View className="items-center gap-1">
+      <View className="items-center gap-0.5">
         <Text className="text-foreground text-xl font-bold tracking-tight">{name}</Text>
         {user.username ? (
           <Text className="text-muted-foreground text-sm">@{user.username}</Text>
@@ -39,7 +40,7 @@ export function ProfileHeader({ user }: Props) {
 
       {user.city ? (
         <View className="flex-row items-center gap-1">
-          <MapPinIcon size={14} className="text-muted-foreground" strokeWidth={2} />
+          <Icon as={MapPinIcon} className="text-muted-foreground" size={14} strokeWidth={2} />
           <Text className="text-muted-foreground text-xs">{user.city}</Text>
         </View>
       ) : null}

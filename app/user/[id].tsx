@@ -4,7 +4,7 @@ import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/ui/text';
 import { ProfileHeader } from '@/features/users/components/profile-header';
 import { ProfileInterests } from '@/features/users/components/profile-interests';
-import { ProfileOrganisations } from '@/features/users/components/profile-organisations';
+import { ProfileTabs } from '@/features/users/components/profile-tabs';
 import { usePublicUser } from '@/features/users/hooks';
 import { router, useLocalSearchParams } from 'expo-router';
 import { ChevronLeftIcon, UserRoundXIcon } from 'lucide-react-native';
@@ -40,7 +40,7 @@ export default function PublicUserScreen() {
         <ScrollView contentContainerStyle={{ paddingBottom: 64 }}>
           <ProfileHeader user={user} />
           <ProfileInterests userId={user.id} />
-          <ProfileOrganisations userId={user.id} />
+          <ProfileTabs userId={user.id} viewpoint="other" />
         </ScrollView>
       )}
     </View>

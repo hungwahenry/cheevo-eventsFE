@@ -1,4 +1,5 @@
 import { EventFlyer } from '@/components/event-flyer';
+import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import type { SearchEventResult } from '@/features/search/types';
 import { formatShortDateTime } from '@/lib/format/datetime';
@@ -25,7 +26,7 @@ export function SearchEventRow({ event, onPress }: Props) {
             variant="thumbnail"
           />
         ) : (
-          <CalendarIcon size={20} className="text-muted-foreground" strokeWidth={2} />
+          <Icon as={CalendarIcon} className="text-muted-foreground" size={20} strokeWidth={2} />
         )}
       </View>
       <View className="min-w-0 flex-1 gap-0.5">

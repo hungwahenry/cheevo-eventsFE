@@ -1,3 +1,4 @@
+import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import type { SearchUserResult } from '@/features/search/types';
 import { Image } from 'expo-image';
@@ -16,7 +17,7 @@ export function SearchUserRow({ user, onPress }: Props) {
         {user.avatar_url ? (
           <Image source={{ uri: user.avatar_url }} style={{ width: '100%', height: '100%' }} contentFit="cover" />
         ) : (
-          <UserRoundIcon size={20} className="text-muted-foreground" strokeWidth={2} />
+          <Icon as={UserRoundIcon} className="text-muted-foreground" size={20} strokeWidth={2} />
         )}
       </View>
       <View className="min-w-0 flex-1 gap-0.5">

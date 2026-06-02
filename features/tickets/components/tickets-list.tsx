@@ -4,6 +4,7 @@ import { Text } from '@/components/ui/text';
 import { EventTicketCard } from '@/features/tickets/components/event-ticket-card';
 import { useMyTickets } from '@/features/tickets/hooks';
 import { groupTicketsByEvent } from '@/lib/tickets';
+import { useManualRefresh } from '@/lib/use-manual-refresh';
 import { TicketIcon } from 'lucide-react-native';
 import { useMemo } from 'react';
 import { FlatList, RefreshControl, View } from 'react-native';
@@ -15,9 +16,9 @@ export function TicketsList() {
     hasNextPage,
     isFetchingNextPage,
     isLoading,
-    isRefetching,
     refetch,
   } = useMyTickets();
+  const { refreshing, onRefresh } = useManualRefresh(refetch);
 
   const groups = useMemo(
     () => groupTicketsByEvent(data?.pages.flatMap((p) => p.items) ?? []),
@@ -53,7 +54,7 @@ export function TicketsList() {
       ItemSeparatorComponent={() => <View className="h-3" />}
       contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 96 }}
       refreshControl={
-        <RefreshControl refreshing={isRefetching && !isFetchingNextPage} onRefresh={refetch} />
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
       }
       onEndReachedThreshold={0.4}
       onEndReached={() => {

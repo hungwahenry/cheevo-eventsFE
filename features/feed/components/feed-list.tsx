@@ -5,6 +5,7 @@ import { Text } from '@/components/ui/text';
 import { EventCard } from '@/features/feed/components/event-card';
 import { useFeed } from '@/features/feed/hooks';
 import type { FeedEvent } from '@/features/feed/types';
+import { useManualRefresh } from '@/lib/use-manual-refresh';
 import { router } from 'expo-router';
 import { SearchIcon } from 'lucide-react-native';
 import { useCallback, useMemo, useRef, useState } from 'react';
@@ -37,9 +38,9 @@ export function FeedList() {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-    isRefetching,
     refetch,
   } = useFeed();
+  const { refreshing, onRefresh } = useManualRefresh(refetch);
 
   const events: FeedEvent[] = useMemo(
     () => data?.pages.flatMap((page) => page.items) ?? [],
@@ -94,10 +95,7 @@ export function FeedList() {
           viewabilityConfig={VIEWABILITY_CONFIG}
           onViewableItemsChanged={onViewableItemsChanged}
           refreshControl={
-            <RefreshControl
-              refreshing={isRefetching && !isFetchingNextPage}
-              onRefresh={refetch}
-            />
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
         />
       )}

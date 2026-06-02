@@ -6,6 +6,7 @@ import { SearchOrganisationRow } from '@/features/search/components/search-organ
 import { SearchSection } from '@/features/search/components/search-section';
 import { SearchUserRow } from '@/features/search/components/search-user-row';
 import type { SearchGroups, SearchType } from '@/features/search/types';
+import { useOpenUserProfile } from '@/features/users/hooks';
 import { router } from 'expo-router';
 import { SearchIcon, SearchXIcon } from 'lucide-react-native';
 import { ScrollView, View } from 'react-native';
@@ -20,6 +21,8 @@ type Props = {
 const SECTION_SIZE = 5;
 
 export function SearchResults({ query, data, isLoading, isError }: Props) {
+  const openUser = useOpenUserProfile();
+
   if (query.length < 2) {
     return (
       <EmptyState
@@ -67,7 +70,7 @@ export function SearchResults({ query, data, isLoading, isError }: Props) {
 
   const handleOpenEvent = (id: string) => router.push(`/event/${id}` as any);
   const handleOpenOrg = (slug: string) => router.push(`/org/${slug}` as any);
-  const handleOpenUser = (id: string) => router.push(`/user/${id}` as any);
+  const handleOpenUser = openUser;
 
   return (
     <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{ paddingBottom: 64 }}>

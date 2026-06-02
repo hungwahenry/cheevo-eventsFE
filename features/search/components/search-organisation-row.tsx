@@ -1,3 +1,4 @@
+import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
 import type { SearchOrganisationResult } from '@/features/search/types';
 import { Image } from 'expo-image';
@@ -16,7 +17,7 @@ export function SearchOrganisationRow({ organisation, onPress }: Props) {
         {organisation.logo_url ? (
           <Image source={{ uri: organisation.logo_url }} style={{ width: '100%', height: '100%' }} contentFit="cover" />
         ) : (
-          <Building2Icon size={20} className="text-muted-foreground" strokeWidth={2} />
+          <Icon as={Building2Icon} className="text-muted-foreground" size={20} strokeWidth={2} />
         )}
       </View>
       <View className="min-w-0 flex-1 gap-0.5">
