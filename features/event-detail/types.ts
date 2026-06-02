@@ -83,6 +83,7 @@ export type EventDetail = {
   tickets: EventDetailTicket[];
   is_subscribed: boolean;
   is_rsvped: boolean;
+  is_muted: boolean;
   interest_overlap: number;
 };
 

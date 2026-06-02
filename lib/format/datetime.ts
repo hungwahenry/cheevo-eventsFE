@@ -70,3 +70,27 @@ export function formatBirthday(ymd: string): string {
     day: 'numeric',
   });
 }
+
+/** Time-of-day "HH:mm" or "HH:mm:ss" → Date today at that time. */
+export function parseTimeOfDay(value: string | null, fallback: string = '00:00'): Date {
+  const [h, m] = (value ?? fallback).split(':').map((n) => Number(n));
+  const d = new Date();
+  d.setHours(h ?? 0, m ?? 0, 0, 0);
+  return d;
+}
+
+/** Date → "HH:mm" for sending to the API. */
+export function formatTimeOfDayInput(date: Date): string {
+  const h = String(date.getHours()).padStart(2, '0');
+  const m = String(date.getMinutes()).padStart(2, '0');
+  return `${h}:${m}`;
+}
+
+/** Time-of-day "HH:mm[:ss]" → locale-formatted display. */
+export function formatTimeOfDay(value: string | null): string | null {
+  if (!value) return null;
+  return parseTimeOfDay(value).toLocaleTimeString(undefined, {
+    hour: 'numeric',
+    minute: '2-digit',
+  });
+}
