@@ -1,10 +1,17 @@
+import { THEME } from '@/lib/theme';
 import { cn } from '@/lib/utils';
-import { Platform, TextInput } from 'react-native';
+import { Platform, StyleSheet, TextInput, type TextStyle } from 'react-native';
+import { useUniwind } from 'uniwind';
 
 function Input({
   className,
+  style,
+  placeholderTextColor,
   ...props
 }: React.ComponentProps<typeof TextInput> & React.RefAttributes<TextInput>) {
+  const { theme } = useUniwind();
+  const palette = THEME[theme ?? 'light'];
+
   return (
     <TextInput
       className={cn(
@@ -24,6 +31,8 @@ function Input({
         }),
         className
       )}
+      placeholderTextColor={placeholderTextColor ?? palette.mutedForeground}
+      style={StyleSheet.flatten([{ letterSpacing: 0 } as TextStyle, style])}
       {...props}
     />
   );

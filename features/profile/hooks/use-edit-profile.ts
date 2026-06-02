@@ -2,6 +2,7 @@ import { useCurrentUser } from '@/features/auth';
 import { useUsernameAvailability } from '@/features/onboarding/hooks';
 import { useUpdateProfile } from '@/features/profile/hooks/use-update-profile';
 import { editProfileSchema, type EditProfileInput } from '@/features/profile/validation';
+import { firstErrorMessage } from '@/lib/form-errors';
 import { haptics } from '@/lib/haptics';
 import { requestDeviceLocation, type ResolvedLocation } from '@/lib/location';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -33,7 +34,7 @@ export function useEditProfile() {
   const [avatarUri, setAvatarUri] = useState<string | null>(null);
   const [removeAvatar, setRemoveAvatar] = useState(false);
   const [locationOverride, setLocationOverride] = useState<ResolvedLocation | null>(null);
-  const [locationStatus, setLocationStatus] = useState<'idle' | 'loading' | 'denied'>('idle');
+  const [locationStatus, setLocationStatus] = useState<'idle' | 'loading'>('idle');
 
   const pickAvatar = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
@@ -57,8 +58,9 @@ export function useEditProfile() {
     try {
       const result = await requestDeviceLocation();
       if (result.status === 'denied') {
-        setLocationStatus('denied');
+        setLocationStatus('idle');
         haptics.error();
+        toast.error('Location permission is required. Enable it in Settings.');
         return;
       }
       setLocationOverride(result.location);
@@ -84,53 +86,60 @@ export function useEditProfile() {
 
   const placeName = locationOverride?.placeName ?? user?.profile.place_name ?? null;
 
-  const save = form.handleSubmit((data) => {
-    if (usernameStatus.available === false) {
-      form.setError('username', { message: 'That username is taken.' });
-      return;
-    }
+  const save = form.handleSubmit(
+    (data) => {
+      if (usernameStatus.available === false) {
+        haptics.error();
+        toast.error('That username is taken.');
+        return;
+      }
 
-    const initialUsername = user?.profile.username ?? '';
-    const initialBio = user?.profile.bio ?? '';
+      const initialUsername = user?.profile.username ?? '';
+      const initialBio = user?.profile.bio ?? '';
 
-    mutation.mutate(
-      {
-        ...(data.firstName !== (user?.profile.first_name ?? '')
-          ? { firstName: data.firstName }
-          : {}),
-        ...(data.lastName !== (user?.profile.last_name ?? '')
-          ? { lastName: data.lastName }
-          : {}),
-        ...(data.username !== initialUsername ? { username: data.username } : {}),
-        ...((data.bio ?? '') !== initialBio ? { bio: data.bio ?? null } : {}),
-        ...(locationOverride
-          ? {
-              latitude: locationOverride.latitude,
-              longitude: locationOverride.longitude,
-              placeName: locationOverride.placeName,
-              city: locationOverride.city,
-            }
-          : {}),
-        ...(avatarUri ? { avatarUri } : {}),
-        ...(removeAvatar && !avatarUri ? { removeAvatar: true } : {}),
-      },
-      {
-        onSuccess: () => {
-          haptics.success();
-          toast.success('Profile updated');
-          router.back();
+      mutation.mutate(
+        {
+          ...(data.firstName !== (user?.profile.first_name ?? '')
+            ? { firstName: data.firstName }
+            : {}),
+          ...(data.lastName !== (user?.profile.last_name ?? '')
+            ? { lastName: data.lastName }
+            : {}),
+          ...(data.username !== initialUsername ? { username: data.username } : {}),
+          ...((data.bio ?? '') !== initialBio ? { bio: data.bio ?? null } : {}),
+          ...(locationOverride
+            ? {
+                latitude: locationOverride.latitude,
+                longitude: locationOverride.longitude,
+                placeName: locationOverride.placeName,
+                city: locationOverride.city,
+              }
+            : {}),
+          ...(avatarUri ? { avatarUri } : {}),
+          ...(removeAvatar && !avatarUri ? { removeAvatar: true } : {}),
         },
-        onError: () => {
-          haptics.error();
-          toast.error('Could not save. Try again.');
+        {
+          onSuccess: () => {
+            haptics.success();
+            toast.success('Profile updated');
+            router.back();
+          },
+          onError: () => {
+            haptics.error();
+            toast.error('Could not save. Try again.');
+          },
         },
-      },
-    );
-  });
+      );
+    },
+    (errors) => {
+      haptics.error();
+      const message = firstErrorMessage(errors);
+      if (message) toast.error(message);
+    },
+  );
 
   return {
     control: form.control,
-    errors: form.formState.errors,
     avatarUri,
     removedAvatar: removeAvatar,
     currentAvatarUrl: user?.profile.avatar_url ?? null,

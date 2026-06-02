@@ -2,7 +2,6 @@ import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/ui/text';
 import { useCurrentUser } from '@/features/auth';
-import { Field } from '@/features/onboarding/components/form-fields/field';
 import { InterestGrid } from '@/features/onboarding/components/interest-grid';
 import { useInterests } from '@/features/onboarding/hooks';
 import { useUpdateInterests } from '@/features/profile';
@@ -74,17 +73,12 @@ export default function InterestsSettingsScreen() {
         <Text className="text-muted-foreground pb-4 text-sm">
           Pick what you're into — we'll tailor your feed.
         </Text>
-        <Field
-          error={
-            selectedIds.length === 0 && dirty ? 'Pick at least one.' : undefined
-          }>
-          <InterestGrid
-            interests={interests}
-            selectedIds={selectedIds}
-            onToggle={toggle}
-            isLoading={isLoading}
-          />
-        </Field>
+        <InterestGrid
+          interests={interests}
+          selectedIds={selectedIds}
+          onToggle={toggle}
+          isLoading={isLoading}
+        />
       </ScrollView>
     </SettingsSubscreen>
   );

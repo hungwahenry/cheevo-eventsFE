@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/ui/text';
-import { Field } from '@/features/onboarding/components/form-fields/field';
 import { InterestGrid } from '@/features/onboarding/components/interest-grid';
 import { OnboardingLayout } from '@/features/onboarding/components/onboarding-layout';
 import { OptInRow } from '@/features/onboarding/components/opt-in-row';
@@ -17,7 +16,6 @@ export function InterestsStep() {
     toggleInterest,
     marketingOptIn,
     setMarketingOptIn,
-    error,
     canFinish,
     onFinish,
     onBack,
@@ -50,14 +48,12 @@ export function InterestsStep() {
           </Button>
         </View>
       }>
-      <Field error={error ?? undefined}>
-        <InterestGrid
-          interests={interests}
-          selectedIds={selectedIds}
-          onToggle={toggleInterest}
-          isLoading={isLoading}
-        />
-      </Field>
+      <InterestGrid
+        interests={interests}
+        selectedIds={selectedIds}
+        onToggle={toggleInterest}
+        isLoading={isLoading}
+      />
     </OnboardingLayout>
   );
 }

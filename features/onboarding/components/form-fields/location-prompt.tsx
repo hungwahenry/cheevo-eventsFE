@@ -6,7 +6,7 @@ import { Check, MapPin } from 'lucide-react-native';
 import { View } from 'react-native';
 
 type LocationPromptProps = {
-  status: 'idle' | 'loading' | 'denied';
+  status: 'idle' | 'loading';
   hasLocation: boolean;
   placeName: string | null;
   onRequest: () => void;
@@ -38,12 +38,6 @@ export function LocationPrompt({ status, hasLocation, placeName, onRequest }: Lo
           <Text>{hasLocation ? 'Update location' : 'Set up location'}</Text>
         )}
       </Button>
-
-      {status === 'denied' ? (
-        <Text className="text-destructive text-sm">
-          Location permission is required to continue. Enable it in Settings, then try again.
-        </Text>
-      ) : null}
     </View>
   );
 }

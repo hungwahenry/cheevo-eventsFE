@@ -17,7 +17,6 @@ import { Pressable, ScrollView, View } from 'react-native';
 export default function EditProfileScreen() {
   const {
     control,
-    errors,
     avatarUri,
     removedAvatar,
     currentAvatarUrl,
@@ -63,7 +62,7 @@ export default function EditProfileScreen() {
 
         <View className="flex-row gap-3">
           <View className="flex-1">
-            <Field label="First name" error={errors.firstName?.message}>
+            <Field label="First name">
               <Controller
                 control={control}
                 name="firstName"
@@ -74,7 +73,7 @@ export default function EditProfileScreen() {
             </Field>
           </View>
           <View className="flex-1">
-            <Field label="Last name" error={errors.lastName?.message}>
+            <Field label="Last name">
               <Controller
                 control={control}
                 name="lastName"
@@ -86,7 +85,7 @@ export default function EditProfileScreen() {
           </View>
         </View>
 
-        <Field label="Username" error={errors.username?.message}>
+        <Field label="Username">
           <Controller
             control={control}
             name="username"
@@ -101,7 +100,7 @@ export default function EditProfileScreen() {
           />
         </Field>
 
-        <Field label="Bio" error={errors.bio?.message}>
+        <Field label="Bio">
           <Controller
             control={control}
             name="bio"

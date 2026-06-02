@@ -1,5 +1,6 @@
 import { verifyOtpSchema, type VerifyOtpInput } from '@/features/auth/validation';
 import { isApiError } from '@/lib/api';
+import { firstErrorMessage } from '@/lib/form-errors';
 import { haptics } from '@/lib/haptics';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { router } from 'expo-router';
@@ -17,21 +18,28 @@ export function useVerifyForm(email: string) {
   const resendOtp = useSendOtp();
   const canSubmit = verifyOtpSchema.safeParse(form.watch()).success;
 
-  const submit = form.handleSubmit((data) => {
-    haptics.select();
-    verifyOtp.mutate(data, {
-      onSuccess: () => {
-        haptics.success();
-        router.replace('/');
-      },
-      onError: (error) => {
-        haptics.error();
-        if (isApiError(error) && error.isValidation) {
-          form.setError('code', { message: error.message });
-        }
-      },
-    });
-  });
+  const submit = form.handleSubmit(
+    (data) => {
+      haptics.select();
+      verifyOtp.mutate(data, {
+        onSuccess: () => {
+          haptics.success();
+          router.replace('/');
+        },
+        onError: (error) => {
+          haptics.error();
+          if (isApiError(error)) {
+            toast.error(error.message);
+          }
+        },
+      });
+    },
+    (errors) => {
+      haptics.error();
+      const message = firstErrorMessage(errors);
+      if (message) toast.error(message);
+    },
+  );
 
   const resend = () => {
     if (!email) return;
@@ -40,7 +48,6 @@ export function useVerifyForm(email: string) {
 
   return {
     control: form.control,
-    errors: form.formState.errors,
     canSubmit,
     submit,
     resend,

@@ -1,6 +1,7 @@
+import { Spinner } from '@/components/ui/spinner';
 import { useSession } from '@/features/auth';
 import { Redirect } from 'expo-router';
-import { ActivityIndicator, View } from 'react-native';
+import { View } from 'react-native';
 
 export default function Index() {
   const { status, user } = useSession();
@@ -8,7 +9,7 @@ export default function Index() {
   if (status === 'loading') {
     return (
       <View className="bg-background flex-1 items-center justify-center">
-        <ActivityIndicator size="large" colorClassName="accent-primary" />
+        <Spinner size="lg" />
       </View>
     );
   }

@@ -50,12 +50,6 @@ export function CheckoutSummary({
         </View>
       </View>
 
-      {hasQuoteError ? (
-        <Text className="text-destructive mt-2 text-xs">
-          Couldn&apos;t price your selection. Check your connection and try again.
-        </Text>
-      ) : null}
-
       <Button
         size="lg"
         className="mt-4"

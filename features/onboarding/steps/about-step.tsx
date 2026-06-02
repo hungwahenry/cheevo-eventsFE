@@ -8,16 +8,8 @@ import { useAboutStep } from '@/features/onboarding/hooks';
 import { Cake } from 'lucide-react-native';
 
 export function AboutStep() {
-  const {
-    dateOfBirth,
-    gender,
-    errors,
-    canContinue,
-    setDateOfBirth,
-    setGender,
-    onContinue,
-    onBack,
-  } = useAboutStep();
+  const { dateOfBirth, gender, canContinue, setDateOfBirth, setGender, onContinue, onBack } =
+    useAboutStep();
 
   return (
     <OnboardingLayout
@@ -30,11 +22,11 @@ export function AboutStep() {
           <Text>Continue</Text>
         </Button>
       }>
-      <Field label="Birthday" error={errors.dateOfBirth}>
+      <Field label="Birthday">
         <BirthdayField value={dateOfBirth} onChange={setDateOfBirth} />
       </Field>
 
-      <Field label="Gender" error={errors.gender}>
+      <Field label="Gender">
         <GenderSelect value={gender} onSelect={setGender} />
       </Field>
     </OnboardingLayout>

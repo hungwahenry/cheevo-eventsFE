@@ -16,6 +16,7 @@ import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { THEME } from '@/lib/theme';
 import { getOnSaleTickets } from '@/lib/tickets';
+import { toast } from 'sonner-native';
 import { useUniwind } from 'uniwind';
 
 export type CheckoutSheetRef = {
@@ -44,6 +45,12 @@ export const CheckoutSheet = React.forwardRef<CheckoutSheetRef, CheckoutSheetPro
         cart.clear();
       },
     });
+
+    React.useEffect(() => {
+      if (quote.isError) {
+        toast.error("Couldn't price your selection. Check your connection and try again.");
+      }
+    }, [quote.isError]);
 
     const tickets = React.useMemo(
       () => getOnSaleTickets(event.tickets),

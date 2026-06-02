@@ -1,27 +1,18 @@
 import { Button } from '@/components/ui/button';
 import { IconInput } from '@/components/ui/icon-input';
 import { Text } from '@/components/ui/text';
-import { AvatarPicker } from '@/features/onboarding/components/form-fields/avatar-picker';
-import { Field } from '@/features/onboarding/components/form-fields/field';
-import { OnboardingLayout } from '@/features/onboarding/components/onboarding-layout';
-import { UsernameField } from '@/features/onboarding/components/form-fields/username-field';
 import { useSignOut } from '@/features/auth';
+import { AvatarPicker } from '@/features/onboarding/components/form-fields/avatar-picker';
+import { UsernameField } from '@/features/onboarding/components/form-fields/username-field';
+import { OnboardingLayout } from '@/features/onboarding/components/onboarding-layout';
 import { useProfileStep } from '@/features/onboarding/hooks';
 import { UserRound } from 'lucide-react-native';
 import { Controller } from 'react-hook-form';
 import { View } from 'react-native';
 
 export function ProfileStep() {
-  const {
-    control,
-    errors,
-    avatarUri,
-    avatarSeed,
-    pickAvatar,
-    usernameStatus,
-    canContinue,
-    onContinue,
-  } = useProfileStep();
+  const { control, avatarUri, avatarSeed, pickAvatar, usernameStatus, canContinue, onContinue } =
+    useProfileStep();
   const { signOut } = useSignOut();
 
   return (
@@ -42,14 +33,12 @@ export function ProfileStep() {
             control={control}
             name="username"
             render={({ field }) => (
-              <Field error={errors.username?.message}>
-                <UsernameField
-                  value={field.value}
-                  onChangeText={field.onChange}
-                  onBlur={field.onBlur}
-                  status={usernameStatus}
-                />
-              </Field>
+              <UsernameField
+                value={field.value}
+                onChangeText={field.onChange}
+                onBlur={field.onBlur}
+                status={usernameStatus}
+              />
             )}
           />
         </View>
@@ -61,15 +50,13 @@ export function ProfileStep() {
             control={control}
             name="firstName"
             render={({ field }) => (
-              <Field error={errors.firstName?.message}>
-                <IconInput
-                  value={field.value}
-                  onChangeText={field.onChange}
-                  onBlur={field.onBlur}
-                  placeholder="First name"
-                  autoCapitalize="words"
-                />
-              </Field>
+              <IconInput
+                value={field.value}
+                onChangeText={field.onChange}
+                onBlur={field.onBlur}
+                placeholder="First name"
+                autoCapitalize="words"
+              />
             )}
           />
         </View>
@@ -78,15 +65,13 @@ export function ProfileStep() {
             control={control}
             name="lastName"
             render={({ field }) => (
-              <Field error={errors.lastName?.message}>
-                <IconInput
-                  value={field.value}
-                  onChangeText={field.onChange}
-                  onBlur={field.onBlur}
-                  placeholder="Last name"
-                  autoCapitalize="words"
-                />
-              </Field>
+              <IconInput
+                value={field.value}
+                onChangeText={field.onChange}
+                onBlur={field.onBlur}
+                placeholder="Last name"
+                autoCapitalize="words"
+              />
             )}
           />
         </View>

@@ -1,8 +1,10 @@
 import { Icon } from '@/components/ui/icon';
+import { THEME } from '@/lib/theme';
 import { cn } from '@/lib/utils';
 import type { LucideIcon } from 'lucide-react-native';
 import * as React from 'react';
 import { TextInput, View } from 'react-native';
+import { useUniwind } from 'uniwind';
 
 type IconInputProps = React.ComponentProps<typeof TextInput> & {
   icon?: LucideIcon;
@@ -17,9 +19,12 @@ function IconInput({
   containerClassName,
   onFocus,
   onBlur,
+  placeholderTextColor,
   ...props
 }: IconInputProps) {
   const [focused, setFocused] = React.useState(false);
+  const { theme } = useUniwind();
+  const palette = THEME[theme ?? 'light'];
 
   return (
     <View
@@ -37,11 +42,11 @@ function IconInput({
       ) : null}
       <TextInput
         className={cn(
-          // font-size only (no line-height) so iOS vertically centers single-line text
-          'text-foreground placeholder:text-muted-foreground h-full flex-1 text-[16px]',
+          'text-foreground h-full flex-1 text-[16px]',
           className
         )}
-        style={{ textAlignVertical: 'center', includeFontPadding: false }}
+        style={{ textAlignVertical: 'center', includeFontPadding: false, letterSpacing: 0 }}
+        placeholderTextColor={placeholderTextColor ?? palette.mutedForeground}
         onFocus={(event) => {
           setFocused(true);
           onFocus?.(event);

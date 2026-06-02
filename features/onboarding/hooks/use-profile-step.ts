@@ -1,9 +1,11 @@
 import { useOnboardingStore } from '@/features/onboarding/stores';
 import { profileStepSchema, type ProfileStepInput } from '@/features/onboarding/validation';
+import { firstErrorMessage } from '@/lib/form-errors';
 import { haptics } from '@/lib/haptics';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as ImagePicker from 'expo-image-picker';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner-native';
 import { useUsernameAvailability } from './use-username-availability';
 
 export function useProfileStep() {
@@ -39,19 +41,26 @@ export function useProfileStep() {
     }
   };
 
-  const onContinue = form.handleSubmit((data) => {
-    if (usernameStatus.available === false) {
-      form.setError('username', { message: 'That username is taken.' });
-      return;
-    }
-    haptics.select();
-    patch(data);
-    setStep(1);
-  });
+  const onContinue = form.handleSubmit(
+    (data) => {
+      if (usernameStatus.available === false) {
+        haptics.error();
+        toast.error('That username is taken.');
+        return;
+      }
+      haptics.select();
+      patch(data);
+      setStep(1);
+    },
+    (errors) => {
+      haptics.error();
+      const message = firstErrorMessage(errors);
+      if (message) toast.error(message);
+    },
+  );
 
   return {
     control: form.control,
-    errors: form.formState.errors,
     avatarUri,
     avatarSeed,
     pickAvatar,
