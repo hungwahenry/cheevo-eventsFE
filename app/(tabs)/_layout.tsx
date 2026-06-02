@@ -1,8 +1,8 @@
-import { useCurrentUser } from '@/features/auth';
+import { useCurrentUser, useSession } from '@/features/auth';
 import { useUnreadCount } from '@/features/notifications/hooks';
 import { THEME } from '@/lib/theme';
 import { Image } from 'expo-image';
-import { Tabs } from 'expo-router';
+import { Redirect, Tabs } from 'expo-router';
 import { Bell, House, Ticket, UserRound } from 'lucide-react-native';
 import { Text, View } from 'react-native';
 import { useUniwind } from 'uniwind';
@@ -10,6 +10,11 @@ import { useUniwind } from 'uniwind';
 export default function TabsLayout() {
   const { theme } = useUniwind();
   const palette = THEME[theme ?? 'light'];
+  const { status } = useSession();
+
+  if (status === 'unauthenticated') {
+    return <Redirect href="/welcome" />;
+  }
 
   return (
     <Tabs
