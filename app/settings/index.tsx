@@ -82,7 +82,11 @@ export default function SettingsScreen() {
         </SettingsSection>
 
         <SettingsSection title="Account">
-          <SettingsRow icon={MailIcon} label="Change email" onPress={comingSoon} />
+          <SettingsRow
+            icon={MailIcon}
+            label="Change email"
+            onPress={() => router.push('/settings/change-email' as any)}
+          />
           <SettingsRow icon={LogOutIcon} label="Log out" onPress={signOut} destructive />
           <SettingsRow
             icon={UserXIcon}
