@@ -3,7 +3,7 @@ import { Text } from '@/components/ui/text';
 import type {
   NotificationChannelKey,
   NotificationTypeOption,
-} from '@/features/notifications/api';
+} from '@/features/notifications/types';
 import { View } from 'react-native';
 
 type Props = {

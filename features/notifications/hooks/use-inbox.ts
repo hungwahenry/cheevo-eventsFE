@@ -3,8 +3,8 @@ import {
   listInboxNotifications,
   markAllNotificationsRead,
   markNotificationRead,
-  type InboxPage,
 } from '@/features/notifications/api';
+import type { InboxPage } from '@/features/notifications/types';
 import {
   keepPreviousData,
   useInfiniteQuery,

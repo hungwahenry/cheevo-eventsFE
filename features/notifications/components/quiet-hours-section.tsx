@@ -1,6 +1,6 @@
 import { Switch } from '@/components/ui/switch';
 import { Text } from '@/components/ui/text';
-import type { QuietHours } from '@/features/notifications/api';
+import type { QuietHours } from '@/features/notifications/types';
 import { QuietHoursPickerModal } from '@/features/notifications/components/quiet-hours-picker-modal';
 import { useUpdateQuietHours } from '@/features/notifications/hooks';
 import {

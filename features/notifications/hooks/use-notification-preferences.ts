@@ -2,10 +2,12 @@ import {
   getNotificationPreferences,
   updateNotificationPreferences,
   updateQuietHours,
-  type NotificationPreferences,
-  type PreferenceUpdate,
-  type QuietHours,
 } from '@/features/notifications/api';
+import type {
+  NotificationPreferences,
+  PreferenceUpdate,
+  QuietHours,
+} from '@/features/notifications/types';
 import { isApiError } from '@/lib/api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner-native';

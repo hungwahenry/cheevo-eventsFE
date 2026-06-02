@@ -1,4 +1,5 @@
-import { createBlock, deleteBlock, type BlockTargetType } from '@/features/blocks/api';
+import { createBlock, deleteBlock } from '@/features/blocks/api';
+import type { BlockTargetType } from '@/features/blocks/types';
 import { isApiError } from '@/lib/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner-native';

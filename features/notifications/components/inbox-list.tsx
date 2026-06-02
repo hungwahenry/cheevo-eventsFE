@@ -1,7 +1,7 @@
 import { EmptyState } from '@/components/ui/empty-state';
 import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/ui/text';
-import type { InboxNotification } from '@/features/notifications/api';
+import type { InboxNotification } from '@/features/notifications/types';
 import { InboxRow } from '@/features/notifications/components/inbox-row';
 import { useInboxNotifications, useMarkRead } from '@/features/notifications/hooks';
 import { useManualRefresh } from '@/lib/use-manual-refresh';

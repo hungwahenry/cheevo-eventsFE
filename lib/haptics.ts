@@ -1,6 +1,8 @@
+import { usePreferencesStore } from '@/lib/preferences';
 import * as Haptics from 'expo-haptics';
 
 function run(action: () => Promise<unknown>): void {
+  if (!usePreferencesStore.getState().hapticsEnabled) return;
   action().catch(() => {});
 }
 

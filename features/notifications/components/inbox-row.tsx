@@ -1,6 +1,6 @@
 import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
-import type { InboxNotification } from '@/features/notifications/api';
+import type { InboxNotification } from '@/features/notifications/types';
 import {
   BellIcon,
   MailOpenIcon,
