@@ -10,7 +10,7 @@ import { Pressable, View } from 'react-native';
 
 export function EventDetailOrganisation({ event }: { event: EventDetail }) {
   const org = event.organisation;
-  const toggle = useSubscribeToggle(event.id, org.id);
+  const toggle = useSubscribeToggle(event.slug, org.id);
   const openOrg = () => router.push(`/org/${org.slug}` as any);
 
   return (

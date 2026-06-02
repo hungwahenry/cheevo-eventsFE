@@ -3,9 +3,9 @@ import { eventKey } from '@/features/event-detail/hooks/use-event';
 import type { EventDetail } from '@/features/event-detail/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-export function useRsvpToggle(eventId: string) {
+export function useRsvpToggle(eventSlug: string, eventId: string) {
   const queryClient = useQueryClient();
-  const key = eventKey(eventId);
+  const key = eventKey(eventSlug);
 
   return useMutation({
     mutationFn: (next: boolean) => (next ? rsvp(eventId) : unrsvp(eventId)),

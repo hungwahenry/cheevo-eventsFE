@@ -14,7 +14,7 @@ type Props = {
 };
 
 export function PresaleRsvpAction({ event, onOpenComments }: Props) {
-  const toggle = useRsvpToggle(event.id);
+  const toggle = useRsvpToggle(event.slug, event.id);
 
   return (
     <ActionBarWrapper>

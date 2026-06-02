@@ -13,7 +13,7 @@ export function useEventActions(
   event: EventDetail | null,
   handlers: { onReport: (event: EventDetail) => void }
 ): ActionItem[] {
-  const muteToggle = useToggleEventMute(event?.id ?? '');
+  const muteToggle = useToggleEventMute(event?.slug ?? '', event?.id ?? '');
 
   return React.useMemo(() => {
     if (!event) return [];
