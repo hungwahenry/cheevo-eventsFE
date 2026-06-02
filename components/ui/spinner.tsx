@@ -1,10 +1,10 @@
 import { cn } from '@/lib/utils';
 import * as React from 'react';
-import { View, type ViewProps } from 'react-native';
+import { type ViewProps } from 'react-native';
 import Animated, {
+  Easing,
   useAnimatedStyle,
   useSharedValue,
-  withDelay,
   withRepeat,
   withSequence,
   withTiming,
@@ -14,75 +14,47 @@ type SpinnerSize = 'sm' | 'md' | 'lg';
 
 type SpinnerProps = ViewProps & {
   size?: SpinnerSize;
+  /** Color override for the dot. Kept name for backward compatibility with prior bar-style API. */
   barClassName?: string;
 };
 
-const BARS = 4;
-const CYCLE_MS = 480;
-const STAGGER_MS = 110;
+const SIZES: Record<SpinnerSize, number> = { sm: 8, md: 14, lg: 20 };
+const DURATION = 700;
 
-const SIZES: Record<
-  SpinnerSize,
-  { height: number; bar: string; gap: string }
-> = {
-  sm: { height: 14, bar: 'w-[3px]', gap: 'gap-[3px]' },
-  md: { height: 20, bar: 'w-[4px]', gap: 'gap-[4px]' },
-  lg: { height: 28, bar: 'w-[5px]', gap: 'gap-[5px]' },
-};
-
-export function Spinner({
-  size = 'md',
-  barClassName,
-  className,
-  ...props
-}: SpinnerProps) {
-  const sizing = SIZES[size];
-
-  return (
-    <View
-      className={cn('flex-row items-end', sizing.gap, className)}
-      style={{ height: sizing.height }}
-      accessibilityRole="progressbar"
-      accessibilityLabel="Loading"
-      {...props}>
-      {Array.from({ length: BARS }).map((_, i) => (
-        <Bar
-          key={i}
-          delay={i * STAGGER_MS}
-          maxHeight={sizing.height}
-          className={cn('bg-primary rounded-full', sizing.bar, barClassName)}
-        />
-      ))}
-    </View>
-  );
-}
-
-function Bar({
-  delay,
-  maxHeight,
-  className,
-}: {
-  delay: number;
-  maxHeight: number;
-  className: string;
-}) {
-  const min = maxHeight * 0.3;
-  const heightValue = useSharedValue(min);
+export function Spinner({ size = 'md', barClassName, className, ...props }: SpinnerProps) {
+  const dim = SIZES[size];
+  const scale = useSharedValue(0.6);
+  const opacity = useSharedValue(0.4);
 
   React.useEffect(() => {
-    heightValue.value = withDelay(
-      delay,
-      withRepeat(
-        withSequence(
-          withTiming(maxHeight, { duration: CYCLE_MS }),
-          withTiming(min, { duration: CYCLE_MS })
-        ),
-        -1
-      )
+    scale.value = withRepeat(
+      withSequence(
+        withTiming(1, { duration: DURATION, easing: Easing.inOut(Easing.quad) }),
+        withTiming(0.6, { duration: DURATION, easing: Easing.inOut(Easing.quad) }),
+      ),
+      -1,
     );
-  }, [delay, heightValue, maxHeight, min]);
+    opacity.value = withRepeat(
+      withSequence(
+        withTiming(1, { duration: DURATION, easing: Easing.inOut(Easing.quad) }),
+        withTiming(0.4, { duration: DURATION, easing: Easing.inOut(Easing.quad) }),
+      ),
+      -1,
+    );
+  }, [scale, opacity]);
 
-  const style = useAnimatedStyle(() => ({ height: heightValue.value }));
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+    opacity: opacity.value,
+  }));
 
-  return <Animated.View style={style} className={className} />;
+  return (
+    <Animated.View
+      style={[animatedStyle, { width: dim, height: dim, borderRadius: dim / 2 }]}
+      className={cn('bg-primary', barClassName, className)}
+      accessibilityRole="progressbar"
+      accessibilityLabel="Loading"
+      {...props}
+    />
+  );
 }

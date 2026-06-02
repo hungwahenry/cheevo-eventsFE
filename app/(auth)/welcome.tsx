@@ -1,26 +1,50 @@
 import { Button } from '@/components/ui/button';
-import { Icon } from '@/components/ui/icon';
 import { Text } from '@/components/ui/text';
-import { AuthLayout } from '@/features/auth';
+import { Image } from 'expo-image';
+import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
-import { ArrowRight } from 'lucide-react-native';
+import { View } from 'react-native';
+
+const BG_IMAGE =
+  'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=1200&q=80&auto=format&fit=crop';
 
 export default function WelcomeScreen() {
   return (
-    <AuthLayout
-      title="Find your people, find your night."
-      subtitle="Discover parties, concerts and events near you — and see who's going."
-      media={
-        <Text className="text-primary text-6xl font-extrabold tracking-tighter lowercase">
-          cheevo
-        </Text>
-      }
-      footer={
+    <View className="bg-background flex-1">
+      <Image
+        source={{ uri: BG_IMAGE }}
+        style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}
+        contentFit="cover"
+        transition={200}
+      />
+
+      <LinearGradient
+        pointerEvents="none"
+        colors={['transparent', 'rgba(0,0,0,0.92)']}
+        locations={[0, 0.35]}
+        style={{
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          bottom: 0,
+          height: '60%',
+        }}
+      />
+
+      <View className="pb-safe-offset-6 mt-auto gap-6 px-6 pt-6">
+        <View className="gap-3">
+          <Text className="text-5xl font-extrabold tracking-tight text-white">
+            Events{'\n'}live here.
+          </Text>
+          <Text className="text-base leading-6 text-white/80">
+            Find what&apos;s on, grab your tickets, and talk to everyone going.
+          </Text>
+        </View>
+
         <Button size="lg" className="w-full" onPress={() => router.push('/email')}>
           <Text>Get Started</Text>
-          <Icon as={ArrowRight} className="text-primary-foreground size-5" strokeWidth={2} />
         </Button>
-      }
-    />
+      </View>
+    </View>
   );
 }
