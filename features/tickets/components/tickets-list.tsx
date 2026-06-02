@@ -33,15 +33,7 @@ export function TicketsList() {
     );
   }
 
-  if (groups.length === 0) {
-    return (
-      <EmptyState
-        icon={TicketIcon}
-        title="No tickets yet"
-        description="Tickets you buy will show up here."
-      />
-    );
-  }
+  const isEmpty = groups.length === 0;
 
   return (
     <FlatList
@@ -52,9 +44,20 @@ export function TicketsList() {
         <EventTicketCard event={item.event} tickets={item.tickets} />
       )}
       ItemSeparatorComponent={() => <View className="h-3" />}
-      contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 96 }}
+      contentContainerStyle={
+        isEmpty
+          ? { flexGrow: 1, justifyContent: 'center' }
+          : { paddingHorizontal: 20, paddingBottom: 96 }
+      }
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+      ListEmptyComponent={
+        <EmptyState
+          icon={TicketIcon}
+          title="No tickets yet"
+          description="Tickets you buy will show up here."
+        />
       }
       onEndReachedThreshold={0.4}
       onEndReached={() => {

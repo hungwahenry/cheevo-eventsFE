@@ -36,26 +36,8 @@ export function InboxList({ onOpen }: Props) {
     );
   }
 
-  if (error && items.length === 0) {
-    return (
-      <EmptyState
-        icon={WifiOffIcon}
-        title="Couldn't load notifications"
-        description="Check your connection and try again."
-        action={{ label: 'Retry', variant: 'outline', onPress: () => refetch() }}
-      />
-    );
-  }
-
-  if (items.length === 0) {
-    return (
-      <EmptyState
-        icon={BellIcon}
-        title="No notifications yet"
-        description="We'll let you know when something needs your attention."
-      />
-    );
-  }
+  const isEmpty = items.length === 0;
+  const isError = Boolean(error) && isEmpty;
 
   return (
     <FlatList
@@ -72,8 +54,25 @@ export function InboxList({ onOpen }: Props) {
           }}
         />
       )}
+      contentContainerStyle={isEmpty ? { flexGrow: 1, justifyContent: 'center' } : undefined}
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+      ListEmptyComponent={
+        isError ? (
+          <EmptyState
+            icon={WifiOffIcon}
+            title="Couldn't load notifications"
+            description="Check your connection and try again."
+            action={{ label: 'Retry', variant: 'outline', onPress: () => refetch() }}
+          />
+        ) : (
+          <EmptyState
+            icon={BellIcon}
+            title="No notifications yet"
+            description="We'll let you know when something needs your attention."
+          />
+        )
       }
       onEndReachedThreshold={0.4}
       onEndReached={() => {

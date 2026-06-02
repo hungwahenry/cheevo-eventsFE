@@ -18,13 +18,15 @@ import { ProfileHeader } from '@/features/users/components/profile-header';
 import { ProfileInterests } from '@/features/users/components/profile-interests';
 import { ProfileTabs } from '@/features/users/components/profile-tabs';
 import { usePublicUser, useUserActions } from '@/features/users/hooks';
+import { useManualRefresh } from '@/lib/use-manual-refresh';
 import { router, useLocalSearchParams } from 'expo-router';
 import { ChevronLeftIcon, MoreHorizontalIcon, UserRoundXIcon } from 'lucide-react-native';
-import { Pressable, ScrollView, View } from 'react-native';
+import { Pressable, RefreshControl, ScrollView, View } from 'react-native';
 
 export default function PublicUserScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { data: user, isLoading, isError } = usePublicUser(id);
+  const { data: user, isLoading, isError, refetch } = usePublicUser(id);
+  const { refreshing, onRefresh } = useManualRefresh(refetch);
   const { actionsRef, reportRef, actions, pendingBlock, cancelBlock, confirmBlock } =
     useUserActions(user ?? null);
 
@@ -65,7 +67,9 @@ export default function PublicUserScreen() {
         />
       ) : (
         <>
-          <ScrollView contentContainerStyle={{ paddingBottom: 64 }}>
+          <ScrollView
+            contentContainerStyle={{ paddingBottom: 64 }}
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
             <ProfileHeader user={user} />
             <ProfileInterests userId={user.id} />
             <ProfileTabs userId={user.id} viewpoint="other" />

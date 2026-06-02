@@ -6,9 +6,10 @@ import { BlockedOrgRow } from '@/features/blocks/components/blocked-org-row';
 import { BlockedUserRow } from '@/features/blocks/components/blocked-user-row';
 import { useBlockedOrganisations, useBlockedUsers } from '@/features/blocks/hooks';
 import { SettingsSubscreen } from '@/features/settings';
+import { useManualRefresh } from '@/lib/use-manual-refresh';
 import { Building2Icon, UserRoundIcon } from 'lucide-react-native';
 import { useMemo, useState } from 'react';
-import { FlatList, Pressable, View } from 'react-native';
+import { FlatList, RefreshControl, View } from 'react-native';
 
 type TabKey = 'people' | 'orgs';
 
@@ -29,7 +30,9 @@ export default function PrivacySettingsScreen() {
 }
 
 function BlockedPeople() {
-  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } = useBlockedUsers();
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage, refetch } =
+    useBlockedUsers();
+  const { refreshing, onRefresh } = useManualRefresh(refetch);
   const items = useMemo(() => data?.pages.flatMap((p) => p.items) ?? [], [data]);
 
   if (isLoading) {
@@ -40,16 +43,7 @@ function BlockedPeople() {
     );
   }
 
-  if (items.length === 0) {
-    return (
-      <EmptyState
-        icon={UserRoundIcon}
-        title="No blocked people"
-        description="People you block will show up here. Unblock them anytime."
-        className="py-12"
-      />
-    );
-  }
+  const isEmpty = items.length === 0;
 
   return (
     <FlatList
@@ -57,6 +51,16 @@ function BlockedPeople() {
       keyExtractor={(u) => u.id}
       renderItem={({ item }) => <BlockedUserRow user={item} />}
       ItemSeparatorComponent={() => <View className="border-border h-px" />}
+      contentContainerStyle={isEmpty ? { flexGrow: 1, justifyContent: 'center' } : undefined}
+      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+      ListEmptyComponent={
+        <EmptyState
+          icon={UserRoundIcon}
+          title="No blocked people"
+          description="People you block will show up here. Unblock them anytime."
+          className="py-12"
+        />
+      }
       onEndReachedThreshold={0.4}
       onEndReached={() => hasNextPage && !isFetchingNextPage && fetchNextPage()}
       ListFooterComponent={
@@ -71,8 +75,9 @@ function BlockedPeople() {
 }
 
 function BlockedOrgs() {
-  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage, refetch } =
     useBlockedOrganisations();
+  const { refreshing, onRefresh } = useManualRefresh(refetch);
   const items = useMemo(() => data?.pages.flatMap((p) => p.items) ?? [], [data]);
 
   if (isLoading) {
@@ -83,16 +88,7 @@ function BlockedOrgs() {
     );
   }
 
-  if (items.length === 0) {
-    return (
-      <EmptyState
-        icon={Building2Icon}
-        title="No blocked organisers"
-        description="Organisers you block will show up here. Unblock them anytime."
-        className="py-12"
-      />
-    );
-  }
+  const isEmpty = items.length === 0;
 
   return (
     <FlatList
@@ -100,6 +96,16 @@ function BlockedOrgs() {
       keyExtractor={(o) => o.id}
       renderItem={({ item }) => <BlockedOrgRow organisation={item} />}
       ItemSeparatorComponent={() => <View className="border-border h-px" />}
+      contentContainerStyle={isEmpty ? { flexGrow: 1, justifyContent: 'center' } : undefined}
+      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+      ListEmptyComponent={
+        <EmptyState
+          icon={Building2Icon}
+          title="No blocked organisers"
+          description="Organisers you block will show up here. Unblock them anytime."
+          className="py-12"
+        />
+      }
       onEndReachedThreshold={0.4}
       onEndReached={() => hasNextPage && !isFetchingNextPage && fetchNextPage()}
       ListFooterComponent={

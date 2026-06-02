@@ -22,14 +22,16 @@ import {
   usePublicOrganisation,
 } from '@/features/organisations/hooks';
 import { ReportSheet } from '@/features/reports';
+import { useManualRefresh } from '@/lib/use-manual-refresh';
 import { router, useLocalSearchParams } from 'expo-router';
 import { Building2Icon, ChevronLeftIcon, MoreHorizontalIcon } from 'lucide-react-native';
-import { Pressable, View } from 'react-native';
+import { Pressable, RefreshControl, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
 export default function OrgScreen() {
   const { slug } = useLocalSearchParams<{ slug: string }>();
-  const { data: org, isLoading, isError } = usePublicOrganisation(slug);
+  const { data: org, isLoading, isError, refetch } = usePublicOrganisation(slug);
+  const { refreshing, onRefresh } = useManualRefresh(refetch);
   const { scrollY, onScroll, pinStart, pinEnd } = useOrgScroll();
   const { actionsRef, reportRef, actions, pendingBlock, cancelBlock, confirmBlock } =
     useOrganisationActions(org ?? null);
@@ -51,7 +53,8 @@ export default function OrgScreen() {
           <Animated.ScrollView
             onScroll={onScroll}
             scrollEventThrottle={16}
-            contentContainerStyle={{ paddingBottom: 96 }}>
+            contentContainerStyle={{ paddingBottom: 96 }}
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
             <OrgHeader organisation={org} />
             <View className="h-4" />
             <OrgTabs organisation={org} />
