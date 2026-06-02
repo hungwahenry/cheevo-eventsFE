@@ -30,6 +30,18 @@ function routeFor(notification: InboxNotification): string | null {
   }
 }
 
+function SettingsAction({ onPress }: { onPress: () => void }) {
+  return (
+    <Pressable
+      onPress={onPress}
+      hitSlop={10}
+      accessibilityLabel="Notification settings"
+      className="bg-muted size-10 items-center justify-center rounded-full">
+      <Icon as={Settings} className="text-foreground size-5" strokeWidth={2.25} />
+    </Pressable>
+  );
+}
+
 export default function InboxScreen() {
   const unread = useUnreadCount();
   const markAll = useMarkAllRead();
@@ -41,31 +53,22 @@ export default function InboxScreen() {
   };
 
   return (
-    <Screen title="Notifications">
+    <Screen
+      title="Notifications"
+      rightAction={<SettingsAction onPress={() => prefsRef.current?.present()} />}>
       <View className="flex-row items-center justify-between px-5 pb-3">
-        <View className="flex-row items-center gap-3">
-          <Text className="text-muted-foreground text-xs">
-            {unread.data?.unread ?? 0} unread
-          </Text>
-          {unread.data && unread.data.unread > 0 ? (
-            <Button
-              variant="ghost"
-              size="sm"
-              onPress={() => markAll.mutate()}
-              disabled={markAll.isPending}>
-              <Text>Mark all read</Text>
-            </Button>
-          ) : null}
-        </View>
-
-        <Pressable
-          onPress={() => prefsRef.current?.present()}
-          hitSlop={12}
-          accessibilityLabel="Notification settings">
-          <View className="bg-muted size-9 items-center justify-center rounded-full">
-            <Icon as={Settings} className="text-foreground size-4" strokeWidth={2} />
-          </View>
-        </Pressable>
+        <Text className="text-muted-foreground text-xs">
+          {unread.data?.unread ?? 0} unread
+        </Text>
+        {unread.data && unread.data.unread > 0 ? (
+          <Button
+            variant="ghost"
+            size="sm"
+            onPress={() => markAll.mutate()}
+            disabled={markAll.isPending}>
+            <Text>Mark all read</Text>
+          </Button>
+        ) : null}
       </View>
 
       <InboxList onOpen={handleOpen} />

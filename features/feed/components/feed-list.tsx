@@ -1,11 +1,14 @@
 import { Screen } from '@/components/screen';
+import { Icon } from '@/components/ui/icon';
 import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/ui/text';
 import { EventCard } from '@/features/feed/components/event-card';
 import { useFeed } from '@/features/feed/hooks';
 import type { FeedEvent } from '@/features/feed/types';
+import { router } from 'expo-router';
+import { SearchIcon } from 'lucide-react-native';
 import { useCallback, useMemo, useRef, useState } from 'react';
-import { FlatList, RefreshControl, View, type ViewToken } from 'react-native';
+import { FlatList, Pressable, RefreshControl, View, type ViewToken } from 'react-native';
 
 const VIEWABILITY_CONFIG = { itemVisiblePercentThreshold: 65 };
 
@@ -13,6 +16,18 @@ const keyExtractor = (event: FeedEvent) => event.id;
 
 function CardSeparator() {
   return <View className="h-6" />;
+}
+
+function SearchAction() {
+  return (
+    <Pressable
+      onPress={() => router.push('/search')}
+      hitSlop={10}
+      accessibilityLabel="Search"
+      className="bg-muted size-10 items-center justify-center rounded-full">
+      <Icon as={SearchIcon} className="text-foreground size-5" strokeWidth={2.25} />
+    </Pressable>
+  );
 }
 
 export function FeedList() {
@@ -51,7 +66,10 @@ export function FeedList() {
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   return (
-    <Screen title="For you" subtitle="Events picked for what you’re into.">
+    <Screen
+      title="For you"
+      subtitle="Events picked for what you’re into."
+      rightAction={<SearchAction />}>
       {isLoading ? (
         <View className="flex-1 items-center justify-center">
           <Spinner size="lg" />
