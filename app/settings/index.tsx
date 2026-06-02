@@ -47,13 +47,21 @@ export default function SettingsScreen() {
 
       <ScrollView contentContainerStyle={{ paddingBottom: 64 }}>
         <SettingsSection title="General">
-          <SettingsRow icon={UserCogIcon} label="Edit profile" onPress={comingSoon} />
+          <SettingsRow
+            icon={UserCogIcon}
+            label="Edit profile"
+            onPress={() => router.push('/settings/edit-profile' as any)}
+          />
           <SettingsRow
             icon={BellIcon}
             label="Notifications"
             onPress={() => router.push('/settings/notifications' as any)}
           />
-          <SettingsRow icon={SparklesIcon} label="Interests" onPress={comingSoon} />
+          <SettingsRow
+            icon={SparklesIcon}
+            label="Interests"
+            onPress={() => router.push('/settings/interests' as any)}
+          />
         </SettingsSection>
 
         <SettingsSection title="Privacy & safety">
