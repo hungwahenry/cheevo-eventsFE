@@ -54,20 +54,20 @@ export function QuietHoursSection({ initial }: Props) {
 
       {enabled ? (
         <>
-          <View className="flex-row items-center gap-3">
+          <View className="flex-row items-center gap-2">
             <Pressable
               onPress={() => setEditing('start')}
-              className="border-border flex-1 items-center rounded-xl border px-4 py-3">
+              className="border-border flex-1 flex-row items-center justify-between rounded-full border px-3 py-2">
               <Text className="text-muted-foreground text-xs">From</Text>
-              <Text className="text-foreground mt-1 text-base font-semibold">
+              <Text className="text-foreground text-sm font-semibold">
                 {formatTimeOfDay(initial.start) ?? '—'}
               </Text>
             </Pressable>
             <Pressable
               onPress={() => setEditing('end')}
-              className="border-border flex-1 items-center rounded-xl border px-4 py-3">
+              className="border-border flex-1 flex-row items-center justify-between rounded-full border px-3 py-2">
               <Text className="text-muted-foreground text-xs">To</Text>
-              <Text className="text-foreground mt-1 text-base font-semibold">
+              <Text className="text-foreground text-sm font-semibold">
                 {formatTimeOfDay(initial.end) ?? '—'}
               </Text>
             </Pressable>

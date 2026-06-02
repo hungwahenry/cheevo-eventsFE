@@ -4,7 +4,7 @@ import { Text } from '@/components/ui/text';
 import type { InboxNotification } from '@/features/notifications/api';
 import { InboxRow } from '@/features/notifications/components/inbox-row';
 import { useInboxNotifications, useMarkRead } from '@/features/notifications/hooks';
-import { BellIcon } from 'lucide-react-native';
+import { BellIcon, WifiOffIcon } from 'lucide-react-native';
 import { useMemo } from 'react';
 import { FlatList, RefreshControl, View } from 'react-native';
 
@@ -15,6 +15,7 @@ type Props = {
 export function InboxList({ onOpen }: Props) {
   const {
     data,
+    error,
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
@@ -31,6 +32,17 @@ export function InboxList({ onOpen }: Props) {
       <View className="flex-1 items-center justify-center">
         <Spinner />
       </View>
+    );
+  }
+
+  if (error && items.length === 0) {
+    return (
+      <EmptyState
+        icon={WifiOffIcon}
+        title="Couldn't load notifications"
+        description="Check your connection and try again."
+        action={{ label: 'Retry', variant: 'outline', onPress: () => refetch() }}
+      />
     );
   }
 
