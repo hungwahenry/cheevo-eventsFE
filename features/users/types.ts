@@ -5,6 +5,7 @@ export type PublicUser = {
   avatar_url: string | null;
   bio: string | null;
   city: string | null;
+  is_blocked: boolean;
 };
 
 export type UserInterest = {

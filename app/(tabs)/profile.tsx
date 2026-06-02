@@ -21,6 +21,7 @@ export default function ProfileScreen() {
     avatar_url: user.profile.avatar_url || null,
     bio: user.profile.bio,
     city: user.profile.city,
+    is_blocked: false,
   };
 
   return (

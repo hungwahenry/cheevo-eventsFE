@@ -20,6 +20,7 @@ export type PublicOrganisation = {
     url: string | null;
   }>;
   is_subscribed: boolean;
+  is_blocked: boolean;
 };
 
 export type OrganisationEvent = {
