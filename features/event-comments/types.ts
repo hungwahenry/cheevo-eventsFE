@@ -1,11 +1,10 @@
 import type { PickedGif } from '@/lib/giphy';
 
 export type CommentAuthor = {
-  id: string | null;
+  id: string;
   username: string | null;
   display_name: string | null;
   avatar_url: string | null;
-  deleted: boolean;
 };
 
 export type MentionedUser = {
@@ -27,7 +26,6 @@ export type EventComment = {
   is_liked: boolean;
   is_mine: boolean;
   is_going: boolean;
-  deleted: boolean;
   created_at: string;
   author: CommentAuthor;
 };

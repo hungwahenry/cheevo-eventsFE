@@ -20,27 +20,9 @@ export function CommentRow({ comment, onReply, onLongPress, compact }: CommentRo
   const openUser = useOpenUserProfile();
 
   const time = formatRelativeShort(comment.created_at);
-
-  if (comment.deleted) {
-    return (
-      <View className="flex-row gap-3 py-2.5">
-        <Avatar alt="Deleted avatar" className={compact ? 'size-7' : 'size-9'} />
-        <View className="flex-1 justify-center">
-          <Text className="text-muted-foreground text-sm italic">
-            [deleted]
-            {time ? <Text className="text-muted-foreground text-xs"> · {time}</Text> : null}
-          </Text>
-        </View>
-      </View>
-    );
-  }
-
   const displayName = comment.author.display_name ?? comment.author.username ?? 'Someone';
   const handle = comment.author.username ? `@${comment.author.username}` : null;
   const replyingTo = comment.parent_id !== null ? comment.mentioned_users[0] : null;
-  const openAuthor = () => {
-    if (comment.author.id) openUser(comment.author.id);
-  };
 
   const handleLongPress = () => {
     haptics.impact();
@@ -52,7 +34,7 @@ export function CommentRow({ comment, onReply, onLongPress, compact }: CommentRo
       onLongPress={handleLongPress}
       delayLongPress={350}
       className="flex-row gap-3 py-2.5">
-      <Pressable onPress={openAuthor} hitSlop={4}>
+      <Pressable onPress={() => openUser(comment.author.id)} hitSlop={4}>
         <Avatar alt={`${displayName} avatar`} className={compact ? 'size-7' : 'size-9'}>
           {comment.author.avatar_url ? (
             <AvatarImage source={{ uri: comment.author.avatar_url }} />
@@ -61,7 +43,7 @@ export function CommentRow({ comment, onReply, onLongPress, compact }: CommentRo
       </Pressable>
 
       <View className="flex-1">
-        <Pressable onPress={openAuthor} hitSlop={4}>
+        <Pressable onPress={() => openUser(comment.author.id)} hitSlop={4}>
           <View className="flex-row flex-wrap items-center gap-x-1.5 gap-y-0.5">
             <Text className="text-foreground text-sm font-semibold">{displayName}</Text>
             {handle ? (
