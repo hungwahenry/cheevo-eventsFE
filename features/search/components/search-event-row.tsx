@@ -1,7 +1,7 @@
+import { EventFlyer } from '@/components/event-flyer';
 import { Text } from '@/components/ui/text';
 import type { SearchEventResult } from '@/features/search/types';
 import { formatShortDateTime } from '@/lib/format/datetime';
-import { Image } from 'expo-image';
 import { CalendarIcon } from 'lucide-react-native';
 import { Pressable, View } from 'react-native';
 
@@ -19,7 +19,11 @@ export function SearchEventRow({ event, onPress }: Props) {
     <Pressable onPress={onPress} className="flex-row items-center gap-3 px-5 py-3">
       <View className="bg-muted size-14 items-center justify-center overflow-hidden rounded-xl">
         {event.flyer_url ? (
-          <Image source={{ uri: event.flyer_url }} style={{ width: '100%', height: '100%' }} contentFit="cover" />
+          <EventFlyer
+            flyerUrl={event.flyer_url}
+            flyerType={event.flyer_type}
+            variant="thumbnail"
+          />
         ) : (
           <CalendarIcon size={20} className="text-muted-foreground" strokeWidth={2} />
         )}

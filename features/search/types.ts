@@ -6,6 +6,7 @@ export type SearchEventResult = {
   venue_name: string | null;
   city: string | null;
   flyer_url: string | null;
+  flyer_type: 'image' | 'video' | null;
   status: 'draft' | 'published' | 'past';
   organisation?: {
     id: string;
