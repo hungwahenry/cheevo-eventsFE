@@ -35,3 +35,7 @@ export function updateProfile(input: UpdateProfileInput): Promise<User> {
 export function updateInterests(input: UpdateInterestsInput): Promise<Interest[]> {
   return api.patch<Interest[]>('/attendee/interests', { interests: input.interestIds });
 }
+
+export function getDataExport(): Promise<unknown> {
+  return api.get<unknown>('/attendee/data-export');
+}

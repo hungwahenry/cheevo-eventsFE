@@ -11,7 +11,7 @@ export type StepUpFactor = {
   sent_at: string | null;
 };
 
-export type StepUpAction = 'change_email';
+export type StepUpAction = 'change_email' | 'delete_account';
 
 export type StepUpChallenge = {
   id: string;

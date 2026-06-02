@@ -1,3 +1,13 @@
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 import { Icon } from '@/components/ui/icon';
 import { Switch } from '@/components/ui/switch';
 import { Text } from '@/components/ui/text';
@@ -9,6 +19,7 @@ import { router } from 'expo-router';
 import {
   BellIcon,
   ChevronLeftIcon,
+  DownloadIcon,
   FileTextIcon,
   HelpCircleIcon,
   LifeBuoyIcon,
@@ -20,6 +31,7 @@ import {
   UserXIcon,
   Vibrate,
 } from 'lucide-react-native';
+import { useState } from 'react';
 import { Pressable, ScrollView, View } from 'react-native';
 import { toast } from 'sonner-native';
 
@@ -29,6 +41,7 @@ export default function SettingsScreen() {
   const { signOut } = useSignOut();
   const hapticsEnabled = useHapticsEnabled();
   const setHapticsEnabled = useSetHapticsEnabled();
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   const comingSoon = () => toast('Coming soon');
 
@@ -68,7 +81,6 @@ export default function SettingsScreen() {
           <SettingsRow
             icon={UserXIcon}
             label="Blocked"
-            subtitle="People and organisers you've blocked"
             onPress={() => router.push('/settings/privacy' as any)}
           />
         </SettingsSection>
@@ -87,11 +99,16 @@ export default function SettingsScreen() {
             label="Change email"
             onPress={() => router.push('/settings/change-email' as any)}
           />
+          <SettingsRow
+            icon={DownloadIcon}
+            label="Export my data"
+            onPress={() => router.push('/settings/data-export' as any)}
+          />
           <SettingsRow icon={LogOutIcon} label="Log out" onPress={signOut} destructive />
           <SettingsRow
             icon={UserXIcon}
             label="Delete account"
-            onPress={comingSoon}
+            onPress={() => setShowDeleteConfirm(true)}
             destructive
           />
         </SettingsSection>
@@ -100,9 +117,39 @@ export default function SettingsScreen() {
           <SettingsRow icon={LifeBuoyIcon} label="Help" onPress={comingSoon} />
           <SettingsRow icon={ScrollTextIcon} label="Terms" onPress={comingSoon} />
           <SettingsRow icon={FileTextIcon} label="Privacy policy" onPress={comingSoon} />
-          <SettingsRow icon={HelpCircleIcon} label="About cheevo" subtitle={`v${APP_VERSION}`} />
+          <SettingsRow
+            icon={HelpCircleIcon}
+            label="About cheevo"
+            right={<Text className="text-muted-foreground text-sm">v{APP_VERSION}</Text>}
+          />
         </SettingsSection>
       </ScrollView>
+
+      <AlertDialog
+        open={showDeleteConfirm}
+        onOpenChange={setShowDeleteConfirm}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete your account?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This is permanent. We'll email a code to confirm. Past order receipts are kept for
+              our records but no longer linked to you.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>
+              <Text>Cancel</Text>
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onPress={() => {
+                setShowDeleteConfirm(false);
+                router.push('/settings/delete-account' as any);
+              }}>
+              <Text>Continue</Text>
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </View>
   );
 }
