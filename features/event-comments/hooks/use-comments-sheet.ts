@@ -20,6 +20,7 @@ export function useCommentsSheet(eventId: string) {
   );
 
   const replyTo = React.useCallback((comment: EventComment) => {
+    if (comment.author.id === null) return;
     setReplyTarget({
       parentId: comment.parent_id ?? comment.id,
       mentionedUserId: comment.author.id,
