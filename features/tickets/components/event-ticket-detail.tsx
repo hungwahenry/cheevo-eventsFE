@@ -51,7 +51,7 @@ export function EventTicketDetail({ eventId }: { eventId: string }) {
       <TicketScreenHeader />
 
       <ScrollView contentContainerStyle={{ paddingBottom: 48 }}>
-        <Link href={`/event/${event.id}`} asChild>
+        <Link href={`/event/${event.slug}`} asChild>
           <Pressable className="bg-muted mx-4 flex-row items-center gap-3 rounded-xl p-3 active:opacity-80">
             <View className="bg-muted h-20 w-16 overflow-hidden rounded-md">
               <EventFlyer

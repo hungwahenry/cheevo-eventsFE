@@ -9,15 +9,15 @@ import { View } from 'react-native';
 
 function routeFor(notification: InboxNotification): string | null {
   const data = notification.data as Record<string, any>;
+  const eventTarget = data.event_slug ?? data.event_id;
 
   switch (notification.type) {
     case 'attendee.order_paid':
       return '/(tabs)/tickets';
     case 'attendee.event_starting_soon':
     case 'attendee.new_event_from_subscription':
-      return data.event_id ? `/event/${data.event_id}` : null;
     case 'attendee.comment_reply':
-      return data.event_id ? `/event/${data.event_id}` : null;
+      return eventTarget ? `/event/${eventTarget}` : null;
     default:
       return null;
   }

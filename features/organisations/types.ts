@@ -25,6 +25,7 @@ export type PublicOrganisation = {
 
 export type OrganisationEvent = {
   id: string;
+  slug: string;
   title: string;
   starts_at: string | null;
   ends_at: string | null;

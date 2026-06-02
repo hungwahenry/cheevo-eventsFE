@@ -40,6 +40,7 @@ export type UserComment = {
   created_at: string;
   event: {
     id: string;
+    slug: string;
     title: string;
     flyer_url: string | null;
     flyer_type: 'image' | 'video' | null;
@@ -57,6 +58,7 @@ export type UserCommentsPage = {
 
 export type UserAttendedEvent = {
   id: string;
+  slug: string;
   title: string;
   starts_at: string | null;
   ends_at: string | null;

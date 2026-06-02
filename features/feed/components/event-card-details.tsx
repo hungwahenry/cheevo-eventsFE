@@ -5,8 +5,9 @@ import { Text } from '@/components/ui/text';
 import type { FeedEvent } from '@/features/feed/types';
 import { formatShortDateTime } from '@/lib/format/datetime';
 import { formatPriceRange } from '@/lib/format/money';
+import { router } from 'expo-router';
 import { Calendar, MapPin, Sparkles } from 'lucide-react-native';
-import { View } from 'react-native';
+import { Pressable, View } from 'react-native';
 
 export function EventCardDetails({ event }: { event: FeedEvent }) {
   const org = event.organisation;
@@ -18,7 +19,10 @@ export function EventCardDetails({ event }: { event: FeedEvent }) {
   return (
     <View className="gap-3">
       {org ? (
-        <View className="flex-row items-center gap-2">
+        <Pressable
+          onPress={() => router.push(`/org/${org.slug}` as any)}
+          hitSlop={6}
+          className="flex-row items-center gap-2 self-start active:opacity-70">
           {org.logo_url ? (
             <Avatar alt={`${org.name} logo`} className="size-5">
               <AvatarImage source={{ uri: org.logo_url }} />
@@ -28,7 +32,7 @@ export function EventCardDetails({ event }: { event: FeedEvent }) {
           {event.is_subscribed ? (
             <Text className="text-muted-foreground text-xs">· Following</Text>
           ) : null}
-        </View>
+        </Pressable>
       ) : null}
 
       <Text className="text-foreground text-xl leading-tight font-bold">{event.title}</Text>

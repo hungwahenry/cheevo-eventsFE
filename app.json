@@ -70,7 +70,13 @@
       "expo-video",
       "expo-web-browser",
       "expo-sharing",
-      "expo-notifications"
+      "expo-notifications",
+      [
+        "expo-calendar",
+        {
+          "calendarPermission": "cheevo needs calendar access to save events you're going to."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

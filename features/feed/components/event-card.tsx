@@ -14,7 +14,7 @@ function EventCardImpl({ event, isVisible }: EventCardProps) {
   const router = useRouter();
 
   return (
-    <Pressable className="gap-4 px-5" onPress={() => router.push(`/event/${event.id}`)}>
+    <Pressable className="gap-4 px-5" onPress={() => router.push(`/event/${event.slug}`)}>
       <EventCardFlyer event={event} isVisible={isVisible} />
       <EventCardDetails event={event} />
     </Pressable>

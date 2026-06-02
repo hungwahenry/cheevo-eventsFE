@@ -27,8 +27,8 @@ import { ChevronLeft, MoreHorizontal } from 'lucide-react-native';
 import { Pressable, RefreshControl, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
-export function EventDetailScreen({ id }: { id: string }) {
-  const { data: event, isLoading, error, refetch } = useEvent(id);
+export function EventDetailScreen({ slug }: { slug: string }) {
+  const { data: event, isLoading, error, refetch } = useEvent(slug);
   const { refreshing, onRefresh } = useManualRefresh(refetch);
   const router = useRouter();
   const { scrollY, onScroll, pinStart, pinEnd } = useEventDetailScroll();

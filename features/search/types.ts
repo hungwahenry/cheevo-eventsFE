@@ -1,5 +1,6 @@
 export type SearchEventResult = {
   id: string;
+  slug: string;
   title: string;
   starts_at: string | null;
   ends_at: string | null;

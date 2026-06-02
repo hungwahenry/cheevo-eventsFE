@@ -1,8 +1,8 @@
 import type { EventDetail, RsvpResponse } from '@/features/event-detail/types';
 import { api } from '@/lib/api';
 
-export function getEvent(id: string): Promise<EventDetail> {
-  return api.get<EventDetail>(`/attendee/events/${id}`);
+export function getEvent(slug: string): Promise<EventDetail> {
+  return api.get<EventDetail>(`/attendee/events/${slug}`);
 }
 
 export function rsvp(eventId: string): Promise<RsvpResponse> {

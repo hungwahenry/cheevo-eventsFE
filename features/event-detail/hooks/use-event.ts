@@ -1,12 +1,12 @@
 import { getEvent } from '@/features/event-detail/api';
 import { useQuery } from '@tanstack/react-query';
 
-export const eventKey = (id: string) => ['event', id] as const;
+export const eventKey = (slug: string) => ['event', slug] as const;
 
-export function useEvent(id: string) {
+export function useEvent(slug: string) {
   return useQuery({
-    queryKey: eventKey(id),
-    queryFn: () => getEvent(id),
-    enabled: Boolean(id),
+    queryKey: eventKey(slug),
+    queryFn: () => getEvent(slug),
+    enabled: Boolean(slug),
   });
 }

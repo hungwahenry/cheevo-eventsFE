@@ -36,7 +36,7 @@ export default function SearchByTypeScreen() {
   const renderRow = (item: any) => {
     switch (type) {
       case 'event':
-        return <SearchEventRow event={item} onPress={() => router.push(`/event/${item.id}` as any)} />;
+        return <SearchEventRow event={item} onPress={() => router.push(`/event/${item.slug}` as any)} />;
       case 'organisation':
         return (
           <SearchOrganisationRow

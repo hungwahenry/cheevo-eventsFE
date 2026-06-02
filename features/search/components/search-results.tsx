@@ -68,7 +68,7 @@ export function SearchResults({ query, data, isLoading, isError }: Props) {
   const handleSeeAll = (type: SearchType) =>
     router.push({ pathname: '/search/[type]', params: { type, q: query } } as any);
 
-  const handleOpenEvent = (id: string) => router.push(`/event/${id}` as any);
+  const handleOpenEvent = (slug: string) => router.push(`/event/${slug}` as any);
   const handleOpenOrg = (slug: string) => router.push(`/org/${slug}` as any);
   const handleOpenUser = openUser;
 
@@ -80,7 +80,7 @@ export function SearchResults({ query, data, isLoading, isError }: Props) {
           hasMore={data.events.length >= SECTION_SIZE}
           onSeeAll={() => handleSeeAll('event')}>
           {data.events.map((event) => (
-            <SearchEventRow key={event.id} event={event} onPress={() => handleOpenEvent(event.id)} />
+            <SearchEventRow key={event.id} event={event} onPress={() => handleOpenEvent(event.slug)} />
           ))}
         </SearchSection>
       ) : null}
