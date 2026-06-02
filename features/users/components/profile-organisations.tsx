@@ -6,6 +6,7 @@ import type { ProfileViewpoint } from '@/features/users/components/profile-tabs'
 import { useUserOrganisations } from '@/features/users/hooks';
 import type { UserOrganisation } from '@/features/users/types';
 import { Image } from 'expo-image';
+import { router } from 'expo-router';
 import { Building2Icon } from 'lucide-react-native';
 import { useMemo } from 'react';
 import { Pressable, View } from 'react-native';
@@ -13,10 +14,9 @@ import { Pressable, View } from 'react-native';
 type Props = {
   userId: string;
   viewpoint: ProfileViewpoint;
-  onOpen?: (org: UserOrganisation) => void;
 };
 
-export function ProfileOrganisations({ userId, viewpoint, onOpen }: Props) {
+export function ProfileOrganisations({ userId, viewpoint }: Props) {
   const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useUserOrganisations(userId);
 
@@ -50,7 +50,11 @@ export function ProfileOrganisations({ userId, viewpoint, onOpen }: Props) {
   return (
     <View className="gap-3 py-2">
       {items.map((org) => (
-        <OrgRow key={org.id} org={org} onPress={onOpen ? () => onOpen(org) : undefined} />
+        <OrgRow
+          key={org.id}
+          org={org}
+          onPress={() => router.push(`/org/${org.slug}` as any)}
+        />
       ))}
       {hasNextPage ? (
         <Pressable
@@ -66,11 +70,10 @@ export function ProfileOrganisations({ userId, viewpoint, onOpen }: Props) {
   );
 }
 
-function OrgRow({ org, onPress }: { org: UserOrganisation; onPress?: () => void }) {
+function OrgRow({ org, onPress }: { org: UserOrganisation; onPress: () => void }) {
   return (
     <Pressable
       onPress={onPress}
-      disabled={!onPress}
       className="flex-row items-center gap-3 rounded-xl">
       <View className="bg-muted size-11 items-center justify-center overflow-hidden rounded-full">
         {org.logo_url ? (
