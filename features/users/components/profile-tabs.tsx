@@ -1,6 +1,4 @@
-import { Icon } from '@/components/ui/icon';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Text } from '@/components/ui/text';
+import { UnderlinedTabs, type UnderlinedTab } from '@/components/ui/underlined-tabs';
 import { ProfileAttendedEvents } from '@/features/users/components/profile-attended-events';
 import { ProfileComments } from '@/features/users/components/profile-comments';
 import { ProfileOrganisations } from '@/features/users/components/profile-organisations';
@@ -17,37 +15,30 @@ type Props = {
 
 type TabKey = 'attended' | 'comments' | 'following';
 
+const TABS: UnderlinedTab<TabKey>[] = [
+  { value: 'attended', label: 'Past events', icon: HistoryIcon },
+  { value: 'comments', label: 'Comments', icon: MessageCircleIcon },
+  { value: 'following', label: 'Following', icon: HeartIcon },
+];
+
 export function ProfileTabs({ userId, viewpoint }: Props) {
   const [value, setValue] = useState<TabKey>('attended');
 
   return (
-    <Tabs value={value} onValueChange={(v) => setValue(v as TabKey)} className="px-5">
-      <TabsList className="h-10 w-full">
-        <TabsTrigger value="attended" className="flex-1">
-          <Icon as={HistoryIcon} className="text-foreground size-4" strokeWidth={2.25} />
-          <Text>Past events</Text>
-        </TabsTrigger>
-        <TabsTrigger value="comments" className="flex-1">
-          <Icon as={MessageCircleIcon} className="text-foreground size-4" strokeWidth={2.25} />
-          <Text>Comments</Text>
-        </TabsTrigger>
-        <TabsTrigger value="following" className="flex-1">
-          <Icon as={HeartIcon} className="text-foreground size-4" strokeWidth={2.25} />
-          <Text>Following</Text>
-        </TabsTrigger>
-      </TabsList>
+    <View>
+      <UnderlinedTabs tabs={TABS} value={value} onValueChange={setValue} />
 
-      <View className="pt-1">
-        <TabsContent value="attended">
+      <View className="px-5 pt-2">
+        {value === 'attended' ? (
           <ProfileAttendedEvents userId={userId} viewpoint={viewpoint} />
-        </TabsContent>
-        <TabsContent value="comments">
+        ) : null}
+        {value === 'comments' ? (
           <ProfileComments userId={userId} viewpoint={viewpoint} />
-        </TabsContent>
-        <TabsContent value="following">
+        ) : null}
+        {value === 'following' ? (
           <ProfileOrganisations userId={userId} viewpoint={viewpoint} />
-        </TabsContent>
+        ) : null}
       </View>
-    </Tabs>
+    </View>
   );
 }

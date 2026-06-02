@@ -11,6 +11,7 @@ export type PublicOrganisation = {
   city: string | null;
   events_count: number;
   subscribers_count: number;
+  hosting_since: string | null;
   category: { id: number; slug: string; name: string } | null;
   socials: Array<{
     platform: string;

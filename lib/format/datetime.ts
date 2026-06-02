@@ -94,3 +94,12 @@ export function formatTimeOfDay(value: string | null): string | null {
     minute: '2-digit',
   });
 }
+
+/** ISO → "Jul 2025" */
+export function formatMonthYear(iso: string | null): string | null {
+  if (!iso) return null;
+  return new Date(iso).toLocaleDateString(undefined, {
+    month: 'short',
+    year: 'numeric',
+  });
+}

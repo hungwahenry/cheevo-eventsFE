@@ -1,6 +1,4 @@
-import { Icon } from '@/components/ui/icon';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Text } from '@/components/ui/text';
+import { UnderlinedTabs, type UnderlinedTab } from '@/components/ui/underlined-tabs';
 import { OrgAbout } from '@/features/organisations/components/org-about';
 import { OrgEventsList } from '@/features/organisations/components/org-events-list';
 import {
@@ -18,30 +16,23 @@ type Props = {
 
 type TabKey = 'upcoming' | 'past' | 'about';
 
+const TABS: UnderlinedTab<TabKey>[] = [
+  { value: 'upcoming', label: 'Upcoming', icon: CalendarIcon },
+  { value: 'past', label: 'Past', icon: HistoryIcon },
+  { value: 'about', label: 'About', icon: InfoIcon },
+];
+
 export function OrgTabs({ organisation }: Props) {
   const [value, setValue] = useState<TabKey>('upcoming');
   const upcoming = useOrganisationUpcomingEvents(organisation.slug);
   const past = useOrganisationPastEvents(organisation.slug);
 
   return (
-    <Tabs value={value} onValueChange={(v) => setValue(v as TabKey)} className="px-5">
-      <TabsList className="h-10 w-full">
-        <TabsTrigger value="upcoming" className="flex-1">
-          <Icon as={CalendarIcon} className="text-foreground size-4" strokeWidth={2.25} />
-          <Text>Upcoming</Text>
-        </TabsTrigger>
-        <TabsTrigger value="past" className="flex-1">
-          <Icon as={HistoryIcon} className="text-foreground size-4" strokeWidth={2.25} />
-          <Text>Past</Text>
-        </TabsTrigger>
-        <TabsTrigger value="about" className="flex-1">
-          <Icon as={InfoIcon} className="text-foreground size-4" strokeWidth={2.25} />
-          <Text>About</Text>
-        </TabsTrigger>
-      </TabsList>
+    <View>
+      <UnderlinedTabs tabs={TABS} value={value} onValueChange={setValue} />
 
-      <View className="-mx-5 pt-1">
-        <TabsContent value="upcoming">
+      <View className="pt-2">
+        {value === 'upcoming' ? (
           <OrgEventsList
             data={upcoming.data}
             isLoading={upcoming.isLoading}
@@ -52,8 +43,8 @@ export function OrgTabs({ organisation }: Props) {
             emptyDescription="When this organiser publishes a new event, it'll show up here."
             variant="upcoming"
           />
-        </TabsContent>
-        <TabsContent value="past">
+        ) : null}
+        {value === 'past' ? (
           <OrgEventsList
             data={past.data}
             isLoading={past.isLoading}
@@ -64,11 +55,9 @@ export function OrgTabs({ organisation }: Props) {
             emptyDescription="Events that have ended will appear here."
             variant="past"
           />
-        </TabsContent>
-        <TabsContent value="about">
-          <OrgAbout organisation={organisation} />
-        </TabsContent>
+        ) : null}
+        {value === 'about' ? <OrgAbout organisation={organisation} /> : null}
       </View>
-    </Tabs>
+    </View>
   );
 }
