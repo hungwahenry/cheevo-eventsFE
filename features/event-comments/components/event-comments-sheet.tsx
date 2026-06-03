@@ -6,6 +6,7 @@ import { CommentsList } from '@/features/event-comments/components/list/comments
 import { DeleteCommentDialog } from '@/features/event-comments/components/actions/delete-comment-dialog';
 import { useCommentsSheet, useCommentsSheetActions } from '@/features/event-comments/hooks';
 import { ReportSheet } from '@/features/reports';
+import { useFeature } from '@/features/system/hooks';
 import { THEME } from '@/lib/theme';
 import {
   BottomSheetBackdrop,
@@ -41,6 +42,7 @@ export const EventCommentsSheet = React.forwardRef<
 
   const sheet = useCommentsSheet(eventId);
   const { actionsRef, reportRef, actions, handleLongPress } = useCommentsSheetActions(sheet);
+  const commentsEnabled = useFeature('comments.enabled');
 
   React.useImperativeHandle(forwardedRef, () => ({
     present: () => sheetRef.current?.present(),
@@ -94,7 +96,7 @@ export const EventCommentsSheet = React.forwardRef<
             onLongPress={handleLongPress}
           />
 
-          {canCompose ? (
+          {canCompose && commentsEnabled ? (
             <CommentCompose
               eventId={eventId}
               replyTarget={sheet.replyTarget}

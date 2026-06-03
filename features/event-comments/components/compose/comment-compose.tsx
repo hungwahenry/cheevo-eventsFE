@@ -4,6 +4,7 @@ import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/ui/text';
 import { useCommentCompose } from '@/features/event-comments/hooks';
 import type { ReplyTarget } from '@/features/event-comments/types';
+import { useFeature } from '@/features/system/hooks';
 import { THEME } from '@/lib/theme';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { Image } from 'expo-image';
@@ -30,6 +31,7 @@ export function CommentCompose({
   const gifPickerRef = React.useRef<GifPickerRef>(null);
   const { theme } = useUniwind();
   const colors = THEME[theme === 'dark' ? 'dark' : 'light'];
+  const giphyEnabled = useFeature('comments.giphy_picker');
 
   React.useEffect(() => {
     if (replyTarget) {
@@ -48,12 +50,14 @@ export function CommentCompose({
       ) : null}
 
       <View className="flex-row items-end gap-2 px-2 pt-2 pb-safe">
-        <Pressable
-          onPress={() => gifPickerRef.current?.present()}
-          hitSlop={8}
-          className="size-9 items-center justify-center">
-          <Icon as={ImagePlay} className="text-muted-foreground size-5" />
-        </Pressable>
+        {giphyEnabled ? (
+          <Pressable
+            onPress={() => gifPickerRef.current?.present()}
+            hitSlop={8}
+            className="size-9 items-center justify-center">
+            <Icon as={ImagePlay} className="text-muted-foreground size-5" />
+          </Pressable>
+        ) : null}
 
         <View className="bg-muted min-h-9 flex-1 justify-center rounded-2xl px-4 py-2">
           <BottomSheetTextInput
@@ -93,7 +97,7 @@ export function CommentCompose({
         </Pressable>
       </View>
 
-      <GifPicker ref={gifPickerRef} onSelect={compose.setGif} />
+      {giphyEnabled ? <GifPicker ref={gifPickerRef} onSelect={compose.setGif} /> : null}
     </View>
   );
 }

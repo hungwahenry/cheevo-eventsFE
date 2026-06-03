@@ -1,20 +1,21 @@
+import { useConfigValue } from '@/features/system/hooks';
 import { searchGifs } from '@/lib/giphy/api';
 import { useDebouncedValue } from '@/lib/use-debounced-value';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-const PAGE_SIZE = 24;
-
 export function useGiphySearch(query: string) {
-  const debounced = useDebouncedValue(query.trim(), 300);
+  const pageSize = useConfigValue('search.giphy_page_size', 24);
+  const debounceMs = useConfigValue('search.giphy_debounce_ms', 300);
+  const debounced = useDebouncedValue(query.trim(), debounceMs);
 
   return {
     debouncedQuery: debounced,
     ...useInfiniteQuery({
-      queryKey: ['giphy', debounced],
+      queryKey: ['giphy', debounced, pageSize],
       queryFn: ({ pageParam }) =>
         searchGifs({
           query: debounced || undefined,
-          limit: PAGE_SIZE,
+          limit: pageSize,
           offset: pageParam,
         }),
       initialPageParam: 0,
