@@ -4,6 +4,7 @@ import type { InboxNotification } from '@/features/notifications/types';
 import {
   BellIcon,
   MailOpenIcon,
+  MegaphoneIcon,
   MessageCircleIcon,
   PartyPopperIcon,
   TicketIcon,
@@ -49,6 +50,12 @@ function presentationFor(notification: InboxNotification): Presentation {
         icon: MessageCircleIcon,
         title: 'New reply on your comment',
         body: data.preview ?? '',
+      };
+    case 'admin.system_announcement':
+      return {
+        icon: MegaphoneIcon,
+        title: data.title ?? 'Announcement',
+        body: data.body ?? '',
       };
     default:
       return {

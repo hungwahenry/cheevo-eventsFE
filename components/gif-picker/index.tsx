@@ -1,7 +1,6 @@
 import { GifPickerGrid } from '@/components/gif-picker/gif-picker-grid';
 import { GifPickerSearch } from '@/components/gif-picker/gif-picker-search';
 import { useGifPickerState } from '@/components/gif-picker/use-gif-picker-state';
-import { Text } from '@/components/ui/text';
 import { type PickedGif } from '@/lib/giphy';
 import { THEME } from '@/lib/theme';
 import {
@@ -83,11 +82,6 @@ export const GifPicker = React.forwardRef<GifPickerRef, GifPickerProps>(
             onFetchNextPage={gif.fetchNextPage}
             onSelect={gif.handleSelect}
           />
-          <View className="border-border items-center border-t px-4 py-2">
-            <Text className="text-muted-foreground text-[10px] tracking-wider uppercase">
-              Powered by GIPHY
-            </Text>
-          </View>
         </View>
       </BottomSheetModal>
     );

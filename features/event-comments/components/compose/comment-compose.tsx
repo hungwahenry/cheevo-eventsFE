@@ -8,7 +8,7 @@ import { useFeature } from '@/features/system/hooks';
 import { THEME } from '@/lib/theme';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 import { Image } from 'expo-image';
-import { ImagePlay, Send, X } from 'lucide-react-native';
+import { Send, X } from 'lucide-react-native';
 import * as React from 'react';
 import { Pressable, View } from 'react-native';
 import { useUniwind } from 'uniwind';
@@ -54,8 +54,10 @@ export function CommentCompose({
           <Pressable
             onPress={() => gifPickerRef.current?.present()}
             hitSlop={8}
-            className="size-9 items-center justify-center">
-            <Icon as={ImagePlay} className="text-muted-foreground size-5" />
+            className="border-border h-9 items-center justify-center rounded-full border px-2.5">
+            <Text className="text-muted-foreground text-[11px] font-bold tracking-wider">
+              GIF
+            </Text>
           </Pressable>
         ) : null}
 

@@ -13,6 +13,7 @@ import { Switch } from '@/components/ui/switch';
 import { Text } from '@/components/ui/text';
 import { useSignOut } from '@/features/auth';
 import { SettingsRow, SettingsSection } from '@/features/settings';
+import { openLegalPage } from '@/lib/legal';
 import { useHapticsEnabled, useSetHapticsEnabled } from '@/lib/preferences';
 import Constants from 'expo-constants';
 import { router } from 'expo-router';
@@ -22,7 +23,6 @@ import {
   DownloadIcon,
   FileTextIcon,
   HelpCircleIcon,
-  LifeBuoyIcon,
   LogOutIcon,
   MailIcon,
   ScrollTextIcon,
@@ -33,7 +33,6 @@ import {
 } from 'lucide-react-native';
 import { useState } from 'react';
 import { Pressable, ScrollView, View } from 'react-native';
-import { toast } from 'sonner-native';
 
 const APP_VERSION = Constants.expoConfig?.version ?? '0.0.0';
 
@@ -42,8 +41,6 @@ export default function SettingsScreen() {
   const hapticsEnabled = useHapticsEnabled();
   const setHapticsEnabled = useSetHapticsEnabled();
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-
-  const comingSoon = () => toast('Coming soon');
 
   return (
     <View className="bg-background pt-safe-offset-2 flex-1">
@@ -114,9 +111,16 @@ export default function SettingsScreen() {
         </SettingsSection>
 
         <SettingsSection title="About">
-          <SettingsRow icon={LifeBuoyIcon} label="Help" onPress={comingSoon} />
-          <SettingsRow icon={ScrollTextIcon} label="Terms" onPress={comingSoon} />
-          <SettingsRow icon={FileTextIcon} label="Privacy policy" onPress={comingSoon} />
+          <SettingsRow
+            icon={ScrollTextIcon}
+            label="Terms"
+            onPress={() => openLegalPage('terms')}
+          />
+          <SettingsRow
+            icon={FileTextIcon}
+            label="Privacy policy"
+            onPress={() => openLegalPage('privacy')}
+          />
           <SettingsRow
             icon={HelpCircleIcon}
             label="About cheevo"

@@ -8,6 +8,25 @@ export type ExpoPushTokenResult =
   | { status: 'denied' }
   | { status: 'unsupported' };
 
+export function configureForegroundHandler(): void {
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowBanner: true,
+      shouldShowList: true,
+      shouldPlaySound: true,
+      shouldSetBadge: true,
+    }),
+  });
+}
+
+export async function setAppBadgeCount(count: number): Promise<void> {
+  try {
+    await Notifications.setBadgeCountAsync(Math.max(0, count));
+  } catch {
+    // Silently ignore — some platforms / sandboxes refuse badge updates.
+  }
+}
+
 function projectId(): string | undefined {
   return (
     Constants.expoConfig?.extra?.eas?.projectId ??

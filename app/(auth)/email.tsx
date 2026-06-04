@@ -4,8 +4,10 @@ import { IconInput } from '@/components/ui/icon-input';
 import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/ui/text';
 import { AuthLayout, useEmailForm } from '@/features/auth';
+import { openLegalPage } from '@/lib/legal';
 import { ArrowRight, Mail } from 'lucide-react-native';
 import { Controller } from 'react-hook-form';
+import { View } from 'react-native';
 
 export default function EmailScreen() {
   const { control, canSubmit, submit, isPending } = useEmailForm();
@@ -16,14 +18,31 @@ export default function EmailScreen() {
       title="What's your email?"
       subtitle="We'll email you a 6-digit code to verify it's you."
       footer={
-        <Button size="lg" className="w-full" disabled={!canSubmit || isPending} onPress={submit}>
-          <Text>Continue</Text>
-          {isPending ? (
-            <Spinner size="sm" barClassName="bg-primary-foreground" />
-          ) : (
-            <Icon as={ArrowRight} className="text-primary-foreground size-5" strokeWidth={2} />
-          )}
-        </Button>
+        <View className="gap-3">
+          <Button size="lg" className="w-full" disabled={!canSubmit || isPending} onPress={submit}>
+            <Text>Continue</Text>
+            {isPending ? (
+              <Spinner size="sm" barClassName="bg-primary-foreground" />
+            ) : (
+              <Icon as={ArrowRight} className="text-primary-foreground size-5" strokeWidth={2} />
+            )}
+          </Button>
+          <Text className="text-muted-foreground text-center text-xs leading-5">
+            By continuing you agree to our{' '}
+            <Text
+              className="text-foreground text-xs font-medium underline"
+              onPress={() => openLegalPage('terms')}>
+              Terms of Service
+            </Text>{' '}
+            and{' '}
+            <Text
+              className="text-foreground text-xs font-medium underline"
+              onPress={() => openLegalPage('privacy')}>
+              Privacy Policy
+            </Text>
+            .
+          </Text>
+        </View>
       }>
       <Controller
         control={control}

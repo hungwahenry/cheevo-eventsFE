@@ -1,8 +1,13 @@
 import '@/global.css';
 
 import { useAuthBootstrap } from '@/features/auth';
-import { usePushTokenRegistration } from '@/features/notifications';
+import {
+  useBadgeSync,
+  useNotificationResponseListener,
+  usePushTokenRegistration,
+} from '@/features/notifications';
 import { useSystemBootstrap } from '@/features/system/hooks';
+import { configureForegroundHandler } from '@/lib/notifications';
 import { queryClient } from '@/lib/query';
 import { NAV_THEME } from '@/lib/theme';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
@@ -19,9 +24,15 @@ import { Toaster } from 'sonner-native';
 import { Uniwind, useUniwind } from 'uniwind';
 
 export {
-  // Catch any errors thrown by the Layout component.
   ErrorBoundary,
 } from 'expo-router';
+
+configureForegroundHandler();
+
+function NotificationsRuntime() {
+  useBadgeSync();
+  return null;
+}
 
 export default function RootLayout() {
   const { theme } = useUniwind();
@@ -29,6 +40,7 @@ export default function RootLayout() {
   useAuthBootstrap();
   useSystemBootstrap();
   usePushTokenRegistration();
+  useNotificationResponseListener();
 
   useEffect(() => {
     Uniwind.setTheme('system');
@@ -40,6 +52,7 @@ export default function RootLayout() {
         <SafeAreaProvider>
           <SafeAreaListener onChange={({ insets }) => Uniwind.updateInsets(insets)}>
             <QueryClientProvider client={queryClient}>
+              <NotificationsRuntime />
               <BottomSheetModalProvider>
                 <ThemeProvider value={NAV_THEME[theme ?? 'light']}>
                   <StatusBar style={theme === 'dark' ? 'light' : 'dark'} />
