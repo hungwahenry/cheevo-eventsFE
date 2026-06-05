@@ -6,6 +6,8 @@ import * as React from 'react';
 export function useCommentActions(
   comment: EventComment | null,
   handlers: {
+    onCopy: (comment: EventComment) => void;
+    onShare: (comment: EventComment) => void;
     onDelete: (comment: EventComment) => void;
     onReport: (comment: EventComment) => void;
   }
@@ -18,14 +20,14 @@ export function useCommentActions(
       actions.push({
         label: 'Copy text',
         icon: Copy,
-        onPress: () => {},
+        onPress: () => handlers.onCopy(comment),
       });
     }
 
     actions.push({
       label: 'Share',
       icon: Share2,
-      onPress: () => {},
+      onPress: () => handlers.onShare(comment),
     });
 
     if (comment.is_mine) {

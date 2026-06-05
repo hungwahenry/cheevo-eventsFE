@@ -17,10 +17,10 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "vip.cheevo.app",
+      "bundleIdentifier": "events.cheevo.app",
       "associatedDomains": [
         "applinks:api.cheevo.vip",
-        "applinks:cheevo.vip"
+        "applinks:cheevo.events"
       ],
       "infoPlist": {
         "NSAppTransportSecurity": {
@@ -30,7 +30,7 @@
       }
     },
     "android": {
-      "package": "vip.cheevo.app",
+      "package": "events.cheevo.app",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -47,12 +47,12 @@
             },
             {
               "scheme": "https",
-              "host": "cheevo.vip",
+              "host": "cheevo.events",
               "pathPrefix": "/events"
             },
             {
               "scheme": "https",
-              "host": "cheevo.vip",
+              "host": "cheevo.events",
               "pathPrefix": "/orders"
             }
           ],

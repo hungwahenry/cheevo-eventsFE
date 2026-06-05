@@ -1,5 +1,5 @@
-const PUBLIC_HOST = 'https://cheevo.vip';
+import { config } from '@/lib/config';
 
 export function eventShareUrl(slug: string): string {
-  return `${PUBLIC_HOST}/events/${slug}`;
+  return `${config.webUrl}/events/${slug}`;
 }
