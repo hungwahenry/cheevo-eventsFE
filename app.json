@@ -21,7 +21,13 @@
       "associatedDomains": [
         "applinks:api.cheevo.vip",
         "applinks:cheevo.vip"
-      ]
+      ],
+      "infoPlist": {
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": true,
+          "NSAllowsLocalNetworking": true
+        }
+      }
     },
     "android": {
       "package": "vip.cheevo.app",
@@ -55,6 +61,10 @@
             "DEFAULT"
           ]
         }
+      ],
+      "permissions": [
+        "android.permission.READ_CALENDAR",
+        "android.permission.WRITE_CALENDAR"
       ]
     },
     "web": {
@@ -76,10 +86,25 @@
         {
           "calendarPermission": "cheevo needs calendar access to save events you're going to."
         }
+      ],
+      [
+        "@sentry/react-native/expo",
+        {
+          "url": "https://sentry.io/",
+          "organization": "issorite",
+          "project": "cheevo-mobile"
+        }
       ]
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "11862163-606c-4190-a756-4617dccc0793"
+      }
+    },
+    "owner": "henryhh"
   }
 }

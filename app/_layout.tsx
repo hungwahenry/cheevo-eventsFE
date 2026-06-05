@@ -21,11 +21,23 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { SafeAreaListener, SafeAreaProvider } from 'react-native-safe-area-context';
 import { Toaster } from 'sonner-native';
+import * as Sentry from '@sentry/react-native';
 import { Uniwind, useUniwind } from 'uniwind';
 
 export {
   ErrorBoundary,
 } from 'expo-router';
+
+Sentry.init({
+  dsn: process.env.EXPO_PUBLIC_SENTRY_DSN,
+  enabled: Boolean(process.env.EXPO_PUBLIC_SENTRY_DSN),
+  environment: __DEV__ ? 'development' : 'production',
+  sendDefaultPii: false,
+  tracesSampleRate: __DEV__ ? 1.0 : 0.1,
+  replaysSessionSampleRate: 0,
+  replaysOnErrorSampleRate: 1.0,
+  integrations: [Sentry.mobileReplayIntegration()],
+});
 
 configureForegroundHandler();
 
@@ -34,7 +46,7 @@ function NotificationsRuntime() {
   return null;
 }
 
-export default function RootLayout() {
+function RootLayout() {
   const { theme } = useUniwind();
 
   useAuthBootstrap();
@@ -68,3 +80,5 @@ export default function RootLayout() {
     </GestureHandlerRootView>
   );
 }
+
+export default Sentry.wrap(RootLayout);
