@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 
 import * as api from '@/features/system/api';
+import { configKey, flagsKey } from '@/features/system/hooks/keys';
 import type { ConfigKey, FeatureFlagKey } from '@/features/system/types';
 
-export const flagsKey = () => ['system', 'flags'] as const;
-export const configKey = () => ['system', 'config'] as const;
+export { configKey, flagsKey };
 
 export function useFlags() {
   return useQuery({

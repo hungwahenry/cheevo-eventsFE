@@ -1,4 +1,4 @@
-import { useUnreadCount } from '@/features/notifications/hooks';
+import { useUnreadCount } from '@/features/notifications/hooks/use-inbox';
 import { setAppBadgeCount } from '@/lib/notifications';
 import { useEffect } from 'react';
 

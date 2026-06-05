@@ -4,7 +4,7 @@ import { useShallow } from 'zustand/react/shallow';
 import { clearToken, getToken, setToken } from '@/lib/api';
 import { getCurrentExpoPushToken } from '@/lib/notifications';
 import * as authApi from '@/features/auth/api';
-import { notificationsApi } from '@/features/notifications';
+import * as notificationsApi from '@/features/notifications/api';
 import type { User } from '@/features/auth/types';
 
 export type SessionStatus = 'loading' | 'authenticated' | 'unauthenticated';

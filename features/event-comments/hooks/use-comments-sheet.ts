@@ -1,7 +1,5 @@
-import {
-  useDeleteComment,
-  useEventComments,
-} from '@/features/event-comments/hooks';
+import { useDeleteComment } from '@/features/event-comments/hooks/use-delete-comment';
+import { useEventComments } from '@/features/event-comments/hooks/use-event-comments';
 import type { EventComment, ReplyTarget } from '@/features/event-comments/types';
 import * as React from 'react';
 

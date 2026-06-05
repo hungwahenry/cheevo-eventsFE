@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { AppState, type AppStateStatus } from 'react-native';
 
 import * as api from '@/features/system/api';
-import { configKey, flagsKey } from '@/features/system/hooks';
+import { configKey, flagsKey } from '@/features/system/hooks/keys';
 import { queryClient } from '@/lib/query';
 
 export function useSystemBootstrap(): void {
