@@ -1,11 +1,12 @@
 import { Button } from '@/components/ui/button';
+import { Icon } from '@/components/ui/icon';
 import { IconInput } from '@/components/ui/icon-input';
 import { OtpInput } from '@/components/ui/otp-input';
 import { Spinner } from '@/components/ui/spinner';
 import { Text } from '@/components/ui/text';
 import { useChangeEmail } from '@/features/profile';
 import { SettingsSubscreen } from '@/features/settings';
-import { Mail } from 'lucide-react-native';
+import { ArrowRight, Mail, ShieldCheck } from 'lucide-react-native';
 import { Pressable, ScrollView, View } from 'react-native';
 
 export default function ChangeEmailScreen() {
@@ -29,49 +30,102 @@ export default function ChangeEmailScreen() {
   return (
     <SettingsSubscreen title="Change email">
       <ScrollView
-        contentContainerStyle={{ padding: 16, paddingBottom: 96, gap: 16 }}
+        contentContainerStyle={{ padding: 16, paddingBottom: 96, gap: 20 }}
         keyboardShouldPersistTaps="handled">
         {stage === 'collect' ? (
-          <View className="gap-4">
-            <Text className="text-muted-foreground text-sm">
-              Your current email is{' '}
-              <Text className="text-foreground font-medium">{user?.email}</Text>. We&apos;ll send a
-              code to your current email and then to your new one to confirm the change.
-            </Text>
-            <IconInput
-              icon={Mail}
-              value={newEmail}
-              onChangeText={setNewEmail}
-              placeholder="you@email.com"
-              autoCapitalize="none"
-              autoCorrect={false}
-              autoComplete="email"
-              keyboardType="email-address"
-              returnKeyType="go"
-              onSubmitEditing={start}
-            />
+          <View className="gap-5">
+            <View className="bg-muted/40 items-center gap-3 rounded-2xl p-6">
+              <View className="bg-primary/10 size-12 items-center justify-center rounded-full">
+                <Icon as={Mail} className="text-primary size-6" strokeWidth={2} />
+              </View>
+              <Text className="text-foreground text-center text-lg font-semibold">
+                Update your email
+              </Text>
+              <Text className="text-muted-foreground text-center text-sm">
+                We&apos;ll send a code to your current email, then to your new one. Both must check
+                out before we make the switch.
+              </Text>
+            </View>
+
+            <View className="gap-2">
+              <Text className="text-muted-foreground text-xs font-semibold tracking-wide uppercase">
+                Current
+              </Text>
+              <View className="bg-muted rounded-2xl px-4 py-3">
+                <Text className="text-foreground text-sm" numberOfLines={1}>
+                  {user?.email}
+                </Text>
+              </View>
+            </View>
+
+            <View className="gap-2">
+              <Text className="text-muted-foreground text-xs font-semibold tracking-wide uppercase">
+                New
+              </Text>
+              <IconInput
+                icon={Mail}
+                value={newEmail}
+                onChangeText={setNewEmail}
+                placeholder="you@email.com"
+                autoCapitalize="none"
+                autoCorrect={false}
+                autoComplete="email"
+                keyboardType="email-address"
+                returnKeyType="go"
+                onSubmitEditing={start}
+              />
+            </View>
+
             <Button size="lg" className="w-full" disabled={isStarting} onPress={start}>
               {isStarting ? (
                 <Spinner size="sm" barClassName="bg-primary-foreground" />
               ) : (
-                <Text>Continue</Text>
+                <>
+                  <Text>Continue</Text>
+                  <Icon as={ArrowRight} className="text-primary-foreground ml-1 size-5" />
+                </>
               )}
             </Button>
           </View>
         ) : null}
 
         {stage === 'verify' && nextFactor ? (
-          <View className="gap-4">
-            <Text className="text-muted-foreground text-sm">
-              Step {factorIndex} of {factorsTotal}. We sent a 6-digit code to{' '}
-              <Text className="text-foreground font-medium">{nextFactor.target_masked}</Text>.
-            </Text>
-            <OtpInput
-              value={code}
-              onChangeText={setCode}
-              onComplete={submitCode}
-              autoFocus
-            />
+          <View className="gap-5">
+            <View className="gap-2">
+              <View className="flex-row items-center gap-2">
+                {Array.from({ length: factorsTotal }).map((_, i) => {
+                  const isActive = i + 1 === factorIndex;
+                  const isDone = i + 1 < factorIndex;
+                  return (
+                    <View
+                      key={i}
+                      className={`h-1.5 flex-1 rounded-full ${
+                        isActive ? 'bg-primary' : isDone ? 'bg-primary/60' : 'bg-muted'
+                      }`}
+                    />
+                  );
+                })}
+              </View>
+              <Text className="text-muted-foreground text-center text-xs font-semibold tracking-wide uppercase">
+                Step {factorIndex} of {factorsTotal}
+              </Text>
+            </View>
+
+            <View className="bg-muted/40 items-center gap-3 rounded-2xl p-6">
+              <View className="bg-primary/10 size-12 items-center justify-center rounded-full">
+                <Icon as={ShieldCheck} className="text-primary size-6" strokeWidth={2} />
+              </View>
+              <Text className="text-foreground text-center text-lg font-semibold">
+                Enter your code
+              </Text>
+              <Text className="text-muted-foreground text-center text-sm">
+                We sent a 6-digit code to{' '}
+                <Text className="text-foreground font-medium">{nextFactor.target_masked}</Text>.
+              </Text>
+            </View>
+
+            <OtpInput value={code} onChangeText={setCode} onComplete={submitCode} autoFocus />
+
             <Pressable
               onPress={resend}
               hitSlop={8}

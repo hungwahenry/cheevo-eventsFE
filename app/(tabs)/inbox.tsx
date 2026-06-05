@@ -21,7 +21,7 @@ export default function InboxScreen() {
   };
 
   return (
-    <Screen title="Notifications">
+    <Screen title="Notifications" subtitle="Heads-ups from events and people you follow.">
       <View className="flex-row items-center justify-between px-5 pb-3">
         <Text className="text-muted-foreground text-xs">
           {unread.data?.unread ?? 0} unread
