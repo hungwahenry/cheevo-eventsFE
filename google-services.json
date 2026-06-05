@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "187101457818",
+    "project_id": "cheevo-e71a7",
+    "storage_bucket": "cheevo-e71a7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:187101457818:android:ad99fb2a178a42df5c1e23",
+        "android_client_info": {
+          "package_name": "events.cheevo.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZRH5dDgrc0iuo-HGHeTUv3CCdShISVOE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
