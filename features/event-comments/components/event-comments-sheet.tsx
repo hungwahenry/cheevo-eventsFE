@@ -104,7 +104,7 @@ export const EventCommentsSheet = React.forwardRef<
               onSent={sheet.clearReply}
             />
           ) : (
-            <ComposeClosed />
+            <ComposeClosed reason={!canCompose ? 'past' : 'disabled'} />
           )}
         </View>
       </BottomSheetModal>
@@ -122,11 +122,13 @@ export const EventCommentsSheet = React.forwardRef<
   );
 });
 
-function ComposeClosed() {
+function ComposeClosed({ reason }: { reason: 'past' | 'disabled' }) {
   return (
     <View className="border-border pb-safe-offset-3 border-t px-5 pt-3">
       <Text className="text-muted-foreground text-center text-xs">
-        Comments are closed for past events.
+        {reason === 'past'
+          ? 'Comments are closed for past events.'
+          : 'Comments are currently unavailable.'}
       </Text>
     </View>
   );
