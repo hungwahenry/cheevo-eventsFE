@@ -23,5 +23,5 @@ export type OrderQuote = {
 
 export type CreatedOrder = {
   order: Order;
-  authorization_url: string;
+  authorization_url: string | null;
 };

@@ -30,6 +30,10 @@ export function useCheckout(options: Options = {}) {
         callback_url: callbackUrl,
       });
 
+      if (!authorization_url) {
+        return { order, cancelled: false as const };
+      }
+
       const result = await WebBrowser.openAuthSessionAsync(authorization_url, callbackUrl);
 
       if (result.type !== 'success') {
