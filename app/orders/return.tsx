@@ -26,12 +26,15 @@ export default function PaymentReturnScreen() {
   const onContinue = useCallback(() => {
     useActiveCheckoutStore.getState().clear();
     if (phase === 'paid' || phase === 'pending') {
-      router.replace('/(tabs)/tickets' as any);
-    } else if (router.canGoBack()) {
-      router.back();
-    } else {
-      router.replace('/(tabs)');
+      router.dismissAll();
+      router.navigate('/(tabs)/tickets' as any);
+      return;
     }
+    if (router.canGoBack()) {
+      router.back();
+      return;
+    }
+    router.navigate('/(tabs)' as any);
   }, [phase]);
 
   // Idle and no order id anywhere → arrived here by mistake. Bounce home,
