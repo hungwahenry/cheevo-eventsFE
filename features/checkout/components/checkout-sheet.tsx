@@ -41,7 +41,6 @@ export const CheckoutSheet = React.forwardRef<CheckoutSheetRef, CheckoutSheetPro
     const quote = useQuote(event.id, cart.items);
     const checkout = useCheckout({
       onConfirmed: () => {
-        ref.current?.dismiss();
         cart.clear();
       },
     });
@@ -76,6 +75,7 @@ export const CheckoutSheet = React.forwardRef<CheckoutSheetRef, CheckoutSheetPro
 
     const handleCheckout = () => {
       if (cart.items.length === 0) return;
+      ref.current?.dismiss();
       checkout.mutate({ eventId: event.id, items: cart.items });
     };
 

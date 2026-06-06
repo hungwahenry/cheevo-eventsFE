@@ -21,6 +21,12 @@ export function useLocationStep() {
         toast.error('Location permission is required. Enable it in Settings.');
         return;
       }
+      if (result.status === 'unavailable') {
+        setStatus('idle');
+        haptics.error();
+        toast.error("Couldn't get your location. Check that location services are on.");
+        return;
+      }
       patch(result.location);
       setStatus('idle');
       haptics.success();

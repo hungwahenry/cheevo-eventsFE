@@ -15,6 +15,7 @@ import {
 } from '@gorhom/bottom-sheet';
 import * as React from 'react';
 import { View } from 'react-native';
+import { KeyboardAvoidingView } from 'react-native-keyboard-controller';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useUniwind } from 'uniwind';
 
@@ -72,12 +73,10 @@ export const EventCommentsSheet = React.forwardRef<
         onChange={(index) => sheet.setIsOpen(index >= 0)}
         onDismiss={sheet.handleClose}
         backdropComponent={renderBackdrop}
-        keyboardBehavior="interactive"
         keyboardBlurBehavior="restore"
-        android_keyboardInputMode="adjustResize"
         backgroundStyle={{ backgroundColor: colors.background }}
         handleIndicatorStyle={{ backgroundColor: colors.mutedForeground }}>
-        <View className="flex-1">
+        <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
           <SheetHeader
             title={
               commentsCount > 0
@@ -106,7 +105,7 @@ export const EventCommentsSheet = React.forwardRef<
           ) : (
             <ComposeClosed reason={!canCompose ? 'past' : 'disabled'} />
           )}
-        </View>
+        </KeyboardAvoidingView>
       </BottomSheetModal>
 
       <ActionsSheet ref={actionsRef} actions={actions} />

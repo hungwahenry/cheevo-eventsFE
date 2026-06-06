@@ -63,6 +63,12 @@ export function useEditProfile() {
         toast.error('Location permission is required. Enable it in Settings.');
         return;
       }
+      if (result.status === 'unavailable') {
+        setLocationStatus('idle');
+        haptics.error();
+        toast.error("Couldn't get your location. Check that location services are on.");
+        return;
+      }
       setLocationOverride(result.location);
       setLocationStatus('idle');
       haptics.success();
