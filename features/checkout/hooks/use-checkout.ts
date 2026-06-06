@@ -1,6 +1,6 @@
 import { createOrder } from '@/features/checkout/api';
 import type { CartItem } from '@/features/checkout/types';
-import { cancelOrder, verifyOrder } from '@/features/orders/api';
+import { cancelOrder, getOrder, verifyOrder } from '@/features/orders/api';
 import type { Order } from '@/features/orders/types';
 import { isApiError } from '@/lib/api';
 import { useMutation } from '@tanstack/react-query';
@@ -14,9 +14,7 @@ type StartCheckoutArgs = {
 };
 
 type Options = {
-  /** Called when the user closes the payment browser without paying. */
   onCancelled?: () => void;
-  /** Called after a successful payment (paid or pending capture). */
   onConfirmed?: (order: Order) => void;
 };
 
@@ -37,6 +35,15 @@ export function useCheckout(options: Options = {}) {
       const result = await WebBrowser.openAuthSessionAsync(authorization_url, callbackUrl);
 
       if (result.type !== 'success') {
+        // The user may have actually paid and dismissed the browser before the
+        // redirect fired (common on iOS Paystack). Probe the order state before
+        // cancelling so we don't trash a paid order.
+        try {
+          const probed = await getOrder(order.id);
+          if (probed.status === 'paid') {
+            return { order: probed, cancelled: false as const };
+          }
+        } catch {}
         cancelOrder(order.id).catch(() => {});
         return { order, cancelled: true as const };
       }
@@ -45,18 +52,27 @@ export function useCheckout(options: Options = {}) {
       const lookupKey =
         typeof params?.transaction_id === 'string' ? params.transaction_id : undefined;
 
-      const verified = await verifyOrder(order.id, lookupKey);
-
-      return { order: verified, cancelled: false as const };
+      try {
+        const verified = await verifyOrder(order.id, lookupKey);
+        return { order: verified, cancelled: false as const };
+      } catch (e) {
+        // Verify can fail with the webhook still in flight. Fall back to the
+        // last-known order — onSuccess will show the right "we'll confirm"
+        // copy, and the order detail screen will pick up the final status when
+        // the webhook lands.
+        return { order, cancelled: false as const, verifyFailed: true as const };
+      }
     },
-    onSuccess: ({ order, cancelled }) => {
+    onSuccess: ({ order, cancelled, verifyFailed }) => {
       if (cancelled) {
         toast.info('Checkout cancelled.');
         options.onCancelled?.();
         return;
       }
 
-      if (order.status === 'paid') {
+      if (verifyFailed) {
+        toast.info("Payment received — we'll confirm shortly.");
+      } else if (order.status === 'paid') {
         toast.success('Tickets confirmed!');
       } else {
         toast.success("Payment received — we'll confirm shortly.");
@@ -67,7 +83,9 @@ export function useCheckout(options: Options = {}) {
       if (isApiError(error) && error.isValidation) {
         const first = Object.values(error.fieldErrors())[0];
         toast.error(first ?? error.message);
+        return;
       }
+      toast.error(isApiError(error) ? error.message : 'Checkout failed. Please try again.');
     },
   });
 }
