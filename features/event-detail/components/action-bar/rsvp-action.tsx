@@ -6,8 +6,16 @@ import { CommentsButton } from '@/features/event-detail/components/action-bar/co
 import { useRsvpToggle } from '@/features/event-detail/hooks';
 import type { EventDetail } from '@/features/event-detail/types';
 import { useFeature } from '@/features/system/hooks';
+import { MOTION } from '@/lib/motion';
 import { Check, Sparkles } from 'lucide-react-native';
+import { useEffect, useRef } from 'react';
 import { View } from 'react-native';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSequence,
+  withTiming,
+} from 'react-native-reanimated';
 
 type Props = {
   event: EventDetail;
@@ -18,6 +26,23 @@ export function RsvpAction({ event, onOpenComments }: Props) {
   const toggle = useRsvpToggle(event.slug, event.id);
   const rsvpEnabled = useFeature('rsvp.enabled');
   const showButton = rsvpEnabled || event.is_rsvped;
+
+  const scale = useSharedValue(1);
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+  }));
+
+  const isFirstRender = useRef(true);
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    scale.value = withSequence(
+      withTiming(MOTION.like.peak, { duration: MOTION.like.upMs }),
+      withTiming(1, { duration: MOTION.like.downMs })
+    );
+  }, [event.is_rsvped, scale]);
 
   return (
     <ActionBarWrapper>
@@ -34,11 +59,13 @@ export function RsvpAction({ event, onOpenComments }: Props) {
           className="px-8"
           disabled={toggle.isPending}
           onPress={() => toggle.mutate(!event.is_rsvped)}>
-          <Icon
-            as={event.is_rsvped ? Check : Sparkles}
-            className={event.is_rsvped ? 'text-foreground size-4' : 'text-primary-foreground size-4'}
-            strokeWidth={2.25}
-          />
+          <Animated.View style={animatedStyle}>
+            <Icon
+              as={event.is_rsvped ? Check : Sparkles}
+              className={event.is_rsvped ? 'text-foreground size-4' : 'text-primary-foreground size-4'}
+              strokeWidth={2.25}
+            />
+          </Animated.View>
           <Text>{event.is_rsvped ? 'Going' : 'RSVP'}</Text>
         </Button>
       ) : null}

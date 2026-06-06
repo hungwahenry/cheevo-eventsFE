@@ -9,6 +9,7 @@ import {
 import { usePaymentReturn } from '@/features/checkout/hooks/use-payment-return';
 import { useActiveCheckoutStore } from '@/features/checkout/stores/active-checkout';
 import { router } from 'expo-router';
+import { AnimatePresence, MotiView } from 'moti';
 import { useCallback, useEffect } from 'react';
 import { BackHandler, View } from 'react-native';
 
@@ -47,12 +48,22 @@ export default function PaymentReturnScreen() {
 
   return (
     <View className="bg-background pt-safe-offset-2 flex-1 items-center justify-center px-6">
-      {phase === 'paying' ? <PayingState onCancel={cancel} /> : null}
-      {phase === 'confirming' ? <ConfirmingState /> : null}
-      {phase === 'paid' ? <PaidState onContinue={onContinue} /> : null}
-      {phase === 'pending' ? <PendingState onContinue={onContinue} /> : null}
-      {phase === 'failed' ? <FailedState onContinue={onContinue} /> : null}
-      {phase === 'cancelled' ? <CancelledState onContinue={onContinue} /> : null}
+      <AnimatePresence exitBeforeEnter>
+        <MotiView
+          key={phase}
+          from={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ type: 'timing', duration: 200 }}
+          style={{ width: '100%', alignItems: 'center' }}>
+          {phase === 'paying' ? <PayingState onCancel={cancel} /> : null}
+          {phase === 'confirming' ? <ConfirmingState /> : null}
+          {phase === 'paid' ? <PaidState onContinue={onContinue} /> : null}
+          {phase === 'pending' ? <PendingState onContinue={onContinue} /> : null}
+          {phase === 'failed' ? <FailedState onContinue={onContinue} /> : null}
+          {phase === 'cancelled' ? <CancelledState onContinue={onContinue} /> : null}
+        </MotiView>
+      </AnimatePresence>
     </View>
   );
 }

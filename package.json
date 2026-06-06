@@ -69,6 +69,7 @@
     "expo-video": "~55.0.17",
     "expo-web-browser": "~55.0.16",
     "lucide-react-native": "^0.545.0",
+    "moti": "^0.30.0",
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "react-hook-form": "^7.76.1",
