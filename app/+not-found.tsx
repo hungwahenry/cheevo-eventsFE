@@ -1,17 +1,19 @@
-import { Link, Stack } from 'expo-router';
+import { EmptyState } from '@/components/ui/empty-state';
+import { router, Stack } from 'expo-router';
+import { Compass } from 'lucide-react-native';
 import { View } from 'react-native';
-import { Text } from '@/components/ui/text';
 
 export default function NotFoundScreen() {
   return (
     <>
-      <Stack.Screen options={{ title: 'Oops!' }} />
-      <View>
-        <Text>This screen doesn't exist.</Text>
-
-        <Link href="/">
-          <Text>Go to home screen!</Text>
-        </Link>
+      <Stack.Screen options={{ title: 'Not found' }} />
+      <View className="bg-background flex-1 justify-center">
+        <EmptyState
+          icon={Compass}
+          title="Page not found"
+          description="We couldn't find that screen. It may have moved."
+          action={{ label: 'Go home', onPress: () => router.replace('/') }}
+        />
       </View>
     </>
   );
