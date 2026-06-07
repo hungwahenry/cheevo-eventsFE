@@ -2,8 +2,8 @@ import { config } from '@/lib/config';
 import * as WebBrowser from 'expo-web-browser';
 
 const SLUGS = {
-  terms: 'terms-of-service',
-  privacy: 'privacy-policy',
+  terms: 'pages/terms-of-service',
+  privacy: 'pages/privacy-policy',
 } as const;
 
 export const legalUrls = {
