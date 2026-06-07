@@ -22,7 +22,7 @@ export default function InterestsSettingsScreen() {
           {isSaving ? (
             <Spinner size="sm" barClassName="bg-foreground" />
           ) : (
-            <Text className="text-primary font-semibold">Save</Text>
+            <Text className="text-primary font-sans-semibold">Save</Text>
           )}
         </Button>
       }>

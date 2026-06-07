@@ -31,7 +31,7 @@ export function ProfileInterests({ userId }: Props) {
       <View className="flex-row flex-wrap gap-1.5">
         {data.map((interest) => (
           <View key={interest.id} className="bg-muted rounded-full px-3 py-1.5">
-            <Text className="text-foreground text-xs font-medium">{interest.name}</Text>
+            <Text className="text-foreground text-xs font-sans-medium">{interest.name}</Text>
           </View>
         ))}
       </View>
@@ -41,7 +41,7 @@ export function ProfileInterests({ userId }: Props) {
 
 function SectionTitle({ children }: { children: string }) {
   return (
-    <Text className="text-muted-foreground text-xs font-semibold tracking-wide uppercase">
+    <Text className="text-muted-foreground text-xs font-sans-semibold tracking-wide uppercase">
       {children}
     </Text>
   );

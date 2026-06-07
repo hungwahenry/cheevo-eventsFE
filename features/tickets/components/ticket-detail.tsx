@@ -59,7 +59,7 @@ export function TicketDetail({ ticketId }: { ticketId: string }) {
 
       <ScrollView contentContainerStyle={{ paddingBottom: 24 }}>
         <View className="mx-4 mt-2 items-center gap-1">
-          <Text className="text-foreground text-xl font-semibold" numberOfLines={2}>
+          <Text className="text-foreground text-xl font-sans-semibold" numberOfLines={2}>
             {ticket.event.title}
           </Text>
           {when ? <Text className="text-muted-foreground text-sm">{when}</Text> : null}
@@ -76,7 +76,7 @@ export function TicketDetail({ ticketId }: { ticketId: string }) {
           style={{ marginHorizontal: 16, marginTop: 24, backgroundColor: 'transparent' }}>
           <View className="items-center gap-4 rounded-2xl bg-muted p-6">
             <View className="flex-row items-center gap-2">
-              <Text className="text-foreground text-base font-semibold">
+              <Text className="text-foreground text-base font-sans-semibold">
                 {ticket.ticket_name}
               </Text>
               <TicketStatusPill status={ticket.status} />

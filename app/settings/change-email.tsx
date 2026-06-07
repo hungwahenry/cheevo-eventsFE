@@ -38,7 +38,7 @@ export default function ChangeEmailScreen() {
               <View className="bg-primary/10 size-12 items-center justify-center rounded-full">
                 <Icon as={Mail} className="text-primary size-6" strokeWidth={2} />
               </View>
-              <Text className="text-foreground text-center text-lg font-semibold">
+              <Text className="text-foreground text-center text-lg font-sans-semibold">
                 Update your email
               </Text>
               <Text className="text-muted-foreground text-center text-sm">
@@ -48,7 +48,7 @@ export default function ChangeEmailScreen() {
             </View>
 
             <View className="gap-2">
-              <Text className="text-muted-foreground text-xs font-semibold tracking-wide uppercase">
+              <Text className="text-muted-foreground text-xs font-sans-semibold tracking-wide uppercase">
                 Current
               </Text>
               <View className="bg-muted rounded-2xl px-4 py-3">
@@ -59,7 +59,7 @@ export default function ChangeEmailScreen() {
             </View>
 
             <View className="gap-2">
-              <Text className="text-muted-foreground text-xs font-semibold tracking-wide uppercase">
+              <Text className="text-muted-foreground text-xs font-sans-semibold tracking-wide uppercase">
                 New
               </Text>
               <IconInput
@@ -106,7 +106,7 @@ export default function ChangeEmailScreen() {
                   );
                 })}
               </View>
-              <Text className="text-muted-foreground text-center text-xs font-semibold tracking-wide uppercase">
+              <Text className="text-muted-foreground text-center text-xs font-sans-semibold tracking-wide uppercase">
                 Step {factorIndex} of {factorsTotal}
               </Text>
             </View>
@@ -115,12 +115,12 @@ export default function ChangeEmailScreen() {
               <View className="bg-primary/10 size-12 items-center justify-center rounded-full">
                 <Icon as={ShieldCheck} className="text-primary size-6" strokeWidth={2} />
               </View>
-              <Text className="text-foreground text-center text-lg font-semibold">
+              <Text className="text-foreground text-center text-lg font-sans-semibold">
                 Enter your code
               </Text>
               <Text className="text-muted-foreground text-center text-sm">
                 We sent a 6-digit code to{' '}
-                <Text className="text-foreground font-medium">{nextFactor.target_masked}</Text>.
+                <Text className="text-foreground font-sans-medium">{nextFactor.target_masked}</Text>.
               </Text>
             </View>
 
@@ -133,7 +133,7 @@ export default function ChangeEmailScreen() {
               disabled={isVerifying}>
               <Text className="text-muted-foreground text-sm">
                 Didn&apos;t get it?{' '}
-                <Text className="text-primary text-sm font-semibold">Resend code</Text>
+                <Text className="text-primary text-sm font-sans-semibold">Resend code</Text>
               </Text>
             </Pressable>
           </View>

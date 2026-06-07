@@ -11,7 +11,7 @@ export function PendingState({ onContinue }: { onContinue: () => void }) {
         <View className="bg-primary/10 size-16 items-center justify-center rounded-full">
           <Icon as={Clock} className="text-primary size-8" strokeWidth={2} />
         </View>
-        <Text className="text-foreground text-center text-xl font-semibold">
+        <Text className="text-foreground text-center text-xl font-sans-semibold">
           Payment received
         </Text>
         <Text className="text-muted-foreground text-center text-sm">

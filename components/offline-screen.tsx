@@ -26,7 +26,7 @@ export function OfflineScreen() {
         <View className="bg-destructive/10 size-16 items-center justify-center rounded-full">
           <Icon as={WifiOff} className="text-destructive size-8" strokeWidth={2} />
         </View>
-        <Text className="text-foreground text-center text-xl font-semibold">
+        <Text className="text-foreground text-center text-xl font-sans-semibold">
           No Internet Connection
         </Text>
         <Text className="text-muted-foreground text-center text-sm">

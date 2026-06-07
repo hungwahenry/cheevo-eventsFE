@@ -13,7 +13,7 @@ export function PastEventAction({ commentsCount, onOpenComments }: Props) {
     <ActionBarWrapper>
       <View className="flex-1">
         <Text className="text-muted-foreground text-xs">Event ended</Text>
-        <Text className="text-foreground text-base font-semibold">Thanks for coming</Text>
+        <Text className="text-foreground text-base font-sans-semibold">Thanks for coming</Text>
       </View>
       <CommentsButton count={commentsCount} onPress={onOpenComments} />
     </ActionBarWrapper>

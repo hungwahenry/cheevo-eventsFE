@@ -30,7 +30,7 @@ export function EventDetailFeatureCard({ feature }: { feature: EventDetailFeatur
 
       <View className="gap-0.5">
         <View className="flex-row items-center gap-1.5">
-          <Text className="text-foreground text-sm font-semibold" numberOfLines={1}>
+          <Text className="text-foreground text-sm font-sans-semibold" numberOfLines={1}>
             {feature.title}
           </Text>
           {feature.link ? (

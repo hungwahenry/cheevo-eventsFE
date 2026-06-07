@@ -17,7 +17,7 @@ export function OfflineBanner() {
       className="bg-destructive absolute left-0 right-0 top-0 z-50">
       <View className="flex-row items-center justify-center gap-2 px-4 py-2">
         <Icon as={WifiOff} className="size-4 text-white" />
-        <Text className="text-sm font-medium text-white">No internet connection</Text>
+        <Text className="text-sm font-sans-medium text-white">No internet connection</Text>
       </View>
     </View>
   );

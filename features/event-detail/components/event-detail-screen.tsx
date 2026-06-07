@@ -45,7 +45,7 @@ export function EventDetailScreen({ slug }: { slug: string }) {
   if (error || !event) {
     return (
       <View className="bg-background flex-1 items-center justify-center px-8">
-        <Text className="text-foreground text-lg font-semibold">Event not found</Text>
+        <Text className="text-foreground text-lg font-sans-semibold">Event not found</Text>
         <Text className="text-muted-foreground mt-1 text-center text-sm">
           It might have been taken down or you opened a stale link.
         </Text>

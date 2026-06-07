@@ -6,7 +6,7 @@ export function ConfirmingState() {
   return (
     <View className="items-center gap-4">
       <Spinner size="lg" />
-      <Text className="text-foreground text-lg font-semibold">Confirming payment</Text>
+      <Text className="text-foreground text-lg font-sans-semibold">Confirming payment</Text>
       <Text className="text-muted-foreground text-center text-sm">
         Hang on — we&apos;re checking with your bank.
       </Text>

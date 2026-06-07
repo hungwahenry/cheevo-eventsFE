@@ -43,7 +43,7 @@ export default function DeleteAccountScreen() {
               <View className="bg-destructive/10 size-12 items-center justify-center rounded-full">
                 <Icon as={TriangleAlert} className="text-destructive size-6" strokeWidth={2} />
               </View>
-              <Text className="text-foreground text-center text-lg font-semibold">
+              <Text className="text-foreground text-center text-lg font-sans-semibold">
                 Delete your account
               </Text>
               <Text className="text-muted-foreground text-center text-sm">
@@ -53,7 +53,7 @@ export default function DeleteAccountScreen() {
             </View>
 
             <View className="gap-2">
-              <Text className="text-muted-foreground text-xs font-semibold tracking-wide uppercase">
+              <Text className="text-muted-foreground text-xs font-sans-semibold tracking-wide uppercase">
                 What we&apos;ll remove
               </Text>
               <View className="bg-muted overflow-hidden rounded-2xl">
@@ -109,7 +109,7 @@ export default function DeleteAccountScreen() {
                     );
                   })}
                 </View>
-                <Text className="text-muted-foreground text-center text-xs font-semibold tracking-wide uppercase">
+                <Text className="text-muted-foreground text-center text-xs font-sans-semibold tracking-wide uppercase">
                   Step {factorIndex} of {factorsTotal}
                 </Text>
               </View>
@@ -119,12 +119,12 @@ export default function DeleteAccountScreen() {
               <View className="bg-primary/10 size-12 items-center justify-center rounded-full">
                 <Icon as={ShieldCheck} className="text-primary size-6" strokeWidth={2} />
               </View>
-              <Text className="text-foreground text-center text-lg font-semibold">
+              <Text className="text-foreground text-center text-lg font-sans-semibold">
                 Confirm it&apos;s you
               </Text>
               <Text className="text-muted-foreground text-center text-sm">
                 We sent a 6-digit code to{' '}
-                <Text className="text-foreground font-medium">{nextFactor.target_masked}</Text>.
+                <Text className="text-foreground font-sans-medium">{nextFactor.target_masked}</Text>.
                 Enter it to delete your account.
               </Text>
             </View>
@@ -138,7 +138,7 @@ export default function DeleteAccountScreen() {
               disabled={isVerifying}>
               <Text className="text-muted-foreground text-sm">
                 Didn&apos;t get it?{' '}
-                <Text className="text-primary text-sm font-semibold">Resend code</Text>
+                <Text className="text-primary text-sm font-sans-semibold">Resend code</Text>
               </Text>
             </Pressable>
 

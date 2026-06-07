@@ -21,7 +21,7 @@ export function EventDetailTicketCard({ ticket, currency }: EventDetailTicketCar
       className={`bg-muted gap-2 rounded-2xl p-4 ${soldOut ? 'opacity-60' : ''}`}>
       <View className="flex-row items-start justify-between gap-3">
         <View className="min-w-0 flex-1">
-          <Text className="text-foreground text-base font-semibold" numberOfLines={1}>
+          <Text className="text-foreground text-base font-sans-semibold" numberOfLines={1}>
             {ticket.name}
           </Text>
           {ticket.description ? (
@@ -31,7 +31,7 @@ export function EventDetailTicketCard({ ticket, currency }: EventDetailTicketCar
           ) : null}
         </View>
         <View className="items-end">
-          <Text className="text-foreground text-xl leading-tight font-bold">
+          <Text className="text-foreground text-xl leading-tight font-sans-bold">
             {formatMoney(ticket.gross_price, currency)}
           </Text>
           {showCompare ? (

@@ -77,7 +77,7 @@ export function FeedList() {
         </View>
       ) : events.length === 0 ? (
         <View className="flex-1 items-center justify-center gap-1 px-8">
-          <Text className="text-foreground text-lg font-semibold">No events yet</Text>
+          <Text className="text-foreground text-lg font-sans-semibold">No events yet</Text>
           <Text className="text-muted-foreground text-center text-sm">
             Pick more interests or follow some organisers to start seeing what&apos;s on.
           </Text>

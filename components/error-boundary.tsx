@@ -22,7 +22,7 @@ export function AppErrorBoundary({ error, retry }: Props) {
         <View className="bg-destructive/10 size-16 items-center justify-center rounded-full">
           <Icon as={TriangleAlert} className="text-destructive size-8" strokeWidth={2} />
         </View>
-        <Text className="text-foreground text-center text-xl font-semibold">
+        <Text className="text-foreground text-center text-xl font-sans-semibold">
           Something went wrong
         </Text>
         <Text className="text-muted-foreground text-center text-sm">

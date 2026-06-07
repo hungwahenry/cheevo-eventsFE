@@ -40,7 +40,7 @@ export default function SettingsScreen() {
           className="size-10 items-center justify-center">
           <Icon as={ChevronLeftIcon} className="text-foreground size-6" strokeWidth={2.25} />
         </Pressable>
-        <Text className="text-foreground text-2xl font-bold tracking-tight">Settings</Text>
+        <Text className="text-foreground text-2xl font-sans-bold tracking-tight">Settings</Text>
       </View>
 
       <ScrollView contentContainerStyle={{ paddingBottom: 64 }}>

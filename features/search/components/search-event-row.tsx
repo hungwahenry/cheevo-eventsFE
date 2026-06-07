@@ -30,7 +30,7 @@ export function SearchEventRow({ event, onPress }: Props) {
         )}
       </View>
       <View className="min-w-0 flex-1 gap-0.5">
-        <Text numberOfLines={1} className="text-foreground text-sm font-semibold">
+        <Text numberOfLines={1} className="text-foreground text-sm font-sans-semibold">
           {event.title}
         </Text>
         {subtitle ? (

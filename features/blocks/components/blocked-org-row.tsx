@@ -37,7 +37,7 @@ export function BlockedOrgRow({ organisation }: Props) {
           )}
         </View>
         <View className="min-w-0 flex-1">
-          <Text numberOfLines={1} className="text-foreground text-sm font-semibold">
+          <Text numberOfLines={1} className="text-foreground text-sm font-sans-semibold">
             {organisation.name}
           </Text>
           <Text numberOfLines={1} className="text-muted-foreground text-xs">

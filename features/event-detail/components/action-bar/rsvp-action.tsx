@@ -48,7 +48,7 @@ export function RsvpAction({ event, onOpenComments }: Props) {
     <ActionBarWrapper>
       <View className="flex-1">
         <Text className="text-muted-foreground text-xs">{event.rsvps_count} going</Text>
-        <Text className="text-foreground text-base font-semibold">
+        <Text className="text-foreground text-base font-sans-semibold">
           {event.is_rsvped ? "You're going" : 'Are you in?'}
         </Text>
       </View>

@@ -69,7 +69,7 @@ export function BirthdayField({ value, onChange }: BirthdayFieldProps) {
             <Button variant="ghost" size="sm" onPress={() => sheetRef.current?.dismiss()}>
               <Text>Cancel</Text>
             </Button>
-            <Text className="text-foreground text-base font-semibold">Birthday</Text>
+            <Text className="text-foreground text-base font-sans-semibold">Birthday</Text>
             <Button variant="link" size="sm" onPress={commit}>
               <Text>Done</Text>
             </Button>

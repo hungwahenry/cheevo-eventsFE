@@ -21,7 +21,7 @@ export function SettingsSubscreen({ title, rightAction, children }: Props) {
           className="size-10 items-center justify-center">
           <Icon as={ChevronLeftIcon} className="text-foreground size-6" strokeWidth={2.25} />
         </Pressable>
-        <Text className="text-foreground flex-1 text-2xl font-bold tracking-tight">{title}</Text>
+        <Text className="text-foreground flex-1 text-2xl font-sans-bold tracking-tight">{title}</Text>
         {rightAction}
       </View>
       {children}

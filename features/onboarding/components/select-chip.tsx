@@ -18,7 +18,7 @@ export function SelectChip({ label, selected, onPress }: SelectChipProps) {
       )}>
       <Text
         className={cn(
-          'text-sm font-medium',
+          'text-sm font-sans-medium',
           selected ? 'text-primary-foreground' : 'text-foreground'
         )}>
         {label}

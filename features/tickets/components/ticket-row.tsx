@@ -14,7 +14,7 @@ export function TicketRow({ ticket, isLast }: { ticket: MyTicket; isLast: boolea
           isLast ? '' : 'border-border/60 border-b'
         }`}>
         <View className="min-w-0 flex-1 gap-0.5">
-          <Text className="text-foreground text-sm font-medium" numberOfLines={1}>
+          <Text className="text-foreground text-sm font-sans-medium" numberOfLines={1}>
             {ticket.ticket_name}
           </Text>
           <Text className="text-muted-foreground font-mono text-xs">

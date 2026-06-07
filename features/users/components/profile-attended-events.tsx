@@ -58,7 +58,7 @@ export function ProfileAttendedEvents({ userId, viewpoint }: Props) {
           onPress={() => fetchNextPage()}
           disabled={isFetchingNextPage}
           className="items-center pt-2">
-          <Text className="text-primary text-xs font-semibold">
+          <Text className="text-primary text-xs font-sans-semibold">
             {isFetchingNextPage ? 'Loading…' : 'Show more'}
           </Text>
         </Pressable>
@@ -88,7 +88,7 @@ function EventRow({ event }: { event: UserAttendedEvent }) {
         )}
       </View>
       <View className="min-w-0 flex-1 gap-0.5">
-        <Text numberOfLines={1} className="text-foreground text-sm font-semibold">
+        <Text numberOfLines={1} className="text-foreground text-sm font-sans-semibold">
           {event.title}
         </Text>
         {subtitle ? (

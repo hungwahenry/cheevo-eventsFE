@@ -95,7 +95,8 @@
           "organization": "issorite",
           "project": "cheevo-mobile"
         }
-      ]
+      ],
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true

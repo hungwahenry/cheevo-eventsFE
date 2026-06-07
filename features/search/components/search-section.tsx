@@ -14,12 +14,12 @@ export function SearchSection({ title, hasMore, onSeeAll, children }: Props) {
   return (
     <View className="gap-1 pb-2">
       <View className="flex-row items-center justify-between px-5 pt-4 pb-2">
-        <Text className="text-muted-foreground text-xs font-semibold tracking-wide uppercase">
+        <Text className="text-muted-foreground text-xs font-sans-semibold tracking-wide uppercase">
           {title}
         </Text>
         {hasMore ? (
           <Pressable onPress={onSeeAll} hitSlop={10} className="flex-row items-center gap-0.5">
-            <Text className="text-primary text-xs font-semibold">See all</Text>
+            <Text className="text-primary text-xs font-sans-semibold">See all</Text>
             <Icon as={ChevronRightIcon} className="text-primary" size={14} strokeWidth={2.4} />
           </Pressable>
         ) : null}

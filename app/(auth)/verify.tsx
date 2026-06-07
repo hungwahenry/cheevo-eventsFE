@@ -41,7 +41,7 @@ export default function VerifyScreen() {
             className="self-center py-1">
             <Text className="text-muted-foreground text-sm">
               Didn&apos;t get it?{' '}
-              <Text className="text-primary text-sm font-semibold">Resend code</Text>
+              <Text className="text-primary text-sm font-sans-semibold">Resend code</Text>
             </Text>
           </Pressable>
         </View>

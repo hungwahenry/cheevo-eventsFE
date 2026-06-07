@@ -15,7 +15,7 @@ export function EventDetailHeader({ event }: { event: EventDetail }) {
   return (
     <View className="gap-3">
       <View className="flex-row items-start gap-2">
-        <Text className="text-foreground flex-1 text-2xl leading-tight font-bold">
+        <Text className="text-foreground flex-1 text-2xl leading-tight font-sans-bold">
           {event.title}
         </Text>
         {event.status === 'past' ? (
@@ -53,7 +53,7 @@ export function EventDetailHeader({ event }: { event: EventDetail }) {
       {match > 0 ? (
         <View className="flex-row items-center gap-1.5">
           <Icon as={Sparkles} className="text-primary size-4" strokeWidth={2.25} />
-          <Text className="text-primary text-xs font-medium">
+          <Text className="text-primary text-xs font-sans-medium">
             {match === 1 ? 'Matches 1 of your interests' : `Matches ${match} of your interests`}
           </Text>
         </View>

@@ -57,7 +57,7 @@ export function ProfileComments({ userId, viewpoint }: Props) {
           onPress={() => fetchNextPage()}
           disabled={isFetchingNextPage}
           className="items-center pt-2">
-          <Text className="text-primary text-xs font-semibold">
+          <Text className="text-primary text-xs font-sans-semibold">
             {isFetchingNextPage ? 'Loading…' : 'Show more'}
           </Text>
         </Pressable>

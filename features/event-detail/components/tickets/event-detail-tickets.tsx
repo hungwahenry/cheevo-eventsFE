@@ -38,7 +38,7 @@ function ViewAllRow({ count }: { count: number }) {
       onPress={() => {
       }}
       className="bg-muted flex-row items-center justify-between rounded-2xl px-4 py-3">
-      <Text className="text-foreground text-sm font-medium">View all {count} tickets</Text>
+      <Text className="text-foreground text-sm font-sans-medium">View all {count} tickets</Text>
       <Icon as={ChevronRight} className="text-muted-foreground size-4" strokeWidth={2} />
     </Pressable>
   );

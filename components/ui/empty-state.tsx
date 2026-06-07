@@ -53,7 +53,7 @@ export function EmptyState({
           </View>
         ) : null}
 
-        <Text className="text-foreground mt-3 text-center text-base font-semibold">
+        <Text className="text-foreground mt-3 text-center text-base font-sans-semibold">
           {title}
         </Text>
 

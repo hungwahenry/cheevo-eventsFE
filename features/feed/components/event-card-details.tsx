@@ -28,14 +28,14 @@ export function EventCardDetails({ event }: { event: FeedEvent }) {
               <AvatarImage source={{ uri: org.logo_url }} />
             </Avatar>
           ) : null}
-          <Text className="text-foreground text-sm font-medium">{org.name}</Text>
+          <Text className="text-foreground text-sm font-sans-medium">{org.name}</Text>
           {event.is_subscribed ? (
             <Text className="text-muted-foreground text-xs">· Following</Text>
           ) : null}
         </Pressable>
       ) : null}
 
-      <Text className="text-foreground text-xl leading-tight font-bold">{event.title}</Text>
+      <Text className="text-foreground text-xl leading-tight font-sans-bold">{event.title}</Text>
 
       <View className="flex-row flex-wrap items-center gap-x-4 gap-y-2">
         {when ? (
@@ -53,7 +53,7 @@ export function EventCardDetails({ event }: { event: FeedEvent }) {
         {event.interest_overlap > 0 ? (
           <View className="flex-row items-center gap-1.5">
             <Icon as={Sparkles} className="text-primary size-4" strokeWidth={2} />
-            <Text className="text-primary text-xs font-medium">
+            <Text className="text-primary text-xs font-sans-medium">
               {event.interest_overlap === 1
                 ? '1 match'
                 : `${event.interest_overlap} matches`}

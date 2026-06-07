@@ -34,7 +34,7 @@ export function TicketPickerRow({
       <View className="flex-row items-start justify-between gap-3">
         <View className="min-w-0 flex-1">
           <View className="flex-row flex-wrap items-center gap-x-2 gap-y-1">
-            <Text className="text-foreground text-base font-semibold" numberOfLines={1}>
+            <Text className="text-foreground text-base font-sans-semibold" numberOfLines={1}>
               {ticket.name}
             </Text>
             {soldOut ? (
@@ -50,7 +50,7 @@ export function TicketPickerRow({
           ) : null}
         </View>
         <View className="items-end">
-          <Text className="text-foreground text-lg leading-tight font-bold">
+          <Text className="text-foreground text-lg leading-tight font-sans-bold">
             {formatMoney(ticket.gross_price, currency)}
           </Text>
           {showCompare ? (

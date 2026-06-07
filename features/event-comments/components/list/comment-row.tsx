@@ -45,7 +45,7 @@ export function CommentRow({ comment, onReply, onLongPress, compact }: CommentRo
       <View className="flex-1">
         <Pressable onPress={() => openUser(comment.author.id)} hitSlop={4}>
           <View className="flex-row flex-wrap items-center gap-x-1.5 gap-y-0.5">
-            <Text className="text-foreground text-sm font-semibold">{displayName}</Text>
+            <Text className="text-foreground text-sm font-sans-semibold">{displayName}</Text>
             {handle ? (
               <Text className="text-muted-foreground text-xs">{handle}</Text>
             ) : null}
@@ -63,7 +63,7 @@ export function CommentRow({ comment, onReply, onLongPress, compact }: CommentRo
             Replying to{' '}
             <Text
               onPress={() => openUser(replyingTo.id)}
-              className="text-primary text-xs font-medium">
+              className="text-primary text-xs font-sans-medium">
               @{replyingTo.username}
             </Text>
           </Text>
@@ -79,7 +79,7 @@ export function CommentRow({ comment, onReply, onLongPress, compact }: CommentRo
 
         <View className="mt-1 flex-row items-center gap-4">
           <Pressable onPress={() => onReply(comment)} hitSlop={6}>
-            <Text className="text-muted-foreground text-xs font-medium">Reply</Text>
+            <Text className="text-muted-foreground text-xs font-sans-medium">Reply</Text>
           </Pressable>
         </View>
       </View>

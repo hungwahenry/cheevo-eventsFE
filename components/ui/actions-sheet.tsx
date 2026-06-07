@@ -102,7 +102,7 @@ function ActionRow({
       <Text
         className={
           action.destructive
-            ? 'text-destructive text-base font-medium'
+            ? 'text-destructive text-base font-sans-medium'
             : 'text-foreground text-base'
         }>
         {action.label}

@@ -28,7 +28,7 @@ export function ProfileHeader({ user }: Props) {
       </View>
 
       <View className="items-center gap-0.5">
-        <Text className="text-foreground text-xl font-bold tracking-tight">{name}</Text>
+        <Text className="text-foreground text-xl font-sans-bold tracking-tight">{name}</Text>
         {user.username ? (
           <Text className="text-muted-foreground text-sm">@{user.username}</Text>
         ) : null}

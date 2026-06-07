@@ -32,7 +32,7 @@ export function CommentReplies({ parent, onReply, onLongPress }: CommentRepliesP
         onPress={() => setExpanded((v) => !v)}
         className="flex-row items-center gap-2 py-1.5">
         <View className="bg-muted-foreground/40 h-px w-6" />
-        <Text className="text-muted-foreground text-xs font-medium">
+        <Text className="text-muted-foreground text-xs font-sans-medium">
           {expanded ? 'Hide' : `View ${parent.replies_count}`}{' '}
           {parent.replies_count === 1 ? 'reply' : 'replies'}
         </Text>

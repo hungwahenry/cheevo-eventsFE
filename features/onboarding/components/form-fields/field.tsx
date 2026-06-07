@@ -11,7 +11,7 @@ export function Field({ label, children }: FieldProps) {
   return (
     <View className="gap-1.5">
       {label ? (
-        <Text className="text-muted-foreground ml-1 text-sm font-medium">{label}</Text>
+        <Text className="text-muted-foreground ml-1 text-sm font-sans-medium">{label}</Text>
       ) : null}
       {children}
     </View>

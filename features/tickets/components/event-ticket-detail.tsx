@@ -61,7 +61,7 @@ export function EventTicketDetail({ eventId }: { eventId: string }) {
               />
             </View>
             <View className="min-w-0 flex-1 gap-1">
-              <Text className="text-foreground text-base font-semibold" numberOfLines={2}>
+              <Text className="text-foreground text-base font-sans-semibold" numberOfLines={2}>
                 {event.title}
               </Text>
               {when ? (
@@ -83,7 +83,7 @@ export function EventTicketDetail({ eventId }: { eventId: string }) {
         </Link>
 
         <View className="mx-4 mt-6">
-          <Text className="text-muted-foreground mb-2 px-1 text-xs font-semibold uppercase tracking-wide">
+          <Text className="text-muted-foreground mb-2 px-1 text-xs font-sans-semibold uppercase tracking-wide">
             Your tickets
           </Text>
           <View className="bg-muted overflow-hidden rounded-xl">

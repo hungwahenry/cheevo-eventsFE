@@ -11,7 +11,7 @@ export function CancelledState({ onContinue }: { onContinue: () => void }) {
         <View className="size-16 items-center justify-center rounded-full bg-amber-500/10">
           <Icon as={XCircle} className="size-8 text-amber-600" strokeWidth={2} />
         </View>
-        <Text className="text-foreground text-center text-xl font-semibold">
+        <Text className="text-foreground text-center text-xl font-sans-semibold">
           Checkout cancelled
         </Text>
         <Text className="text-muted-foreground text-center text-sm">

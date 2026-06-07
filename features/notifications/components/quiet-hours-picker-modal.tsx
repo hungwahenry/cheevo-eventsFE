@@ -36,7 +36,7 @@ export function QuietHoursPickerModal({ label, initial, onCancel, onSave }: Prop
       <Pressable onPress={onCancel} className="flex-1 justify-center bg-black/40 px-8">
         <Pressable onPress={(e) => e.stopPropagation()}>
           <View className="bg-card rounded-2xl px-4 py-5">
-            <Text className="text-foreground text-center text-base font-semibold">{label}</Text>
+            <Text className="text-foreground text-center text-base font-sans-semibold">{label}</Text>
             <DateTimePicker
               mode="time"
               display="spinner"

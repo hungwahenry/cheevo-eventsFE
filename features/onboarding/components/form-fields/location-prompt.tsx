@@ -18,7 +18,7 @@ export function LocationPrompt({ status, hasLocation, placeName, onRequest }: Lo
       {hasLocation ? (
         <View className="bg-muted/40 flex-row items-center gap-3 rounded-2xl p-4">
           <Icon as={MapPin} className="text-primary size-5" strokeWidth={1.75} />
-          <Text className="text-foreground flex-1 font-medium">{placeName}</Text>
+          <Text className="text-foreground flex-1 font-sans-medium">{placeName}</Text>
           <Icon as={Check} className="text-primary size-5" strokeWidth={2} />
         </View>
       ) : null}

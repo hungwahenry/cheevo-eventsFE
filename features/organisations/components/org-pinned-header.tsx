@@ -45,7 +45,7 @@ export function OrgPinnedHeader({ organisation, scrollY, startAt, endAt }: Props
       className="bg-background pt-safe border-border absolute top-0 right-0 left-0 z-20 border-b">
       <View className="flex-row items-center justify-between gap-3 px-14 py-2">
         <View className="min-w-0 flex-1">
-          <Text className="text-foreground text-sm font-semibold" numberOfLines={1}>
+          <Text className="text-foreground text-sm font-sans-semibold" numberOfLines={1}>
             {organisation.name}
           </Text>
           <Text className="text-muted-foreground text-xs" numberOfLines={1}>

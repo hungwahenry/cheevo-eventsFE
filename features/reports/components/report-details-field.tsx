@@ -17,7 +17,7 @@ export function ReportDetailsField({ value, onChange, required, maxLength }: Pro
 
   return (
     <View className="px-5 pt-3">
-      <Text className="text-foreground mb-2 text-sm font-medium">
+      <Text className="text-foreground mb-2 text-sm font-sans-medium">
         Details {required ? '' : '(optional)'}
       </Text>
       <View className="border-input rounded-md border bg-transparent px-3 py-2">

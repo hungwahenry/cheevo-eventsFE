@@ -30,13 +30,13 @@ export default function EmailScreen() {
           <Text className="text-muted-foreground text-center text-xs leading-5">
             By continuing you agree to our{' '}
             <Text
-              className="text-foreground text-xs font-medium underline"
+              className="text-foreground text-xs font-sans-medium underline"
               onPress={() => openLegalPage('terms')}>
               Terms of Service
             </Text>{' '}
             and{' '}
             <Text
-              className="text-foreground text-xs font-medium underline"
+              className="text-foreground text-xs font-sans-medium underline"
               onPress={() => openLegalPage('privacy')}>
               Privacy Policy
             </Text>

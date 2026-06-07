@@ -10,7 +10,7 @@ export function SettingsSection({ title, children }: Props) {
   return (
     <View className="pt-5">
       {title ? (
-        <Text className="text-muted-foreground px-5 pb-2 text-xs font-semibold tracking-wide uppercase">
+        <Text className="text-muted-foreground px-5 pb-2 text-xs font-sans-semibold tracking-wide uppercase">
           {title}
         </Text>
       ) : null}

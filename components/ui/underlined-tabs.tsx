@@ -39,8 +39,8 @@ export function UnderlinedTabs<T extends string>({ tabs, value, onValueChange }:
               <Text
                 className={
                   focused
-                    ? 'text-foreground text-sm font-semibold'
-                    : 'text-muted-foreground text-sm font-medium'
+                    ? 'text-foreground text-sm font-sans-semibold'
+                    : 'text-muted-foreground text-sm font-sans-medium'
                 }>
                 {tab.label}
               </Text>

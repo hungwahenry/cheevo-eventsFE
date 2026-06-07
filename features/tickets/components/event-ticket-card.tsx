@@ -30,7 +30,7 @@ export function EventTicketCard({ event, tickets }: Props) {
         </View>
 
         <View className="min-w-0 flex-1 gap-0.5">
-          <Text className="text-foreground text-sm font-semibold" numberOfLines={1}>
+          <Text className="text-foreground text-sm font-sans-semibold" numberOfLines={1}>
             {event.title}
           </Text>
           {when ? (
@@ -43,7 +43,7 @@ export function EventTicketCard({ event, tickets }: Props) {
               {venue}
             </Text>
           ) : null}
-          <Text className="text-foreground mt-0.5 text-xs font-medium">{countLabel}</Text>
+          <Text className="text-foreground mt-0.5 text-xs font-sans-medium">{countLabel}</Text>
         </View>
 
         <Icon as={ChevronRightIcon} className="text-muted-foreground size-4" />

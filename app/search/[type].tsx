@@ -53,7 +53,7 @@ export default function SearchByTypeScreen() {
     <View className="bg-background pt-safe-offset-2 flex-1">
       <SearchBar value={query} onChange={setQuery} placeholder={`Search ${TITLES[type].toLowerCase()}`} showBack />
 
-      <Text className="text-muted-foreground px-5 pb-2 text-xs font-semibold tracking-wide uppercase">
+      <Text className="text-muted-foreground px-5 pb-2 text-xs font-sans-semibold tracking-wide uppercase">
         {TITLES[type]}
       </Text>
 

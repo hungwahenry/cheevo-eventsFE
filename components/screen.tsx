@@ -26,7 +26,7 @@ export function Screen({
       <View className="flex-row items-start justify-between px-5 pt-2 pb-4">
         <View className="min-w-0 flex-1 gap-1">
           {title ? (
-            <Text className="text-foreground text-3xl font-bold tracking-tight">{title}</Text>
+            <Text className="text-foreground text-3xl font-sans-bold tracking-tight">{title}</Text>
           ) : null}
           {subtitle ? (
             <Text className="text-muted-foreground text-sm">{subtitle}</Text>

@@ -77,7 +77,7 @@ function MenubarTrigger({
   return (
     <TextClassContext.Provider
       value={cn(
-        'text-sm font-medium select-none group-active:text-accent-foreground',
+        'text-sm font-sans-medium select-none group-active:text-accent-foreground',
         value === itemValue && 'text-accent-foreground'
       )}>
       <MenubarPrimitive.Trigger
@@ -311,7 +311,7 @@ function MenubarLabel({
   return (
     <MenubarPrimitive.Label
       className={cn(
-        'text-foreground px-2 py-2 text-sm font-medium sm:py-1.5',
+        'text-foreground px-2 py-2 text-sm font-sans-medium sm:py-1.5',
         inset && 'pl-8',
         className
       )}

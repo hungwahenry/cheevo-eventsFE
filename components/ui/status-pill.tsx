@@ -24,11 +24,11 @@ const TONES: Record<StatusPillTone, { container: string; text: string }> = {
 const SIZES: Record<StatusPillSize, { container: string; text: string }> = {
   sm: {
     container: 'px-2 py-px',
-    text: 'text-[10px] font-semibold uppercase tracking-wider',
+    text: 'text-[10px] font-sans-semibold uppercase tracking-wider',
   },
   md: {
     container: 'px-2 py-0.5',
-    text: 'text-xs font-semibold',
+    text: 'text-xs font-sans-semibold',
   },
 };
 

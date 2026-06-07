@@ -54,7 +54,7 @@ export function OrgHeader({ organisation }: Props) {
       </View>
 
       <View className="gap-0.5 px-5">
-        <Text className="text-foreground text-xl font-bold tracking-tight">
+        <Text className="text-foreground text-xl font-sans-bold tracking-tight">
           {organisation.name}
         </Text>
         <Text className="text-muted-foreground text-sm">@{organisation.slug}</Text>

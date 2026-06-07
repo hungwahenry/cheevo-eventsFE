@@ -24,7 +24,7 @@ export default function DataExportScreen() {
           <View className="bg-primary/10 size-12 items-center justify-center rounded-full">
             <Icon as={DownloadIcon} className="text-primary size-6" strokeWidth={2} />
           </View>
-          <Text className="text-foreground text-center text-lg font-semibold">
+          <Text className="text-foreground text-center text-lg font-sans-semibold">
             Get a copy of your cheevo data
           </Text>
           <Text className="text-muted-foreground text-center text-sm">
@@ -34,7 +34,7 @@ export default function DataExportScreen() {
         </View>
 
         <View className="gap-2">
-          <Text className="text-muted-foreground text-xs font-semibold tracking-wide uppercase">
+          <Text className="text-muted-foreground text-xs font-sans-semibold tracking-wide uppercase">
             What's included
           </Text>
           <View className="bg-muted overflow-hidden rounded-2xl">

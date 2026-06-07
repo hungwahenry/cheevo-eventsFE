@@ -26,7 +26,7 @@ export function NotificationPreferencesPanel() {
     <ScrollView contentContainerStyle={{ paddingBottom: 64 }}>
       <View className="border-border border-b">
         <View className="px-5 pt-4 pb-2">
-          <Text className="text-muted-foreground text-xs font-semibold tracking-wide uppercase">
+          <Text className="text-muted-foreground text-xs font-sans-semibold tracking-wide uppercase">
             What to send
           </Text>
         </View>
@@ -43,7 +43,7 @@ export function NotificationPreferencesPanel() {
 
       <View>
         <View className="px-5 pt-4 pb-2">
-          <Text className="text-muted-foreground text-xs font-semibold tracking-wide uppercase">
+          <Text className="text-muted-foreground text-xs font-sans-semibold tracking-wide uppercase">
             When to send
           </Text>
         </View>

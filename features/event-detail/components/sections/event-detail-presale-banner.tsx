@@ -18,7 +18,7 @@ export function EventDetailPresaleBanner({ presaleUntil, isRsvped }: Props) {
         <Icon as={LockIcon} className="text-primary size-4" strokeWidth={2.25} />
       </View>
       <View className="min-w-0 flex-1 gap-0.5">
-        <Text className="text-foreground text-sm font-semibold">
+        <Text className="text-foreground text-sm font-sans-semibold">
           {isRsvped ? "You're in early access" : 'RSVP-only presale'}
         </Text>
         <Text className="text-muted-foreground text-xs leading-5">

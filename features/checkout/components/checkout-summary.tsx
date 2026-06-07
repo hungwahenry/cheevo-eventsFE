@@ -86,7 +86,7 @@ function PriceRow({
       <Text
         className={
           emphasis
-            ? 'text-foreground text-base font-semibold'
+            ? 'text-foreground text-base font-sans-semibold'
             : 'text-muted-foreground text-sm'
         }>
         {label}
@@ -94,7 +94,7 @@ function PriceRow({
       <Text
         className={
           emphasis
-            ? 'text-foreground text-lg font-bold'
+            ? 'text-foreground text-lg font-sans-bold'
             : 'text-foreground text-sm'
         }>
         {value}

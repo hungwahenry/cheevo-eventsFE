@@ -37,7 +37,7 @@ export function QuantityStepper({
         onPress={() => handle(-1)}>
         <Icon as={Minus} className="text-foreground size-4" strokeWidth={2.25} />
       </Button>
-      <Text className="text-foreground w-6 text-center text-base font-semibold">
+      <Text className="text-foreground w-6 text-center text-base font-sans-semibold">
         {value}
       </Text>
       <Button

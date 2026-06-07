@@ -26,8 +26,8 @@ export function SettingsRow({ icon, label, right, onPress, destructive }: Props)
       <Text
         className={
           destructive
-            ? 'text-destructive flex-1 text-sm font-medium'
-            : 'text-foreground flex-1 text-sm font-medium'
+            ? 'text-destructive flex-1 text-sm font-sans-medium'
+            : 'text-foreground flex-1 text-sm font-sans-medium'
         }>
         {label}
       </Text>

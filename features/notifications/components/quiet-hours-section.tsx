@@ -44,7 +44,7 @@ export function QuietHoursSection({ initial }: Props) {
     <View className="gap-4 px-5 py-4">
       <View className="flex-row items-center justify-between">
         <View className="flex-1 gap-1 pr-3">
-          <Text className="text-foreground text-sm font-semibold">Quiet hours</Text>
+          <Text className="text-foreground text-sm font-sans-semibold">Quiet hours</Text>
           <Text className="text-muted-foreground text-xs">
             Pause push during a window. Email and in-app inbox still deliver.
           </Text>
@@ -59,7 +59,7 @@ export function QuietHoursSection({ initial }: Props) {
               onPress={() => setEditing('start')}
               className="border-border flex-1 flex-row items-center justify-between rounded-full border px-3 py-2">
               <Text className="text-muted-foreground text-xs">From</Text>
-              <Text className="text-foreground text-sm font-semibold">
+              <Text className="text-foreground text-sm font-sans-semibold">
                 {formatTimeOfDay(initial.start) ?? '—'}
               </Text>
             </Pressable>
@@ -67,7 +67,7 @@ export function QuietHoursSection({ initial }: Props) {
               onPress={() => setEditing('end')}
               className="border-border flex-1 flex-row items-center justify-between rounded-full border px-3 py-2">
               <Text className="text-muted-foreground text-xs">To</Text>
-              <Text className="text-foreground text-sm font-semibold">
+              <Text className="text-foreground text-sm font-sans-semibold">
                 {formatTimeOfDay(initial.end) ?? '—'}
               </Text>
             </Pressable>

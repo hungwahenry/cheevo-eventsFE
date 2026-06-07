@@ -24,7 +24,7 @@ export function PresaleRsvpAction({ event, onOpenComments }: Props) {
         <Text className="text-muted-foreground text-xs">
           {rsvpEnabled ? 'RSVP to unlock' : 'Presale closed'}
         </Text>
-        <Text className="text-foreground text-base font-semibold">Presale</Text>
+        <Text className="text-foreground text-base font-sans-semibold">Presale</Text>
       </View>
       <CommentsButton count={event.comments_count} onPress={onOpenComments} />
       {rsvpEnabled ? (

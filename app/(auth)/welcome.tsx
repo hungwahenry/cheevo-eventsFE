@@ -36,7 +36,7 @@ export default function WelcomeScreen() {
       <View className="pb-safe-offset-6 mt-auto gap-6 px-6 pt-6">
         <View className="gap-3">
           {data?.headline ? (
-            <Text className="text-5xl font-extrabold tracking-tight text-white">
+            <Text className="text-5xl font-sans-extrabold tracking-tight text-white">
               {data.headline}
             </Text>
           ) : null}

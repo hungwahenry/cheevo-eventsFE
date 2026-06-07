@@ -42,7 +42,7 @@ export function EventDetailActionBar({ event }: { event: EventDetail }) {
         <ActionBarWrapper>
           <View className="flex-1">
             <Text className="text-muted-foreground text-xs">From</Text>
-            <Text className="text-foreground text-base font-semibold">
+            <Text className="text-foreground text-base font-sans-semibold">
               {formatPriceRange(event.tickets_min_price, event.tickets_max_price, event.currency) ?? 'Free'}
             </Text>
           </View>

@@ -43,7 +43,7 @@ export function OtpInput({
                     ? 'border-foreground/40'
                     : 'border-input',
                 )}>
-                <Text className="text-foreground text-2xl font-semibold">{char}</Text>
+                <Text className="text-foreground text-2xl font-sans-semibold">{char}</Text>
               </View>
             );
           })}

@@ -55,7 +55,7 @@ export function CommentCompose({
             onPress={() => gifPickerRef.current?.present()}
             hitSlop={8}
             className="border-border h-9 items-center justify-center rounded-full border px-2.5">
-            <Text className="text-muted-foreground text-[11px] font-bold tracking-wider">
+            <Text className="text-muted-foreground text-[11px] font-sans-bold tracking-wider">
               GIF
             </Text>
           </Pressable>
@@ -117,7 +117,7 @@ function ReplyPill({
     <View className="bg-muted/60 flex-row items-center justify-between px-4 py-2">
       <Text className="text-muted-foreground text-xs">
         Replying to{' '}
-        <Text className="text-foreground text-xs font-medium">{label}</Text>
+        <Text className="text-foreground text-xs font-sans-medium">{label}</Text>
       </Text>
       <Pressable onPress={onCancel} hitSlop={8}>
         <Icon as={X} className="text-muted-foreground size-4" />

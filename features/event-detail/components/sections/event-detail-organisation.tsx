@@ -26,7 +26,7 @@ export function EventDetailOrganisation({ event }: { event: EventDetail }) {
         ) : null}
 
         <View className="flex-1">
-          <Text className="text-foreground text-sm font-semibold">{org.name}</Text>
+          <Text className="text-foreground text-sm font-sans-semibold">{org.name}</Text>
           <Text className="text-muted-foreground text-xs">
             {org.subscribers_count.toLocaleString()} followers
           </Text>

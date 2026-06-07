@@ -93,7 +93,7 @@ export function InboxRow({ notification, onPress }: Props) {
 
       <View className="flex-1 gap-1">
         <View className="flex-row items-start justify-between gap-2">
-          <Text className={`flex-1 text-sm ${isUnread ? 'font-semibold' : 'font-medium'}`}>
+          <Text className={`flex-1 text-sm ${isUnread ? 'font-sans-semibold' : 'font-sans-medium'}`}>
             {title}
           </Text>
           <Text className="text-muted-foreground text-xs">

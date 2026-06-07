@@ -47,7 +47,7 @@ export function TabBar({ state, navigation, insets }: BottomTabBarProps) {
             }`}>
             <TabIcon route={route.name} icon={tab.icon} focused={focused} />
             {focused ? (
-              <Text className="text-primary-foreground text-sm font-semibold">{tab.label}</Text>
+              <Text className="text-primary-foreground text-sm font-sans-semibold">{tab.label}</Text>
             ) : null}
           </Pressable>
         );
@@ -83,7 +83,7 @@ function InboxBell({ focused }: { focused: boolean }) {
       <Icon as={Bell} className={tintClass(focused)} size={22} strokeWidth={2} />
       {unread > 0 ? (
         <View className="absolute -top-1 -right-1.5 h-4 min-w-4 items-center justify-center rounded-full bg-red-500 px-1">
-          <Text className="text-[10px] font-bold text-white">{unread > 99 ? '99+' : unread}</Text>
+          <Text className="text-[10px] font-sans-bold text-white">{unread > 99 ? '99+' : unread}</Text>
         </View>
       ) : null}
     </View>
