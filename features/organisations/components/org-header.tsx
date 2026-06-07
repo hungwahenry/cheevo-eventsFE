@@ -37,7 +37,7 @@ export function OrgHeader({ organisation }: Props) {
       </View>
 
       <View className="-mt-8 flex-row items-end justify-between gap-3 px-5">
-        <View className="border-background bg-background size-20 items-center justify-center overflow-hidden rounded-full border-4">
+        <View className="border-background bg-background size-20 items-center justify-center overflow-hidden rounded-2xl border-4">
           <View className="bg-muted size-full items-center justify-center">
             {organisation.logo_url ? (
               <Image
