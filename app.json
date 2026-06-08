@@ -16,7 +16,10 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": false,
+      "config": {
+        "usesNonExemptEncryption": false
+      },
       "bundleIdentifier": "events.cheevo.app",
       "associatedDomains": [
         "applinks:api.cheevo.vip",
