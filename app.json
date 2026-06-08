@@ -108,7 +108,7 @@
         {
           "url": "https://sentry.io/",
           "organization": "issorite",
-          "project": "cheevo-mobile"
+          "project": "cheevo-frontend"
         }
       ],
       "expo-font"

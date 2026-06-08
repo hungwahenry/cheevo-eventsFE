@@ -15,8 +15,7 @@
       "env": {
         "EXPO_PUBLIC_API_URL": "https://api.cheevo.vip",
         "EXPO_PUBLIC_WEB_URL": "https://cheevo.events",
-        "EXPO_PUBLIC_SENTRY_DSN": "https://89196d26180725b2f78ed22b9b2dfe57@o4511342454308864.ingest.us.sentry.io/4511510071017472",
-        "SENTRY_DISABLE_AUTO_UPLOAD": "true"
+        "EXPO_PUBLIC_SENTRY_DSN": "https://89196d26180725b2f78ed22b9b2dfe57@o4511342454308864.ingest.us.sentry.io/4511510071017472"
       }
     },
     "production": {
@@ -25,8 +24,7 @@
       "env": {
         "EXPO_PUBLIC_API_URL": "https://api.cheevo.vip",
         "EXPO_PUBLIC_WEB_URL": "https://cheevo.events",
-        "EXPO_PUBLIC_SENTRY_DSN": "https://89196d26180725b2f78ed22b9b2dfe57@o4511342454308864.ingest.us.sentry.io/4511510071017472",
-        "SENTRY_DISABLE_AUTO_UPLOAD": "true"
+        "EXPO_PUBLIC_SENTRY_DSN": "https://89196d26180725b2f78ed22b9b2dfe57@o4511342454308864.ingest.us.sentry.io/4511510071017472"
       }
     }
   },
