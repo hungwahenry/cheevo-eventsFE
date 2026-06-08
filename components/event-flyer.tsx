@@ -3,7 +3,7 @@ import { useEvent } from 'expo';
 import { Image } from 'expo-image';
 import { useVideoPlayer, VideoView } from 'expo-video';
 import { Volume2, VolumeX } from 'lucide-react-native';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { Pressable, View } from 'react-native';
 
 type Props = {
@@ -65,7 +65,8 @@ function FlyerVideoPlayer({ url, isVisible }: { url: string; isVisible: boolean 
 }
 
 function FlyerVideoThumbnail({ url }: { url: string }) {
-  const player = useVideoPlayer(url, (p) => {
+  const source = useMemo(() => ({ uri: url, useCaching: true }), [url]);
+  const player = useVideoPlayer(source, (p) => {
     p.muted = true;
   });
 
@@ -81,9 +82,11 @@ function FlyerVideoThumbnail({ url }: { url: string }) {
 }
 
 function useAutoplayVideo(url: string, isVisible: boolean) {
-  const player = useVideoPlayer(url, (p) => {
+  const source = useMemo(() => ({ uri: url, useCaching: true }), [url]);
+  const player = useVideoPlayer(source, (p) => {
     p.loop = true;
     p.muted = true;
+    p.bufferOptions = { preferredForwardBufferDuration: 30 };
   });
 
   const { muted } = useEvent(player, 'mutedChange', { muted: player.muted });
