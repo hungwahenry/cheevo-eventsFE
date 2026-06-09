@@ -10,7 +10,7 @@ export function routeForNotification(
     case 'attendee.event_starting_soon':
     case 'attendee.new_event_from_subscription':
     case 'attendee.comment_reply':
-      return eventTarget ? `/event/${eventTarget}` : null;
+      return eventTarget ? `/events/${eventTarget}` : null;
     case 'admin.system_announcement':
       return '/(tabs)/inbox';
     default:

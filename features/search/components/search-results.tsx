@@ -68,7 +68,7 @@ export function SearchResults({ query, data, isLoading, isError }: Props) {
   const handleSeeAll = (type: SearchType) =>
     router.push({ pathname: '/search/[type]', params: { type, q: query } } as any);
 
-  const handleOpenEvent = (slug: string) => router.push(`/event/${slug}` as any);
+  const handleOpenEvent = (slug: string) => router.push(`/events/${slug}` as any);
   const handleOpenOrg = (slug: string) => router.push(`/org/${slug}` as any);
   const handleOpenUser = openUser;
 

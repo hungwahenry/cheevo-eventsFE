@@ -74,7 +74,7 @@ function EventRow({ event }: { event: UserAttendedEvent }) {
 
   return (
     <Pressable
-      onPress={() => router.push(`/event/${event.slug}` as any)}
+      onPress={() => router.push(`/events/${event.slug}` as any)}
       className="flex-row items-center gap-3">
       <View className="bg-muted size-12 items-center justify-center overflow-hidden rounded-xl">
         {event.flyer_url ? (

@@ -69,7 +69,7 @@ export function ProfileComments({ userId, viewpoint }: Props) {
 function CommentRow({ comment }: { comment: UserComment }) {
   return (
     <Pressable
-      onPress={() => router.push(`/event/${comment.event.slug}` as any)}
+      onPress={() => router.push(`/events/${comment.event.slug}` as any)}
       className="flex-row gap-3">
       <View className="bg-muted size-12 items-center justify-center overflow-hidden rounded-xl">
         <EventFlyer
